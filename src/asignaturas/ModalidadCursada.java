@@ -1,4 +1,4 @@
-package asistencias;
+package asignaturas;
 
 public enum ModalidadCursada {
     REGULAR, 
