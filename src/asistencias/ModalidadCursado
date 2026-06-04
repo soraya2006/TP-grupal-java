@@ -1,0 +1,7 @@
+package asistencias;
+
+public enum ModalidadCursado {
+    REGULAR, 
+    CONDICIONAL, 
+    OYENTE
+}
