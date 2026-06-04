@@ -31,7 +31,6 @@ public class Inscripcion implements Serializable {
 
     public int cantidadPresentes() {
         int cont = 0;
-
         for (Asistencia a : asistencias) {
             if (a.isPresente()) {
                 cont++;
@@ -85,13 +84,13 @@ public class Inscripcion implements Serializable {
 
     public CondicionAlumno obtenerCondicion() {
         CondicionAlumno condicionFinal = CondicionAlumno.LIBRE;
-        double asistencia = calcularPorcentajeAsistencia();
+        double asistencia = calcularPorcentajeAsistencia(), habilita, promociona;
 
         if (modalidad == ModalidadCursada.OYENTE) {
             condicionFinal = CondicionAlumno.LIBRE; // los oyentes no habilitan ni promocionan 
         } else {
-            double habilita = porcentajeHabilitacion();
-            double promociona = porcentajePromocion();
+            habilita = porcentajeHabilitacion();
+            promociona = porcentajePromocion();
             if (modalidad == ModalidadCursada.CONDICIONAL) {
                 habilita += 20.0; 
                 if (promociona != -1.0) {
