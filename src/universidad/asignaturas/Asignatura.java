@@ -9,7 +9,7 @@ public class Asignatura implements Serializable {
     private String nombre;
     private int cuatrimestre;
     private boolean promocional;
-    private CategoriaAsignatura categoria; // Usa el enum que está en su misma carpeta
+    private CategoriaAsignatura categoria; 
 
     public Asignatura(String codigo, String nombre, int cuatrimestre, boolean promocional, CategoriaAsignatura categoria) {
         this.codigo = codigo;
