@@ -1,6 +1,6 @@
 package asistencias;
 
-public enum ModalidadCursado {
+public enum ModalidadCursada {
     REGULAR, 
     CONDICIONAL, 
     OYENTE
