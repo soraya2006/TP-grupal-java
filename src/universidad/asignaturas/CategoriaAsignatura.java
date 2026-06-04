@@ -1,4 +1,4 @@
-package asignaturas;
+package universidad.asignaturas;
 
 public enum CategoriaAsignatura {
     OBLIGATORIA, 

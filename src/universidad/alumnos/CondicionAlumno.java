@@ -1,4 +1,4 @@
-package asignaturas;
+package universidad.alumnos;
 
 public enum CondicionAlumno {
     LIBRE, 
