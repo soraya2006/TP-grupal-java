@@ -12,6 +12,8 @@ public class Alumno implements Comparable<Alumno>, Serializable {
     private LocalDate fechaNacimiento;
 
     public Alumno(String matricula, String apellido, String nombre, LocalDate fechaNacimiento) {
+        if(matricula == null || matricula.isBlank())
+            throw new IllegalArgumentException("La matrícula no puede estar vacía");
         this.matricula = matricula;
         this.apellido = apellido;
         this.nombre = nombre;

@@ -12,6 +12,8 @@ public class Asignatura implements Serializable {
     private CategoriaAsignatura categoria; 
 
     public Asignatura(String codigo, String nombre, int cuatrimestre, boolean promocional, CategoriaAsignatura categoria) {
+        if(cuatrimestre < 1 || cuatrimestre > 10)
+            throw new IllegalArgumentException("Cuatrimestre inválido");
         this.codigo = codigo;
         this.nombre = nombre;
         this.cuatrimestre = cuatrimestre;
