@@ -1,5 +1,5 @@
 
-package universidad.sistema;
+package universidad;
 
 import universidad.alumnos.Alumno;
 import universidad.asignaturas.Asignatura;
@@ -42,7 +42,7 @@ public class Universidad {
 
         for(Inscripcion i : inscripciones) {
 
-            if(i.getAlumno().equals(alumno)
+            if(i.Alumno().equals(alumno)
                     && i.getAsignatura().equals(clase.getAsignatura())) {
 
                 i.registrarAsistencia(clase.getId());
