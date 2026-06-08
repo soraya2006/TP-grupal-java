@@ -45,14 +45,12 @@ public class Universidad {
 
         for(Inscripcion i : inscripciones) {
 
-            if(i.getAlumno().equals(alumno)
-                    && i.getAsignatura().equals(asignatura)) {
+            if(i.getAlumno().equals(alumno) && i.getAsignatura().equals(asignatura)) {
                 i.registrarAsistencia(clase, true);
                 return;
             }
         }
-        throw new IllegalArgumentException(
-                "El alumno no está inscripto en la asignatura");
+        throw new IllegalArgumentException("El alumno no está inscripto en la asignatura");
     }
 
     public List<RankingAsignatura> rankingPresentismo(){
@@ -80,7 +78,7 @@ public class Universidad {
 
             ranking.add(new RankingAsignatura(a, porcentaje));
         }
-    ranking.sort((x, y) -> Double.compare(y.getPorcentaje(), x.getPorcentaje()));    
+        ranking.sort((x, y) -> Double.compare(y.getPorcentaje(), x.getPorcentaje()));    
         return ranking;
     }
 
