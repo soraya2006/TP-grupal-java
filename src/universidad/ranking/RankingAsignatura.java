@@ -1,5 +1,5 @@
-package universidad.rankingasignatura;
- import universidad.asignaturas.Asignatura
+package universidad.ranking;
+import universidad.asignaturas.Asignatura;
 
 public class RankingAsignatura {
 

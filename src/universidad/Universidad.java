@@ -2,8 +2,11 @@
 package universidad;
 
 import universidad.alumnos.Alumno;
+import universidad.alumnos.CondicionAlumno;
+import universidad.ranking.RankingAsignatura;
 import universidad.asignaturas.Asignatura;
 import universidad.clases.Clase;
+import universidad.inscripciones.Inscripcion;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -38,18 +41,16 @@ public class Universidad {
         inscripciones.add(i);
     }
 
-    public void registrarAsistencia(Alumno alumno, Clase clase) {
+    public void registrarAsistencia(Alumno alumno, Clase clase, Asignatura asignatura) {
 
         for(Inscripcion i : inscripciones) {
 
-            if(i.Alumno().equals(alumno)
-                    && i.getAsignatura().equals(clase.getAsignatura())) {
-
-                i.registrarAsistencia(clase.getId());
+            if(i.getAlumno().equals(alumno)
+                    && i.getAsignatura().equals(asignatura)) {
+                i.registrarAsistencia(clase, true);
                 return;
             }
         }
-
         throw new IllegalArgumentException(
                 "El alumno no está inscripto en la asignatura");
     }
@@ -57,156 +58,62 @@ public class Universidad {
     public List<RankingAsignatura> rankingPresentismo(){
 
         List<RankingAsignatura> ranking = new ArrayList<>();
-
         for(Asignatura a : asignaturas){
 
             int totalAsistencias = 0;
             int totalClases = 0;
             int totalInscriptos = 0;
 
-            for(Clase c : clases){
-
-                if(c.getAsignatura().equals(a))
-                    totalClases++;
-            }
-
             for(Inscripcion i : inscripciones){
-
                 if(i.getAsignatura().equals(a)){
-
                     totalInscriptos++;
-
-                    totalAsistencias +=
-                            i.getCantidadAsistencias();
+                    totalAsistencias += i.cantidadPresentes();
+                    totalClases += i.getAsistencias().size();
                 }
             }
 
-            double porcentaje = 0;
+            double porcentaje = 0.0;
 
             if(totalClases > 0 && totalInscriptos > 0){
-
-                porcentaje =
-                        (totalAsistencias * 100.0) /
-                                (totalClases * totalInscriptos);
+                porcentaje = (totalAsistencias * 100.0) /totalClases;
             }
 
-            ranking.add(
-                    new RankingAsignatura(a, porcentaje)
-            );
+            ranking.add(new RankingAsignatura(a, porcentaje));
         }
-
-        ranking.sort((x,y) ->
-                Double.compare(
-                        y.getPorcentaje(),
-                        x.getPorcentaje()
-                )
-        );
-
+    ranking.sort((x, y) -> Double.compare(y.getPorcentaje(), x.getPorcentaje()));    
         return ranking;
     }
 
-    public void reporteAsignatura(Asignatura asignatura){
-
-        int totalClases = 0;
-
-        for(Clase c : clases){
-
-            if(c.getAsignatura().equals(asignatura))
-                totalClases++;
-        }
-
-        for(Inscripcion i : inscripciones){
-
-            if(i.getAsignatura().equals(asignatura)){
-
-                double porcentaje =
-                        i.calcularPorcentaje(totalClases);
-
-                System.out.println(
-                        i.getAlumno()
-                );
-
-                System.out.println(
-                        "Asistencias: " +
-                                i.getCantidadAsistencias()
-                );
-
-                System.out.println(
-                        "Porcentaje: " +
-                                porcentaje
-                );
-
-                System.out.println(
-                        "Modalidad: " +
-                                i.getModalidad()
-                );
-
-                System.out.println(
-                        "Condicion: " +
-                                i.obtenerCondicion(totalClases)
-                );
-
-                System.out.println("----------------");
+    public void reporteAsignatura(Asignatura asignatura) {
+        for (Inscripcion i : inscripciones) {
+            if (i.getAsignatura().equals(asignatura)) {
+                System.out.println("Alumno: " + i.getAlumno());
+                System.out.println("Asistencias: " + i.cantidadPresentes());
+                System.out.println("Porcentaje: " + i.calcularPorcentajeAsistencia() + "%");
+                System.out.println("Modalidad: " + i.getModalidad());
+                System.out.println("Condición: " + i.obtenerCondicion());
+                System.out.println("----------------------------------------");
             }
         }
     }
 
-    public void alumnosLibres(){
-
-        for(Inscripcion i : inscripciones){
-
-            Asignatura a =
-                    i.getAsignatura();
-
-            int totalClases = 0;
-
-            for(Clase c : clases){
-
-                if(c.getAsignatura().equals(a))
-                    totalClases++;
-            }
-
-            if(i.obtenerCondicion(totalClases)
-                    == CondicionAlumno.LIBRE){
-
-                System.out.println(
-                        i.getAlumno() +
-                                " - " +
-                                a.getNombre()
-                );
+    public void alumnosLibres() {
+        for (Inscripcion i : inscripciones) {
+            if (i.obtenerCondicion() == CondicionAlumno.LIBRE) {
+                System.out.println(i.getAlumno() + " - " + i.getAsignatura().getNombre());
             }
         }
     }
 
-    public void alumnosLibres(int anio){
+    public void alumnosLibres(int anio) {
+        for (Inscripcion i : inscripciones) {
+            Asignatura a = i.getAsignatura();
+            int anioAsignatura = (a.getCuatrimestre() + 1) / 2;
 
-        for(Inscripcion i : inscripciones){
-
-            Asignatura a =
-                    i.getAsignatura();
-
-            int anioAsignatura =
-                    (a.getCuatrimestre() + 1) / 2;
-
-            if(anioAsignatura != anio)
-                continue;
-
-            int totalClases = 0;
-
-            for(Clase c : clases){
-
-                if(c.getAsignatura().equals(a))
-                    totalClases++;
-            }
-
-            if(i.obtenerCondicion(totalClases)
-                    == CondicionAlumno.LIBRE){
-
-                System.out.println(
-                        i.getAlumno() +
-                                " - " +
-                                a.getNombre()
-                );
+            if (anioAsignatura == anio) {
+                if (i.obtenerCondicion() == CondicionAlumno.LIBRE) {
+                    System.out.println(i.getAlumno() + " - " + a.getNombre() + " (Año: " + anioAsignatura + ")");
+                }
             }
         }
     }
