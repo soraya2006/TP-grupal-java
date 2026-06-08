@@ -185,10 +185,10 @@ public class Universidad {
             Asignatura a =
                     i.getAsignatura();
 
-            int añoAsignatura =
+            int anioAsignatura =
                     (a.getCuatrimestre() + 1) / 2;
 
-            if(añoAsignatura != anio)
+            if(anioAsignatura != anio)
                 continue;
 
             int totalClases = 0;
