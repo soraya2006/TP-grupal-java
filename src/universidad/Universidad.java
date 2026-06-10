@@ -23,9 +23,32 @@ public class Universidad {
         inscripciones = new ArrayList<>();
     }
     public void agregarAlumno(Alumno a) {
+        boolean existe = false;
+        int idx = 0;
+        while (idx < alumnos.size() && !existe) {
+            if (alumnos.get(idx).getMatricula().equalsIgnoreCase(a.getMatricula())) {
+                existe = true;
+            }
+            idx++;
+        }
+        if (existe) {
+            throw new IllegalArgumentException("Ya existe un alumno registrado con esa matrícula.");
+        }
         alumnos.add(a);
     }
+
     public void agregarAsignatura(Asignatura a) {
+        boolean existe = false;
+        int idx = 0;
+        while (idx < asignaturas.size() && !existe) {
+            if (asignaturas.get(idx).getCodigo().equalsIgnoreCase(a.getCodigo())) {
+                existe = true;
+            }
+            idx++;
+        }
+        if (existe) {
+            throw new IllegalArgumentException("Ya existe una asignatura registrada con ese código.");
+        }
         asignaturas.add(a);
     }
     public void agregarClase(Clase c) {
