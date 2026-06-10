@@ -5,11 +5,13 @@ import universidad.clases.Clase;
 
 public class Asistencia implements Serializable {
     private static final long serialVersionUID = 1L;
-
     private Clase clase;
     private boolean presente;
 
     public Asistencia(Clase clase, boolean presente) {
+        if (clase == null) {
+            throw new IllegalArgumentException("La clase asociada a la asistencia no puede ser nula");
+        }
         this.clase = clase;
         this.presente = presente;
     }
@@ -17,6 +19,9 @@ public class Asistencia implements Serializable {
         return clase; 
     }
     public void setClase(Clase clase) { 
+        if (clase == null) {
+            throw new IllegalArgumentException("La clase asociada a la asistencia no puede ser nula");
+        }
         this.clase = clase; 
     }
     public boolean isPresente() { 
@@ -30,7 +35,7 @@ public class Asistencia implements Serializable {
         String estado = "AUSENTE";
         if (presente) {
             estado = "PRESENTE";
-        }
+        } 
         return clase.toString() + " -> Estado: " + estado;
     }
 }

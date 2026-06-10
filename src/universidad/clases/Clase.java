@@ -8,14 +8,34 @@ public class Clase implements Serializable {
 
     private String id;
     private LocalDateTime fechaHora;
+
     public Clase(String id, LocalDateTime fechaHora) {
+        if (id == null || id.isBlank()) {
+            throw new IllegalArgumentException("El ID de la clase no puede estar vacío");
+        }
+        if (fechaHora == null) {
+            throw new IllegalArgumentException("La fecha y hora de la clase no pueden ser nulas");
+        }
         this.id = id;
         this.fechaHora = fechaHora;
     }
-    public String getId() { return id; }
-    public void setId(String id) { this.id = id; }
-    public LocalDateTime getFechaHora() { return fechaHora; }
-    public void setFechaHora(LocalDateTime fechaHora) { this.fechaHora = fechaHora; }
+
+    public String getId() { 
+        return id; 
+    }
+
+    public void setId(String id) { 
+        this.id = id; 
+    }
+
+    public LocalDateTime getFechaHora() { 
+        return fechaHora; 
+    }
+
+    public void setFechaHora(LocalDateTime fechaHora) { 
+        this.fechaHora = fechaHora; 
+    }
+
     @Override
     public String toString() {
         return "Clase ID: " + id + " - Fecha/Hora: " + fechaHora;

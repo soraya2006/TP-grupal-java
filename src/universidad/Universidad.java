@@ -1,4 +1,3 @@
-
 package universidad;
 
 import universidad.alumnos.Alumno;
@@ -12,7 +11,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Universidad {
-
     private List<Alumno> alumnos;
     private List<Asignatura> asignaturas;
     private List<Clase> clases;
@@ -24,58 +22,52 @@ public class Universidad {
         clases = new ArrayList<>();
         inscripciones = new ArrayList<>();
     }
-
     public void agregarAlumno(Alumno a) {
         alumnos.add(a);
     }
-
     public void agregarAsignatura(Asignatura a) {
         asignaturas.add(a);
     }
-
     public void agregarClase(Clase c) {
         clases.add(c);
     }
-
     public void agregarInscripcion(Inscripcion i) {
         inscripciones.add(i);
     }
-
     public void registrarAsistencia(Alumno alumno, Clase clase, Asignatura asignatura) {
-
-        for(Inscripcion i : inscripciones) {
-
-            if(i.getAlumno().equals(alumno) && i.getAsignatura().equals(asignatura)) {
-                i.registrarAsistencia(clase, true);
-                return;
+        boolean encontrado = false;
+        int i = 0;
+        Inscripcion inscripcionActual;
+        while (i < inscripciones.size() && !encontrado) {
+            inscripcionActual = inscripciones.get(i);
+            
+            if (inscripcionActual.getAlumno().equals(alumno) && inscripcionActual.getAsignatura().equals(asignatura)) {
+                inscripcionActual.registrarAsistencia(clase, true);
+                encontrado = true; 
             }
+            i++;
         }
-        throw new IllegalArgumentException("El alumno no está inscripto en la asignatura");
+        if (!encontrado) {
+            throw new IllegalArgumentException("El alumno no está inscripto en la asignatura");
+        }
     }
 
     public List<RankingAsignatura> rankingPresentismo(){
-
         List<RankingAsignatura> ranking = new ArrayList<>();
-        for(Asignatura a : asignaturas){
-
+        for (Asignatura a : asignaturas) {
             int totalAsistencias = 0;
-            int totalClases = 0;
-            int totalInscriptos = 0;
-
-            for(Inscripcion i : inscripciones){
-                if(i.getAsignatura().equals(a)){
-                    totalInscriptos++;
+            int totalClasesMaximas = 0;
+            double porcentaje = 0.0;
+            
+            for (Inscripcion i : inscripciones) {
+                if (i.getAsignatura().equals(a)) {
                     totalAsistencias += i.cantidadPresentes();
-                    totalClases += i.getAsistencias().size();
+                    totalClasesMaximas += i.getAsistencias().size(); 
                 }
             }
-
-            double porcentaje = 0.0;
-
-            if(totalClases > 0 && totalInscriptos > 0){
-                porcentaje = (totalAsistencias * 100.0) /totalClases;
+            if (totalClasesMaximas > 0) {
+                porcentaje = (totalAsistencias * 100.0) / totalClasesMaximas;
             }
-
             ranking.add(new RankingAsignatura(a, porcentaje));
         }
         ranking.sort((x, y) -> Double.compare(y.getPorcentaje(), x.getPorcentaje()));    
@@ -94,7 +86,6 @@ public class Universidad {
             }
         }
     }
-
     public void alumnosLibres() {
         for (Inscripcion i : inscripciones) {
             if (i.obtenerCondicion() == CondicionAlumno.LIBRE) {
@@ -102,12 +93,12 @@ public class Universidad {
             }
         }
     }
-
     public void alumnosLibres(int anio) {
+        int anioAsignatura;
         for (Inscripcion i : inscripciones) {
             Asignatura a = i.getAsignatura();
-            int anioAsignatura = (a.getCuatrimestre() + 1) / 2;
-
+            anioAsignatura = (a.getCuatrimestre() + 1) / 2;
+            
             if (anioAsignatura == anio) {
                 if (i.obtenerCondicion() == CondicionAlumno.LIBRE) {
                     System.out.println(i.getAlumno() + " - " + a.getNombre() + " (Año: " + anioAsignatura + ")");

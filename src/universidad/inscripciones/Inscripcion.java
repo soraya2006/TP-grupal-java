@@ -15,7 +15,6 @@ public class Inscripcion implements Serializable {
     private Alumno alumno;
     private Asignatura asignatura;
     private ModalidadCursada modalidad;
-    
     private ArrayList<Asistencia> asistencias;
 
     public Inscripcion(Alumno alumno, Asignatura asignatura, ModalidadCursada modalidad) {
@@ -36,13 +35,11 @@ public class Inscripcion implements Serializable {
                 cont++;
             }
         }
-
         return cont;
     }
 
     public double calcularPorcentajeAsistencia() {
         double porcentaje = 0.0;
-
         if (asistencias.size() != 0) {
             porcentaje = (cantidadPresentes() * 100.0) / asistencias.size();
         }
@@ -50,6 +47,7 @@ public class Inscripcion implements Serializable {
     }
     private double porcentajeHabilitacion() {
         double porcentajeRequerido = 0.0;
+        
         switch (asignatura.getCategoria()) {
             case OBLIGATORIA:
                 porcentajeRequerido = 60.0;
@@ -61,12 +59,16 @@ public class Inscripcion implements Serializable {
             case TESIS:
                 porcentajeRequerido = 75.0;
                 break;
+            default:
+                porcentajeRequerido = 0.0;
+                break;
         }
         return porcentajeRequerido;
     }
 
     private double porcentajePromocion() {
         double porcentajeRequerido = -1.0;
+        
         switch (asignatura.getCategoria()) {
             case OBLIGATORIA:
                 porcentajeRequerido = 80.0;
@@ -78,25 +80,27 @@ public class Inscripcion implements Serializable {
             case TESIS:
                 porcentajeRequerido = -1.0;
                 break;
+            default:
+                porcentajeRequerido = -1.0;
+                break;
         }
         return porcentajeRequerido;
     }
 
     public CondicionAlumno obtenerCondicion() {
         CondicionAlumno condicionFinal = CondicionAlumno.LIBRE;
-        double asistencia = calcularPorcentajeAsistencia(), habilita, promociona;
-
+        double asistencia = calcularPorcentajeAsistencia(), habilita = 0.0, promociona = 0.0;
         if (modalidad == ModalidadCursada.OYENTE) {
-            condicionFinal = CondicionAlumno.LIBRE; // los oyentes no habilitan ni promocionan 
+            condicionFinal = CondicionAlumno.LIBRE; 
         } else {
             habilita = porcentajeHabilitacion();
-            promociona = porcentajePromocion();
+            promociona = porcentajePromocion();            
             if (modalidad == ModalidadCursada.CONDICIONAL) {
                 habilita += 20.0; 
                 if (promociona != -1.0) {
                     promociona += 20.0;
                 }
-            }
+            }   
             if (asignatura.isPromocional() && promociona != -1.0 && asistencia >= promociona) {
                 condicionFinal = CondicionAlumno.PROMOCIONA;
             } else if (asistencia >= habilita) {
@@ -105,10 +109,8 @@ public class Inscripcion implements Serializable {
                 condicionFinal = CondicionAlumno.LIBRE;
             }
         }
-
         return condicionFinal;
     }
-
     public Alumno getAlumno() { return alumno; }
     public Asignatura getAsignatura() { return asignatura; }
     public ModalidadCursada getModalidad() { return modalidad; }
