@@ -77,7 +77,7 @@ public class Universidad {
 
     public void registrarAsistencia(Alumno alumno, Clase clase, Curso curso) {
         boolean encontrado = false;
-        Inscripcion inscripcionActual
+        Inscripcion inscripcionActual;
         int i = 0;
         List<Inscripcion> inscripcionesCurso = curso.getInscripciones();
 
