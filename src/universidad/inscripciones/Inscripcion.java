@@ -45,47 +45,6 @@ public class Inscripcion implements Serializable {
         }
         return porcentaje;
     }
-    private double porcentajeHabilitacion() {
-        double porcentajeRequerido = 0.0;
-        
-        switch (asignatura.getCategoria()) {
-            case OBLIGATORIA:
-                porcentajeRequerido = 60.0;
-                break;
-            case OPTATIVA:
-                porcentajeRequerido = 50.0;
-                break;
-            case PASANTIA:
-            case TESIS:
-                porcentajeRequerido = 75.0;
-                break;
-            default:
-                porcentajeRequerido = 0.0;
-                break;
-        }
-        return porcentajeRequerido;
-    }
-
-    private double porcentajePromocion() {
-        double porcentajeRequerido = -1.0;
-        
-        switch (asignatura.getCategoria()) {
-            case OBLIGATORIA:
-                porcentajeRequerido = 80.0;
-                break;
-            case OPTATIVA:
-                porcentajeRequerido = 60.0;
-                break;
-            case PASANTIA:
-            case TESIS:
-                porcentajeRequerido = -1.0;
-                break;
-            default:
-                porcentajeRequerido = -1.0;
-                break;
-        }
-        return porcentajeRequerido;
-    }
 
     public CondicionAlumno obtenerCondicion() {
         CondicionAlumno condicionFinal = CondicionAlumno.LIBRE;
