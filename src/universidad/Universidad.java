@@ -16,15 +16,12 @@ public class Universidad {
     private List<Clase> clases;
     private List<Inscripcion> inscripciones;
 
-    public Universidad() {
-        alumnos = new ArrayList<>();
-        asignaturas = new ArrayList<>();
-        clases = new ArrayList<>();
-        inscripciones = new ArrayList<>();
-    }
     public void agregarAlumno(Alumno a) {
         boolean existe = false;
         int idx = 0;
+        if (a == null) {
+            throw new IllegalArgumentException("El alumno a agregar no puede ser nulo.");
+        }
         while (idx < alumnos.size() && !existe) {
             if (alumnos.get(idx).getMatricula().equalsIgnoreCase(a.getMatricula())) {
                 existe = true;
@@ -40,6 +37,9 @@ public class Universidad {
     public void agregarAsignatura(Asignatura a) {
         boolean existe = false;
         int idx = 0;
+        if (a == null) {
+            throw new IllegalArgumentException("La asignatura a agregar no puede ser nula.");
+        }
         while (idx < asignaturas.size() && !existe) {
             if (asignaturas.get(idx).getCodigo().equalsIgnoreCase(a.getCodigo())) {
                 existe = true;
@@ -76,12 +76,14 @@ public class Universidad {
     }
 
     public List<RankingAsignatura> rankingPresentismo(){
+        int totalAsistencias;
+        int totalClasesMaximas;
+        double porcentaje;
         List<RankingAsignatura> ranking = new ArrayList<>();
         for (Asignatura a : asignaturas) {
-            int totalAsistencias = 0;
-            int totalClasesMaximas = 0;
-            double porcentaje = 0.0;
-            
+            totalAsistencias = 0;
+            totalClasesMaximas = 0;
+            porcentaje = 0.0;
             for (Inscripcion i : inscripciones) {
                 if (i.getAsignatura().equals(a)) {
                     totalAsistencias += i.cantidadPresentes();
@@ -118,10 +120,10 @@ public class Universidad {
     }
     public void alumnosLibres(int anio) {
         int anioAsignatura;
+        Asignatura a
         for (Inscripcion i : inscripciones) {
-            Asignatura a = i.getAsignatura();
+            a = i.getAsignatura();
             anioAsignatura = (a.getCuatrimestre() + 1) / 2;
-            
             if (anioAsignatura == anio) {
                 if (i.obtenerCondicion() == CondicionAlumno.LIBRE) {
                     System.out.println(i.getAlumno() + " - " + a.getNombre() + " (Año: " + anioAsignatura + ")");
