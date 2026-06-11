@@ -66,4 +66,21 @@ public class Curso implements Serializable {
         }
         clasesDictadas.add(c);
     }
+    public void agregarInscripcion(Inscripcion insc){
+        boolean existe = false;
+        int i = 0;
+        if (insc == null){
+            throw new IllegalArgumentException("La inscripción no puede ser nula.");
+        }
+        while(i < inscripciones.size() && !existe){
+            if(inscripciones.get(i).getAlumno().equals(insc.getAlumno())){
+                existe = true;
+            }
+            i++
+        }
+        if(existe){
+            throw new IllegalArgumentException("El alumno ya se encuentra inscripto en este curso.");
+        }
+        inscripciones.add(insc);
+    }
 }
