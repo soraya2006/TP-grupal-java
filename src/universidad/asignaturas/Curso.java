@@ -49,4 +49,21 @@ public class Curso implements Serializable {
     public List<Inscripcion> getInscripciones() {
         return inscripciones;
     }
+    public void agregarClase(Clase c){
+        boolean existe = false;
+        int i = 0;
+        if (c == null){
+            throw new IllegalArgumentException("La clase no puede ser nula.");
+        }
+        while (i < clasesDictadas.size() && !existe) {
+            if (clasesDictadas.get(i).getId().equalsIgnoreCase(c.getId())) {
+                existe = true;
+            }
+            i++;
+        }
+        if (existe) {
+            throw new IllegalArgumentException("La clase con ese ID ya está registrada en este curso.");
+        }
+        clasesDictadas.add(c);
+    }
 }
