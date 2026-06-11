@@ -2,9 +2,9 @@ package universidad.asignaturas;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
-import universidad.asignaturas.Asignatura;
 import universidad.clases.Clase;
 import universidad.inscripciones.Inscripcion;
+
 public class Curso implements Serializable {
     private static final long serialVersionUID = 1L;
     private String idCurso; 

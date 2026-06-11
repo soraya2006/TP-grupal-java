@@ -4,6 +4,7 @@ import universidad.alumnos.Alumno;
 import universidad.alumnos.CondicionAlumno;
 import universidad.ranking.RankingAsignatura;
 import universidad.asignaturas.Asignatura;
+import universidad.asignaturas.Curso;
 import universidad.clases.Clase;
 import universidad.inscripciones.Inscripcion;
 
@@ -13,9 +14,13 @@ import java.util.List;
 public class Universidad {
     private List<Alumno> alumnos;
     private List<Asignatura> asignaturas;
-    private List<Clase> clases;
-    private List<Inscripcion> inscripciones;
+    private List<Curso> cursos;
 
+    public Universidad() {
+        alumnos = new ArrayList<>();
+        asignaturas = new ArrayList<>();
+        cursos = new ArrayList<>();
+    }
     public void agregarAlumno(Alumno a) {
         boolean existe = false;
         int idx = 0;
@@ -33,7 +38,7 @@ public class Universidad {
         }
         alumnos.add(a);
     }
-
+ // -- empezar a corregir dsde aca
     public void agregarAsignatura(Asignatura a) {
         boolean existe = false;
         int idx = 0;
