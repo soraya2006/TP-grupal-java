@@ -76,7 +76,7 @@ public class Curso implements Serializable {
             if(inscripciones.get(i).getAlumno().equals(insc.getAlumno())){
                 existe = true;
             }
-            i++
+            i++;
         }
         if(existe){
             throw new IllegalArgumentException("El alumno ya se encuentra inscripto en este curso.");
