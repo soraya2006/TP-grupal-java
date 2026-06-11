@@ -77,7 +77,7 @@ public class Asignatura implements Serializable {
     public String toString() {
         return "[" + codigo + "] " + nombre + " - " + categoria;
     }
-    private double porcentajeHabilitacion() {
+    public double porcentajeHabilitacion() {
         double porcentajeRequerido = 0.0;
 
         switch (this.getCategoria()) {
@@ -98,7 +98,7 @@ public class Asignatura implements Serializable {
         return porcentajeRequerido;
     }
 
-    private double porcentajePromocion() {
+    public double porcentajePromocion() {
         double porcentajeRequerido = -1.0;
 
         switch (this.getCategoria()) {
