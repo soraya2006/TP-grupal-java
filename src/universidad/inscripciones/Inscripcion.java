@@ -52,8 +52,8 @@ public class Inscripcion implements Serializable {
         if (modalidad == ModalidadCursada.OYENTE) {
             condicionFinal = CondicionAlumno.LIBRE; 
         } else {
-            habilita = porcentajeHabilitacion();
-            promociona = porcentajePromocion();            
+            habilita = asignatura.porcentajeHabilitacion();
+            promociona = asignatura.porcentajePromocion();
             if (modalidad == ModalidadCursada.CONDICIONAL) {
                 habilita += 20.0; 
                 if (promociona != -1.0) {
