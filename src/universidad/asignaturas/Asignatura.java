@@ -77,46 +77,45 @@ public class Asignatura implements Serializable {
     public String toString() {
         return "[" + codigo + "] " + nombre + " - " + categoria;
     }
-}
+    private double porcentajeHabilitacion() {
+        double porcentajeRequerido = 0.0;
 
-private double porcentajeHabilitacion() {
-    double porcentajeRequerido = 0.0;
-
-    switch (asignatura.getCategoria()) {
-        case CategoriaAsignatura.OBLIGATORIA:
-            porcentajeRequerido = 60.0;
-            break;
-        case OPTATIVA:
-            porcentajeRequerido = 50.0;
-            break;
-        case PASANTIA:
-        case TESIS:
-            porcentajeRequerido = 75.0;
-            break;
-        default:
-            porcentajeRequerido = 0.0;
-            break;
+        switch (this.getCategoria()) {
+            case OBLIGATORIA:
+                porcentajeRequerido = 60.0;
+                break;
+            case OPTATIVA:
+                porcentajeRequerido = 50.0;
+                break;
+            case PASANTIA:
+            case TESIS:
+                porcentajeRequerido = 75.0;
+                break;
+            default:
+                porcentajeRequerido = 0.0;
+                break;
+        }
+        return porcentajeRequerido;
     }
-    return porcentajeRequerido;
-}
 
-private double porcentajePromocion() {
-    double porcentajeRequerido = -1.0;
+    private double porcentajePromocion() {
+        double porcentajeRequerido = -1.0;
 
-    switch (asignatura.getCategoria()) {
-        case OBLIGATORIA:
-            porcentajeRequerido = 80.0;
-            break;
-        case OPTATIVA:
-            porcentajeRequerido = 60.0;
-            break;
-        case PASANTIA:
-        case TESIS:
-            porcentajeRequerido = -1.0;
-            break;
-        default:
-            porcentajeRequerido = -1.0;
-            break;
+        switch (this.getCategoria()) {
+            case OBLIGATORIA:
+                porcentajeRequerido = 80.0;
+                break;
+            case OPTATIVA:
+                porcentajeRequerido = 60.0;
+                break;
+            case PASANTIA:
+            case TESIS:
+                porcentajeRequerido = -1.0;
+                break;
+            default:
+                porcentajeRequerido = -1.0;
+                break;
+        }
+        return porcentajeRequerido;
     }
-    return porcentajeRequerido;
 }
