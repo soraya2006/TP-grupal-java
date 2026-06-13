@@ -2,8 +2,11 @@ package universidad.alumnos;
 
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.io.Serial;
+import java.util.Objects;
 
 public class Alumno implements Comparable<Alumno>, Serializable {
+    @Serial
     private static final long serialVersionUID = 1L;
     private String matricula;
     private String apellido;
@@ -73,7 +76,26 @@ public class Alumno implements Comparable<Alumno>, Serializable {
         return this.nombre.compareToIgnoreCase(otro.nombre);
     }
     @Override
+    public boolean equals(Object o) {
+        if (this == o){
+            return true;
+        } else if (o == null || getClass() != o.getClass()) {
+            return false;
+        } else{
+            Alumno alumno = (Alumno) o;
+            if (this.matricula == null || alumno.matricula == null) {
+                return false;
+            } else {
+                return this.matricula.equalsIgnoreCase(alumno.matricula);
+            }
+        }
+    }
+    @Override
     public String toString() {
         return apellido + ", " + nombre + " (Matrícula: " + matricula + ")";
+    }
+    @Override
+    public int hashCode() {
+        return Objects.hash(matricula != null ? matricula.toLowerCase() : null);
     }
 }
