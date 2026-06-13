@@ -12,9 +12,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Universidad {
-    private List<Alumno> alumnos;
-    private List<Asignatura> asignaturas;
-    private List<Curso> cursos;
+    private final List<Alumno> alumnos;
+    private final List<Asignatura> asignaturas;
+    private final List<Curso> cursos;
 
     public Universidad() {
         alumnos = new ArrayList<>();
