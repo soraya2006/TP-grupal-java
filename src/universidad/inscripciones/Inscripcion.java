@@ -1,31 +1,54 @@
 package universidad.inscripciones;
 
 import java.io.Serializable;
-import java.util.ArrayList; 
+import java.util.ArrayList;
+import java.io.Serial;
 import universidad.alumnos.Alumno;
 import universidad.alumnos.CondicionAlumno; 
 import universidad.asignaturas.Asignatura;
 import universidad.asignaturas.ModalidadCursada;
 import universidad.asistencias.Asistencia;
 import universidad.clases.Clase;
+import universidad.asignaturas.Curso;
 
 public class Inscripcion implements Serializable {
+    @Serial
     private static final long serialVersionUID = 1L;
 
-    private Alumno alumno;
-    private Asignatura asignatura;
-    private ModalidadCursada modalidad;
-    private ArrayList<Asistencia> asistencias;
+    // son final porque, como se asignan una sola vez en el constructor y nunca cambia, protege la seguridad y blabla
+    private final Alumno alumno;
+    private final Curso curso;
+    private final ModalidadCursada modalidad;
+    private final ArrayList<Asistencia> asistencias;
 
-    public Inscripcion(Alumno alumno, Asignatura asignatura, ModalidadCursada modalidad) {
+    public Inscripcion(Alumno alumno, Curso curso, ModalidadCursada modalidad) {
+        if (alumno == null || curso == null || modalidad == null) {
+            throw new IllegalArgumentException("Ninguno de los parámetros puede ser nulo.");
+        }
         this.alumno = alumno;
-        this.asignatura = asignatura;
+        this.curso = curso; // Guardamos la referencia al curso
         this.modalidad = modalidad;
-        this.asistencias = new ArrayList<>(); 
+        this.asistencias = new ArrayList<>();
     }
 
     public void registrarAsistencia(Clase c, boolean presente) {
-        this.asistencias.add(new Asistencia(c, presente));
+        if (c == null) {
+            throw new IllegalArgumentException("La clase no puede ser nula.");
+        }
+        boolean asistenciaDuplicada = false;
+        int i = 0;
+        while (i < asistencias.size() && !asistenciaDuplicada) {
+            if (asistencias.get(i).getClase().getId().equalsIgnoreCase(c.getId())) {
+                asistenciaDuplicada = true;
+            }
+            i++;
+        }
+        if (asistenciaDuplicada) {
+            throw new IllegalArgumentException("Ya se encuentra registrada la asistencia del alumno para esta clase.");
+
+        } else {
+            this.asistencias.add(new Asistencia(c, presente));
+        }
     }
 
     public int cantidadPresentes() {
@@ -40,38 +63,36 @@ public class Inscripcion implements Serializable {
 
     public double calcularPorcentajeAsistencia() {
         double porcentaje = 0.0;
-        if (asistencias.size() != 0) {
+        if (!asistencias.isEmpty()) {
             porcentaje = (cantidadPresentes() * 100.0) / asistencias.size();
         }
         return porcentaje;
     }
 
     public CondicionAlumno obtenerCondicion() {
-        CondicionAlumno condicionFinal = CondicionAlumno.LIBRE;
-        double asistencia = calcularPorcentajeAsistencia(), habilita = 0.0, promociona = 0.0;
         if (modalidad == ModalidadCursada.OYENTE) {
-            condicionFinal = CondicionAlumno.LIBRE; 
-        } else {
-            habilita = asignatura.porcentajeHabilitacion();
-            promociona = asignatura.porcentajePromocion();
-            if (modalidad == ModalidadCursada.CONDICIONAL) {
-                habilita += 20.0; 
-                if (promociona != -1.0) {
-                    promociona += 20.0;
-                }
-            }   
-            if (asignatura.isPromocional() && promociona != -1.0 && asistencia >= promociona) {
-                condicionFinal = CondicionAlumno.PROMOCIONA;
-            } else if (asistencia >= habilita) {
-                condicionFinal = CondicionAlumno.HABILITA;
-            } else {
-                condicionFinal = CondicionAlumno.LIBRE;
+            return CondicionAlumno.LIBRE;
+        }
+        double asistencia = calcularPorcentajeAsistencia();
+        double habilita = curso.getAsignatura().porcentajeHabilitacion();
+        double promociona = curso.getAsignatura().porcentajePromocion();
+        if (modalidad == ModalidadCursada.CONDICIONAL) {
+            habilita += 20.0;
+            if (promociona != -1.0) {
+                promociona += 20.0;
             }
         }
-        return condicionFinal;
+        if (curso.getAsignatura().isPromocional() && promociona != -1.0 && asistencia >= promociona) {
+            return CondicionAlumno.PROMOCIONA;
+        } else if (asistencia >= habilita) {
+            return CondicionAlumno.HABILITA;
+        } else {
+            return CondicionAlumno.LIBRE;
+        }
     }
     public Alumno getAlumno() { return alumno; }
-    public Asignatura getAsignatura() { return asignatura; }
     public ModalidadCursada getModalidad() { return modalidad; }
+    public Asignatura getAsignatura() { return curso.getAsignatura(); }
+    public Curso getCurso() { return curso; }
     public ArrayList<Asistencia> getAsistencias() { return asistencias; }
 }

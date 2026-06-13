@@ -76,20 +76,34 @@ public class Universidad {
     }
 
     public void registrarAsistencia(Alumno alumno, Clase clase, Curso curso) {
+        if (alumno == null || clase == null || curso == null) {
+            throw new IllegalArgumentException("Ninguno de los parámetros puede ser nulo.");
+        }
+        boolean clasePerteneceAlCurso = false;
+        int j = 0;
+        List<Clase> clasesDelCurso = curso.getClasesDictadas();
+        while (j < clasesDelCurso.size() && !clasePerteneceAlCurso) {
+            if (clasesDelCurso.get(j).getId().equalsIgnoreCase(clase.getId())) {
+                clasePerteneceAlCurso = true;
+            }
+            j++;
+        }
+        if (!clasePerteneceAlCurso) {
+            throw new IllegalArgumentException("La clase especificada no pertenece a este curso.");
+        }
         boolean encontrado = false;
         Inscripcion inscripcionActual;
         int i = 0;
         List<Inscripcion> inscripcionesCurso = curso.getInscripciones();
-
         while (i < inscripcionesCurso.size() && !encontrado) {
             inscripcionActual = inscripcionesCurso.get(i);
             if (inscripcionActual.getAlumno().equals(alumno)) {
+                // Pasamos el control a Inscripcion, que ahora validará duplicados
                 inscripcionActual.registrarAsistencia(clase, true);
-                encontrado = true; 
+                encontrado = true;
             }
             i++;
         }
-        
         if (!encontrado) {
             throw new IllegalArgumentException("El alumno no está inscripto en este curso.");
         }
