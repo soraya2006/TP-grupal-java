@@ -7,12 +7,13 @@ import universidad.inscripciones.Inscripcion;
 
 public class Curso implements Serializable {
     private static final long serialVersionUID = 1L;
-    private String idCurso; 
+    private String idCurso;
     private Asignatura asignatura;
-    private int anioCalendario; 
-    private int cuatrimestreDictado; 
+    private int anioCalendario;
+    private int cuatrimestreDictado;
     private List<Clase> clasesDictadas;
     private List<Inscripcion> inscripciones;
+
     public Curso(String idCurso, Asignatura asignatura, int anioCalendario, int cuatrimestreDictado) {
         if (idCurso == null || idCurso.isBlank()) {
             throw new IllegalArgumentException("El ID del curso no puede estar vacío.");
@@ -23,36 +24,43 @@ public class Curso implements Serializable {
         if (cuatrimestreDictado < 1 || cuatrimestreDictado > 2) {
             throw new IllegalArgumentException("El cuatrimestre de dictado debe ser 1 o 2.");
         }
-        
+
         this.idCurso = idCurso;
         this.asignatura = asignatura;
         this.anioCalendario = anioCalendario;
         this.cuatrimestreDictado = cuatrimestreDictado;
         this.clasesDictadas = new ArrayList<>();
         this.inscripciones = new ArrayList<>();
-    } 
+    }
+
     public String getIdCurso() {
         return idCurso;
     }
+
     public Asignatura getAsignatura() {
         return asignatura;
     }
+
     public int getAnioCalendario() {
         return anioCalendario;
     }
+
     public int getCuatrimestreDictado() {
         return cuatrimestreDictado;
     }
+
     public List<Clase> getClasesDictadas() {
         return clasesDictadas;
     }
+
     public List<Inscripcion> getInscripciones() {
         return inscripciones;
     }
-    public void agregarClase(Clase c){
+
+    public void agregarClase(Clase c) {
         boolean existe = false;
         int i = 0;
-        if (c == null){
+        if (c == null) {
             throw new IllegalArgumentException("La clase no puede ser nula.");
         }
         while (i < clasesDictadas.size() && !existe) {
@@ -66,19 +74,24 @@ public class Curso implements Serializable {
         }
         clasesDictadas.add(c);
     }
-    public void agregarInscripcion(Inscripcion insc){
+
+    public void agregarInscripcion(Inscripcion insc) {
         boolean existe = false;
         int i = 0;
-        if (insc == null){
+        if (insc == null) {
             throw new IllegalArgumentException("La inscripción no puede ser nula.");
         }
-        while(i < inscripciones.size() && !existe){
-            if(inscripciones.get(i).getAlumno().equals(insc.getAlumno())){
+        if (insc.getCurso() != this) {
+            throw new IllegalArgumentException("Esta inscripción fue instanciada para otro curso.");
+        }
+
+        while (i < inscripciones.size() && !existe) {
+            if (inscripciones.get(i).getAlumno().equals(insc.getAlumno())) {
                 existe = true;
             }
             i++;
         }
-        if(existe){
+        if (existe) {
             throw new IllegalArgumentException("El alumno ya se encuentra inscripto en este curso.");
         }
         inscripciones.add(insc);
