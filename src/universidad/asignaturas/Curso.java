@@ -1,18 +1,20 @@
 package universidad.asignaturas;
 import java.io.Serializable;
+import java.io.Serial;
 import java.util.ArrayList;
 import java.util.List;
 import universidad.clases.Clase;
 import universidad.inscripciones.Inscripcion;
 
 public class Curso implements Serializable {
+    @Serial
     private static final long serialVersionUID = 1L;
-    private String idCurso;
-    private Asignatura asignatura;
-    private int anioCalendario;
-    private int cuatrimestreDictado;
-    private List<Clase> clasesDictadas;
-    private List<Inscripcion> inscripciones;
+    private final String idCurso;
+    private final Asignatura asignatura;
+    private final int anioCalendario;
+    private final int cuatrimestreDictado;
+    private final List<Clase> clasesDictadas;
+    private final List<Inscripcion> inscripciones;
 
     public Curso(String idCurso, Asignatura asignatura, int anioCalendario, int cuatrimestreDictado) {
         if (idCurso == null || idCurso.isBlank()) {

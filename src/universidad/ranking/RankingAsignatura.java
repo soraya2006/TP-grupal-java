@@ -3,8 +3,8 @@ import universidad.asignaturas.Asignatura;
 
 public class RankingAsignatura {
 
-        private Asignatura asignatura;
-        private double porcentaje;
+        private final Asignatura asignatura;
+        private final double porcentaje;
 
         public RankingAsignatura(Asignatura asignatura, double porcentaje) {
             this.asignatura = asignatura;

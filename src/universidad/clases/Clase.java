@@ -2,8 +2,10 @@ package universidad.clases;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.io.Serial;
 
 public class Clase implements Serializable {
+    @Serial
     private static final long serialVersionUID = 1L;
 
     private String id;
@@ -24,8 +26,11 @@ public class Clase implements Serializable {
         return id; 
     }
 
-    public void setId(String id) { 
-        this.id = id; 
+    public void setId(String id) {
+        if (id == null || id.isBlank()) {
+            throw new IllegalArgumentException("El ID de la clase no puede estar vacío");
+        }
+        this.id = id;
     }
 
     public LocalDateTime getFechaHora() { 

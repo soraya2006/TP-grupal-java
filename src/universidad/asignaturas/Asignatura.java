@@ -1,10 +1,11 @@
 package universidad.asignaturas;
 
 import java.io.Serializable;
+import java.io.Serial;
 
 public class Asignatura implements Serializable {
+    @Serial
     private static final long serialVersionUID = 1L;
-
     private String codigo;
     private String nombre;
     private int cuatrimestre;
@@ -78,44 +79,17 @@ public class Asignatura implements Serializable {
         return "[" + codigo + "] " + nombre + " - " + categoria;
     }
     public double porcentajeHabilitacion() {
-        double porcentajeRequerido = 0.0;
-
-        switch (this.getCategoria()) {
-            case OBLIGATORIA:
-                porcentajeRequerido = 60.0;
-                break;
-            case OPTATIVA:
-                porcentajeRequerido = 50.0;
-                break;
-            case PASANTIA:
-            case TESIS:
-                porcentajeRequerido = 75.0;
-                break;
-            default:
-                porcentajeRequerido = 0.0;
-                break;
-        }
-        return porcentajeRequerido;
+        return switch (this.getCategoria()) {
+            case OBLIGATORIA -> 60.0;
+            case OPTATIVA -> 50.0;
+            case PASANTIA, TESIS -> 75.0;
+        };
     }
-
     public double porcentajePromocion() {
-        double porcentajeRequerido = -1.0;
-
-        switch (this.getCategoria()) {
-            case OBLIGATORIA:
-                porcentajeRequerido = 80.0;
-                break;
-            case OPTATIVA:
-                porcentajeRequerido = 60.0;
-                break;
-            case PASANTIA:
-            case TESIS:
-                porcentajeRequerido = -1.0;
-                break;
-            default:
-                porcentajeRequerido = -1.0;
-                break;
-        }
-        return porcentajeRequerido;
+        return switch (this.getCategoria()) {
+            case OBLIGATORIA -> 80.0;
+            case OPTATIVA -> 60.0;
+            default -> -1.0; //el caso default cubre las otras categoría
+        };
     }
 }

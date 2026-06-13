@@ -1,9 +1,11 @@
 package universidad.asistencias;
 
+import java.io.Serial;
 import java.io.Serializable;
 import universidad.clases.Clase;
 
 public class Asistencia implements Serializable {
+    @Serial
     private static final long serialVersionUID = 1L;
     private Clase clase;
     private boolean presente;
