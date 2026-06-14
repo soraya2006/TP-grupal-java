@@ -32,7 +32,7 @@ public class Asignatura implements Serializable {
         this.promocional = promocional;
         this.categoria = categoria;
     }
-    public String getCodigo() { 
+    public String getCodigo() {
         return codigo; 
     }
     public void setCodigo(String codigo) { 
