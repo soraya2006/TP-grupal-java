@@ -13,6 +13,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Universidad {
+    @Serial
+    private static final long serialVersionUID = 1L;
     private final List<Alumno> alumnos;
     private final List<Asignatura> asignaturas;
     private final List<Curso> cursos;
@@ -22,7 +24,6 @@ public class Universidad {
         asignaturas = new ArrayList<>();
         cursos = new ArrayList<>();
     }
-
     public void agregarAlumno(Alumno a) {
         boolean existe = false;
         int idx = 0;
@@ -40,7 +41,6 @@ public class Universidad {
         }
         alumnos.add(a);
     }
-
     public void agregarAsignatura(Asignatura a) {
         boolean existe = false;
         int idx = 0;
@@ -58,7 +58,6 @@ public class Universidad {
         }
         asignaturas.add(a);
     }
-
     public void agregarCurso(Curso c) {
         boolean existe = false;
         int idx = 0;
@@ -76,7 +75,6 @@ public class Universidad {
         }
         cursos.add(c);
     }
-
     public void registrarAsistencia(Alumno alumno, Clase clase, Curso curso) {
         if (alumno == null || clase == null || curso == null) {
             throw new ParametroNuloException();
@@ -109,7 +107,6 @@ public class Universidad {
             throw new AlumnoNoInscriptoException("El alumno no está inscripto en este curso.");
         }
     }
-
     public List<RankingAsignatura> rankingPresentismo() {
         List<RankingAsignatura> ranking = new ArrayList<>();
         int totalAsistenciasPresentes, alumnosInscriptosEnCurso, totalClasesMaximasPosibles, clasesDictadasEnCurso;
@@ -137,7 +134,6 @@ public class Universidad {
         ranking.sort((x, y) -> Double.compare(y.getPorcentaje(), x.getPorcentaje()));
         return ranking;
     }
-
     public void reporteAsignatura(Curso curso) {
         for (Inscripcion i : curso.getInscripciones()) {
             System.out.println("Alumno: " + i.getAlumno());
@@ -148,7 +144,6 @@ public class Universidad {
             System.out.println("----------------------------------------");
         }
     }
-
     public void alumnosLibres() {
         for (Curso c : cursos) {
             for (Inscripcion i : c.getInscripciones()) {
@@ -158,7 +153,6 @@ public class Universidad {
             }
         }
     }
-
     public void alumnosLibres(int anio) {
         for (Curso c : cursos) {
             if (c.getAnioCalendario() == anio) {
