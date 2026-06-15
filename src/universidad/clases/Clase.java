@@ -3,6 +3,7 @@ package universidad.clases;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.io.Serial;
+import universidad.excepciones.*;
 
 public class Clase implements Serializable {
     @Serial
@@ -13,10 +14,10 @@ public class Clase implements Serializable {
 
     public Clase(String id, LocalDateTime fechaHora) {
         if (id == null || id.isBlank()) {
-            throw new IllegalArgumentException("El ID de la clase no puede estar vacío");
+            throw new ParametroNuloException("El ID de la clase no puede estar vacío");
         }
         if (fechaHora == null) {
-            throw new IllegalArgumentException("La fecha y hora de la clase no pueden ser nulas");
+            throw new ParametroNuloException("La fecha y hora de la clase no pueden ser nulas");
         }
         this.id = id;
         this.fechaHora = fechaHora;
@@ -28,7 +29,7 @@ public class Clase implements Serializable {
 
     public void setId(String id) {
         if (id == null || id.isBlank()) {
-            throw new IllegalArgumentException("El ID de la clase no puede estar vacío");
+            throw new ParametroNuloException("El ID de la clase no puede estar vacío");
         }
         this.id = id;
     }

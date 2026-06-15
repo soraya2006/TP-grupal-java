@@ -10,6 +10,7 @@ import universidad.asignaturas.ModalidadCursada;
 import universidad.asistencias.Asistencia;
 import universidad.clases.Clase;
 import universidad.asignaturas.Curso;
+import universidad.excepciones.*;
 
 public class Inscripcion implements Serializable {
     @Serial
@@ -23,7 +24,7 @@ public class Inscripcion implements Serializable {
 
     public Inscripcion(Alumno alumno, Curso curso, ModalidadCursada modalidad) {
         if (alumno == null || curso == null || modalidad == null) {
-            throw new IllegalArgumentException("Ninguno de los parámetros puede ser nulo.");
+            throw new ParametroNuloException();
         }
         this.alumno = alumno;
         this.curso = curso; // Guardamos la referencia al curso
@@ -33,7 +34,7 @@ public class Inscripcion implements Serializable {
 
     public void registrarAsistencia(Clase c, boolean presente) {
         if (c == null) {
-            throw new IllegalArgumentException("La clase no puede ser nula.");
+            throw new ParametroNuloException("La clase a registrar no puede ser nula.");
         }
         boolean asistenciaDuplicada = false;
         int i = 0;
@@ -44,7 +45,7 @@ public class Inscripcion implements Serializable {
             i++;
         }
         if (asistenciaDuplicada) {
-            throw new IllegalArgumentException("Ya se encuentra registrada la asistencia del alumno para esta clase.");
+            throw new AsistenciaYaRegistradaException();
 
         } else {
             this.asistencias.add(new Asistencia(c, presente));

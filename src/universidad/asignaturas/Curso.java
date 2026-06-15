@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 import universidad.clases.Clase;
 import universidad.inscripciones.Inscripcion;
+import universidad.excepciones.*;
 
 public class Curso implements Serializable {
     @Serial
@@ -18,15 +19,14 @@ public class Curso implements Serializable {
 
     public Curso(String idCurso, Asignatura asignatura, int anioCalendario, int cuatrimestreDictado) {
         if (idCurso == null || idCurso.isBlank()) {
-            throw new IllegalArgumentException("El ID del curso no puede estar vacío.");
+            throw new ParametroNuloException("El ID del curso no puede estar vacío.");
         }
         if (asignatura == null) {
-            throw new IllegalArgumentException("La asignatura asociada no puede ser nula.");
+            throw new ParametroNuloException("La asignatura asociada no puede ser nula.");
         }
         if (cuatrimestreDictado < 1 || cuatrimestreDictado > 2) {
-            throw new IllegalArgumentException("El cuatrimestre de dictado debe ser 1 o 2.");
+            throw new DatoInvalido("Cuatrimestre invalido. El cuatrimestre de dictado debe ser 1 o 2.");
         }
-
         this.idCurso = idCurso;
         this.asignatura = asignatura;
         this.anioCalendario = anioCalendario;
@@ -63,7 +63,7 @@ public class Curso implements Serializable {
         boolean existe = false;
         int i = 0;
         if (c == null) {
-            throw new IllegalArgumentException("La clase no puede ser nula.");
+            throw new ParametroNuloException("La clase no puede ser nula.");
         }
         while (i < clasesDictadas.size() && !existe) {
             if (clasesDictadas.get(i).getId().equalsIgnoreCase(c.getId())) {
@@ -72,7 +72,7 @@ public class Curso implements Serializable {
             i++;
         }
         if (existe) {
-            throw new IllegalArgumentException("La clase con ese ID ya está registrada en este curso.");
+            throw new IllegalArgumentException();
         }
         clasesDictadas.add(c);
     }
@@ -94,7 +94,7 @@ public class Curso implements Serializable {
             i++;
         }
         if (existe) {
-            throw new IllegalArgumentException("El alumno ya se encuentra inscripto en este curso.");
+            throw new AlumnoDuplicadoException();
         }
         inscripciones.add(insc);
     }

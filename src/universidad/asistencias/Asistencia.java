@@ -3,6 +3,7 @@ package universidad.asistencias;
 import java.io.Serial;
 import java.io.Serializable;
 import universidad.clases.Clase;
+import universidad.excepciones.*;
 
 public class Asistencia implements Serializable {
     @Serial
@@ -12,7 +13,7 @@ public class Asistencia implements Serializable {
 
     public Asistencia(Clase clase, boolean presente) {
         if (clase == null) {
-            throw new IllegalArgumentException("La clase asociada a la asistencia no puede ser nula");
+            throw new ParametroNuloException("La clase asociada a la asistencia no puede ser nula");
         }
         this.clase = clase;
         this.presente = presente;
@@ -22,7 +23,7 @@ public class Asistencia implements Serializable {
     }
     public void setClase(Clase clase) { 
         if (clase == null) {
-            throw new IllegalArgumentException("La clase asociada a la asistencia no puede ser nula");
+            throw new ParametroNuloException("La clase asociada a la asistencia no puede ser nula");
         }
         this.clase = clase; 
     }

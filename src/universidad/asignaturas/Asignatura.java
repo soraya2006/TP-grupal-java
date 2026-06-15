@@ -2,6 +2,7 @@ package universidad.asignaturas;
 
 import java.io.Serializable;
 import java.io.Serial;
+import universidad.excepciones.*;
 
 public class Asignatura implements Serializable {
     @Serial
@@ -14,16 +15,16 @@ public class Asignatura implements Serializable {
 
     public Asignatura(String codigo, String nombre, int cuatrimestre, boolean promocional, CategoriaAsignatura categoria) {
         if (cuatrimestre < 1 || cuatrimestre > 10) {
-            throw new IllegalArgumentException("Cuatrimestre inválido");
+            throw new DatoInvalido("Cuatrimestre inválido");
         }
         if (codigo == null || codigo.isBlank()) {
-            throw new IllegalArgumentException("El código de la asignatura no puede estar vacío");
+            throw new ParametroNuloException("El código de la asignatura no puede estar vacío");
         }
         if (nombre == null || nombre.isBlank()) {
-            throw new IllegalArgumentException("El nombre de la asignatura no puede estar vacío");
+            throw new ParametroNuloException("El nombre de la asignatura no puede estar vacío");
         }
         if (categoria == null) {
-            throw new IllegalArgumentException("La categoría de la asignatura no puede ser nula");
+            throw new ParametroNuloException("La categoría de la asignatura no puede ser nula");
         }
         
         this.codigo = codigo;
@@ -37,7 +38,7 @@ public class Asignatura implements Serializable {
     }
     public void setCodigo(String codigo) { 
         if (codigo == null || codigo.isBlank()) {
-            throw new IllegalArgumentException("El código no puede estar vacío");
+            throw new ParametroNuloException("El código no puede estar vacío");
         }
         this.codigo = codigo; 
     }
@@ -46,7 +47,7 @@ public class Asignatura implements Serializable {
     }
     public void setNombre(String nombre) { 
         if (nombre == null || nombre.isBlank()) {
-            throw new IllegalArgumentException("El nombre no puede estar vacío");
+            throw new ParametroNuloException("El nombre no puede estar vacío");
         }
         this.nombre = nombre; 
     }
@@ -55,7 +56,7 @@ public class Asignatura implements Serializable {
     }
     public void setCuatrimestre(int cuatrimestre) { 
         if (cuatrimestre < 1 || cuatrimestre > 10) {
-            throw new IllegalArgumentException("Cuatrimestre inválido");
+            throw new DatoInvalido("Cuatrimestre inválido");
         }
         this.cuatrimestre = cuatrimestre; 
     }

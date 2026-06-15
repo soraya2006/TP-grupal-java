@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.time.LocalDate;
 import java.io.Serial;
 import java.util.Objects;
+import universidad.excepciones.*;
 
 public class Alumno implements Comparable<Alumno>, Serializable {
     @Serial
@@ -15,16 +16,16 @@ public class Alumno implements Comparable<Alumno>, Serializable {
 
     public Alumno(String matricula, String apellido, String nombre, LocalDate fechaNacimiento) {
         if (matricula == null || matricula.isBlank()) {
-            throw new IllegalArgumentException("La matrícula no puede estar vacía");
+            throw new ParametroNuloException("La matrícula no puede estar vacía");
         }
         if (apellido == null || apellido.isBlank()) {
-            throw new IllegalArgumentException("El apellido no puede estar vacío");
+            throw new ParametroNuloException("El apellido no puede estar vacío");
         }
         if (nombre == null || nombre.isBlank()) {
-            throw new IllegalArgumentException("El nombre no puede estar vacío");
+            throw new ParametroNuloException("El nombre no puede estar vacío");
         }
         if (fechaNacimiento == null) {
-            throw new IllegalArgumentException("La fecha de nacimiento no puede ser nula");
+            throw new ParametroNuloException("La fecha de nacimiento no puede ser nula");
         }   
         this.matricula = matricula;
         this.apellido = apellido;
@@ -36,7 +37,7 @@ public class Alumno implements Comparable<Alumno>, Serializable {
     }
     public void setMatricula(String matricula) { 
         if (matricula == null || matricula.isBlank()) {
-            throw new IllegalArgumentException("La matrícula no puede estar vacía");
+            throw new ParametroNuloException("La matrícula no puede estar vacía");
         }
         this.matricula = matricula; 
     }
@@ -45,7 +46,7 @@ public class Alumno implements Comparable<Alumno>, Serializable {
     }
     public void setApellido(String apellido) { 
         if (apellido == null || apellido.isBlank()) {
-            throw new IllegalArgumentException("El apellido no puede estar vacío");
+            throw new ParametroNuloException("El apellido no puede estar vacío");
         }
         this.apellido = apellido; 
     }
@@ -54,7 +55,7 @@ public class Alumno implements Comparable<Alumno>, Serializable {
     }
     public void setNombre(String nombre) { 
         if (nombre == null || nombre.isBlank()) {
-            throw new IllegalArgumentException("El nombre no puede estar vacío");
+            throw new ParametroNuloException("El nombre no puede estar vacío");
         }
         this.nombre = nombre; 
     }
@@ -63,7 +64,7 @@ public class Alumno implements Comparable<Alumno>, Serializable {
     }
     public void setFechaNacimiento(LocalDate fechaNacimiento) { 
         if (fechaNacimiento == null) {
-            throw new IllegalArgumentException("La fecha de nacimiento no puede ser nula");
+            throw new ParametroNuloException("La fecha de nacimiento no puede ser nula");
         }
         this.fechaNacimiento = fechaNacimiento; 
     }

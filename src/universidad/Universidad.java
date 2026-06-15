@@ -7,6 +7,7 @@ import universidad.asignaturas.Asignatura;
 import universidad.asignaturas.Curso;
 import universidad.clases.Clase;
 import universidad.inscripciones.Inscripcion;
+import universidad.excepciones.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,7 +26,7 @@ public class Universidad {
         boolean existe = false;
         int idx = 0;
         if (a == null) {
-            throw new IllegalArgumentException("El alumno no puede ser nulo.");
+            throw new ParametroNuloException("El alumno a agregar no puede ser nulo.");
         }
         while (idx < alumnos.size() && !existe) {
             if (alumnos.get(idx).getMatricula().equalsIgnoreCase(a.getMatricula())) {
@@ -34,7 +35,7 @@ public class Universidad {
             idx++;
         }
         if (existe) {
-            throw new IllegalArgumentException("Ya existe un alumno con esa matrícula.");
+            throw new AlumnoDuplicadoException();
         }
         alumnos.add(a);
     }
@@ -43,7 +44,7 @@ public class Universidad {
         boolean existe = false;
         int idx = 0;
         if (a == null) {
-            throw new IllegalArgumentException("La asignatura no puede ser nula.");
+            throw new ParametroNuloException("La asignatura a agregar no puede ser nula.");
         }
         while (idx < asignaturas.size() && !existe) {
             if (asignaturas.get(idx).getCodigo().equalsIgnoreCase(a.getCodigo())) {
@@ -52,7 +53,7 @@ public class Universidad {
             idx++;
         }
         if (existe) {
-            throw new IllegalArgumentException("Ya existe una asignatura con ese código.");
+            throw new AsignaturaDuplicadaException();
         }
         asignaturas.add(a);
     }
@@ -61,7 +62,7 @@ public class Universidad {
         boolean existe = false;
         int idx = 0;
         if (c == null) {
-            throw new IllegalArgumentException("El curso no puede ser nulo.");
+            throw new ParametroNuloException("El curso a agregar no puede ser nulo.");
         }
         while (idx < cursos.size() && !existe) {
             if (cursos.get(idx).getIdCurso().equalsIgnoreCase(c.getIdCurso())) {
@@ -70,14 +71,14 @@ public class Universidad {
             idx++;
         }
         if (existe) {
-            throw new IllegalArgumentException("Ya existe un curso registrado con ese ID.");
+            throw new CursoDuplicadoException();
         }
         cursos.add(c);
     }
 
     public void registrarAsistencia(Alumno alumno, Clase clase, Curso curso) {
         if (alumno == null || clase == null || curso == null) {
-            throw new IllegalArgumentException("Ninguno de los parámetros puede ser nulo.");
+            throw new ParametroNuloException();
         }
         boolean clasePerteneceAlCurso = false;
         int j = 0;
@@ -89,7 +90,7 @@ public class Universidad {
             j++;
         }
         if (!clasePerteneceAlCurso) {
-            throw new IllegalArgumentException("La clase especificada no pertenece a este curso.");
+            throw new ClaseNoDictadaException("La clase especificada no pertenece a este curso.");
         }
         boolean encontrado = false;
         Inscripcion inscripcionActual;
@@ -98,17 +99,15 @@ public class Universidad {
         while (i < inscripcionesCurso.size() && !encontrado) {
             inscripcionActual = inscripcionesCurso.get(i);
             if (inscripcionActual.getAlumno().equals(alumno)) {
-                // Pasamos el control a Inscripcion, que ahora validará duplicados
                 inscripcionActual.registrarAsistencia(clase, true);
                 encontrado = true;
             }
             i++;
         }
         if (!encontrado) {
-            throw new IllegalArgumentException("El alumno no está inscripto en este curso.");
+            throw new AlumnoNoInscriptoException("El alumno no está inscripto en este curso.");
         }
     }
-
     public List<RankingAsignatura> rankingPresentismo() {
         List<RankingAsignatura> ranking = new ArrayList<>();
         int totalAsistenciasPresentes,alumnosInscriptosEnCurso, totalClasesMaximasPosibles, clasesDictadasEnCurso;
@@ -132,8 +131,8 @@ public class Universidad {
             }
             ranking.add(new RankingAsignatura(a, porcentaje));
         }
-        
-        ranking.sort((x, y) -> Double.compare(y.getPorcentaje(), x.getPorcentaje()));    
+
+        ranking.sort((x, y) -> Double.compare(y.getPorcentaje(), x.getPorcentaje()));
         return ranking;
     }
 
@@ -167,6 +166,3 @@ public class Universidad {
                     }
                 }
             }
-        }
-    }
-}
