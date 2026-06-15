@@ -22,6 +22,7 @@ public class Universidad {
         asignaturas = new ArrayList<>();
         cursos = new ArrayList<>();
     }
+
     public void agregarAlumno(Alumno a) {
         boolean existe = false;
         int idx = 0;
@@ -108,9 +109,10 @@ public class Universidad {
             throw new AlumnoNoInscriptoException("El alumno no está inscripto en este curso.");
         }
     }
+
     public List<RankingAsignatura> rankingPresentismo() {
         List<RankingAsignatura> ranking = new ArrayList<>();
-        int totalAsistenciasPresentes,alumnosInscriptosEnCurso, totalClasesMaximasPosibles, clasesDictadasEnCurso;
+        int totalAsistenciasPresentes, alumnosInscriptosEnCurso, totalClasesMaximasPosibles, clasesDictadasEnCurso;
         double porcentaje;
         for (Asignatura a : asignaturas) {
             totalAsistenciasPresentes = 0;
@@ -166,3 +168,6 @@ public class Universidad {
                     }
                 }
             }
+        }
+    }
+}

@@ -25,7 +25,7 @@ public class Curso implements Serializable {
             throw new ParametroNuloException("La asignatura asociada no puede ser nula.");
         }
         if (cuatrimestreDictado < 1 || cuatrimestreDictado > 2) {
-            throw new DatoInvalido("Cuatrimestre invalido. El cuatrimestre de dictado debe ser 1 o 2.");
+            throw new DatoInvalidoException("Cuatrimestre invalido. El cuatrimestre de dictado debe ser 1 o 2.");
         }
         this.idCurso = idCurso;
         this.asignatura = asignatura;
@@ -81,10 +81,10 @@ public class Curso implements Serializable {
         boolean existe = false;
         int i = 0;
         if (insc == null) {
-            throw new IllegalArgumentException("La inscripción no puede ser nula.");
+            throw new ParametroNuloException("La inscripción no puede ser nula.");
         }
         if (insc.getCurso() != this) {
-            throw new IllegalArgumentException("Esta inscripción fue instanciada para otro curso.");
+            throw new InscripcionDuplicada();
         }
 
         while (i < inscripciones.size() && !existe) {

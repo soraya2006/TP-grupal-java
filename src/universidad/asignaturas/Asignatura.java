@@ -15,7 +15,7 @@ public class Asignatura implements Serializable {
 
     public Asignatura(String codigo, String nombre, int cuatrimestre, boolean promocional, CategoriaAsignatura categoria) {
         if (cuatrimestre < 1 || cuatrimestre > 10) {
-            throw new DatoInvalido("Cuatrimestre inválido");
+            throw new DatoInvalidoException("Cuatrimestre inválido");
         }
         if (codigo == null || codigo.isBlank()) {
             throw new ParametroNuloException("El código de la asignatura no puede estar vacío");
@@ -56,7 +56,7 @@ public class Asignatura implements Serializable {
     }
     public void setCuatrimestre(int cuatrimestre) { 
         if (cuatrimestre < 1 || cuatrimestre > 10) {
-            throw new DatoInvalido("Cuatrimestre inválido");
+            throw new DatoInvalidoException("Cuatrimestre inválido");
         }
         this.cuatrimestre = cuatrimestre; 
     }
@@ -71,7 +71,7 @@ public class Asignatura implements Serializable {
     }
     public void setCategoria(CategoriaAsignatura categoria) { 
         if (categoria == null) {
-            throw new IllegalArgumentException("La categoría no puede ser nula");
+            throw new ParametroNuloException("La categoría no puede ser nula");
         }
         this.categoria = categoria; 
     }
