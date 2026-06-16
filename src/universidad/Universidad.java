@@ -92,12 +92,13 @@ public class Universidad implements Serializable {
         cursos.add(c);
     }
     /**
-     * Registra la asistencia de un alumno en un día de clases específico.
-     * * @param alumno El estudiante al que se le toma asistencia.
-     * @param clase  El día y horario de la clase.
-     * @param curso  La comisión donde se dictó la clase.
+     * Registra la asistencia (o inasistencia) de un alumno en un día de clases específico.
+     * @param alumno   El estudiante al que se le toma asistencia.
+     * @param clase    El día y horario de la clase.
+     * @param curso    La comisión donde se dictó la clase.
+     * @param presente Verdadero si vino, falso si faltó.
      */
-    public void registrarAsistencia(Alumno alumno, Clase clase, Curso curso) {
+    public void registrarAsistencia(Alumno alumno, Clase clase, Curso curso, boolean presente) {
         if (alumno == null || clase == null || curso == null) {
             throw new ParametroNuloException();
         }
@@ -120,7 +121,7 @@ public class Universidad implements Serializable {
         while (i < inscripcionesCurso.size() && !encontrado) {
             inscripcionActual = inscripcionesCurso.get(i);
             if (inscripcionActual.getAlumno().equals(alumno)) {
-                inscripcionActual.registrarAsistencia(clase, true);
+                inscripcionActual.registrarAsistencia(clase, presente); // corregi esto, entonces pasamos la variable "presente" en ujar de un "true" fijo
                 encontrado = true;
             }
             i++;

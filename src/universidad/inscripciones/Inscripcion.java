@@ -76,7 +76,7 @@ public class Inscripcion implements Serializable {
 
     public double calcularPorcentajeAsistencia() {
         double porcentaje = 0.0;
-        if (!asistencias.isEmpty()) {
+        if (!curso.getClasesDictadas().isEmpty()) {
             porcentaje = (cantidadPresentes() * 100.0) / curso.getClasesDictadas().size();
         }
         return porcentaje;
