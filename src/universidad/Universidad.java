@@ -3,16 +3,18 @@ package universidad;
 import universidad.alumnos.Alumno;
 import universidad.alumnos.CondicionAlumno;
 import universidad.ranking.RankingAsignatura;
+import universidad.asistencias.Asistencia;
 import universidad.asignaturas.Asignatura;
 import universidad.asignaturas.Curso;
 import universidad.clases.Clase;
 import universidad.inscripciones.Inscripcion;
 import universidad.excepciones.*;
-
+import java.io.Serial;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Universidad {
+public class Universidad implements Serializable {
     @Serial
     private static final long serialVersionUID = 1L;
     private final List<Alumno> alumnos;
@@ -24,22 +26,22 @@ public class Universidad {
         asignaturas = new ArrayList<>();
         cursos = new ArrayList<>();
     }
-    public void agregarAlumno(Alumno a) {
-        boolean existe = false;
-        int idx = 0;
+    public void agregarAlumno(Alumno a) { // agrega al alumno de forma ordenada
         if (a == null) {
             throw new ParametroNuloException("El alumno a agregar no puede ser nulo.");
         }
-        while (idx < alumnos.size() && !existe) {
+
+        int idx = 0;
+        while (idx < alumnos.size()) {
             if (alumnos.get(idx).getMatricula().equalsIgnoreCase(a.getMatricula())) {
-                existe = true;
+                throw new AlumnoDuplicadoException();
+            }
+            if (alumnos.get(idx).compareTo(a) > 0) {
+                break; // encontramos la posición correcta
             }
             idx++;
         }
-        if (existe) {
-            throw new AlumnoDuplicadoException();
-        }
-        alumnos.add(a);
+        alumnos.add(idx, a);
     }
     public void agregarAsignatura(Asignatura a) {
         boolean existe = false;
@@ -134,14 +136,42 @@ public class Universidad {
         ranking.sort((x, y) -> Double.compare(y.getPorcentaje(), x.getPorcentaje()));
         return ranking;
     }
-    public void reporteAsignatura(Curso curso) {
-        for (Inscripcion i : curso.getInscripciones()) {
-            System.out.println("Alumno: " + i.getAlumno());
-            System.out.println("Asistencias: " + i.cantidadPresentes());
-            System.out.println("Porcentaje: " + i.calcularPorcentajeAsistencia() + "%");
-            System.out.println("Modalidad: " + i.getModalidad());
-            System.out.println("Condición: " + i.obtenerCondicion());
-            System.out.println("----------------------------------------");
+    public void reporteAsignatura(Asignatura asignatura) {
+        if (asignatura == null) {
+            throw new ParametroNuloException("La asignatura no puede ser nula.");
+        }
+
+        boolean tieneCursos = false;
+
+        for (Curso c : cursos) {
+            if (c.getAsignatura().equals(asignatura)) {
+                tieneCursos = true;
+
+                System.out.println("========================================");
+                System.out.println("Curso: " + c.getIdCurso()
+                        + " | Año: " + c.getAnioCalendario()
+                        + " | Cuatrimestre: " + c.getCuatrimestreDictado());
+                System.out.println("Clases dictadas: " + c.getClasesDictadas().size());
+                System.out.println("========================================");
+
+                for (Inscripcion i : c.getInscripciones()) {
+                    System.out.println("Alumno:     " + i.getAlumno());
+                    System.out.println("Modalidad:  " + i.getModalidad());
+                    System.out.println("Presentes:  " + i.cantidadPresentes()
+                            + " / " + c.getClasesDictadas().size());
+                    System.out.println("Porcentaje: " + i.calcularPorcentajeAsistencia() + "%");
+                    System.out.println("Condición:  " + i.obtenerCondicion());
+                    System.out.println("Asistencias detalladas:");
+                    for (Asistencia a : i.getAsistencias()) {
+                        System.out.println("  " + a);
+                    }
+                    System.out.println("----------------------------------------");
+                }
+            }
+        }
+
+        if (!tieneCursos) {
+            System.out.println("No hay cursos registrados para la asignatura: " + asignatura.getNombre());
         }
     }
     public void alumnosLibres() {

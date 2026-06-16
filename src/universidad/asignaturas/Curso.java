@@ -72,7 +72,7 @@ public class Curso implements Serializable {
             i++;
         }
         if (existe) {
-            throw new IllegalArgumentException();
+            throw new ClaseDuplicadaException();
         }
         clasesDictadas.add(c);
     }

@@ -17,8 +17,7 @@ public class RankingAsignatura {
 
         @Override
         public String toString() {
-            return asignatura.getNombre() +
-                    " -> " + porcentaje + "%";
+            return asignatura.getNombre() + " -> " + porcentaje + "%";
         }
 }
 

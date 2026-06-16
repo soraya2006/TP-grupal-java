@@ -65,7 +65,7 @@ public class Inscripcion implements Serializable {
     public double calcularPorcentajeAsistencia() {
         double porcentaje = 0.0;
         if (!asistencias.isEmpty()) {
-            porcentaje = (cantidadPresentes() * 100.0) / asistencias.size();
+            porcentaje = (cantidadPresentes() * 100.0) / curso.getClasesDictadas().size();
         }
         return porcentaje;
     }
@@ -83,7 +83,7 @@ public class Inscripcion implements Serializable {
                 promociona += 20.0;
             }
         }
-        if (curso.getAsignatura().isPromocional() && promociona != -1.0 && asistencia >= promociona) {
+        if (promociona != -1.0 && asistencia >= promociona) {
             return CondicionAlumno.PROMOCIONA;
         } else if (asistencia >= habilita) {
             return CondicionAlumno.HABILITA;
