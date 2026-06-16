@@ -93,7 +93,7 @@ public class Alumno implements Comparable<Alumno>, Serializable {
     }
     @Override
     public String toString() {
-        return apellido + ", " + nombre + " (Matrícula: " + matricula + ")";
+        return getApellido() + ", " + getNombre() + " (Matrícula: " + getMatricula() + ")";
     }
     @Override
     public int hashCode() {
