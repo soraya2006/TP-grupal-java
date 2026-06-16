@@ -13,6 +13,8 @@ import java.io.Serial;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
+import java.util.TreeSet;
 //JAVADOCS
 /**
  * Clase principal que administra todo el sistema de la universidad.
@@ -21,12 +23,12 @@ import java.util.List;
 public class Universidad implements Serializable {
     @Serial
     private static final long serialVersionUID = 1L;
-    private final List<Alumno> alumnos;
+    private final Set<Alumno> alumnos;
     private final List<Asignatura> asignaturas;
     private final List<Curso> cursos;
 
     public Universidad() {
-        alumnos = new ArrayList<>();
+        alumnos = new TreeSet<>();
         asignaturas = new ArrayList<>();
         cursos = new ArrayList<>();
     }
@@ -40,18 +42,12 @@ public class Universidad implements Serializable {
         if (a == null) {
             throw new ParametroNuloException("El alumno a agregar no puede ser nulo.");
         }
-
-        int idx = 0;
-        while (idx < alumnos.size()) {
-            if (alumnos.get(idx).getMatricula().equalsIgnoreCase(a.getMatricula())) {
+        for (Alumno existente : alumnos) {
+            if (existente.getMatricula().equalsIgnoreCase(a.getMatricula())) {
                 throw new AlumnoDuplicadoException();
             }
-            if (alumnos.get(idx).compareTo(a) > 0) {
-                break; // encontramos la posición correcta
-            }
-            idx++;
         }
-        alumnos.add(idx, a);
+        alumnos.add(a);
     }
     /**
      * Guarda una nueva materia en el sistema.

@@ -73,6 +73,6 @@ public abstract class Asignatura implements Serializable {
         return "[" + codigo + "] " + nombre + " - " + this.getClass().getSimpleName();
     }
 
-    public abstract double porcentajeHabilitacion();
-    public abstract double porcentajePromocion();
+    public abstract double porcentajeHabilitacion(); // abstracta
+    public abstract double porcentajePromocion(); // abstracta
 }
