@@ -13,7 +13,12 @@ public class Alumno implements Comparable<Alumno>, Serializable {
     private String apellido;
     private String nombre;
     private LocalDate fechaNacimiento;
-
+    /**
+     * Registra un nuevo alumno.
+     * @param matricula El DNI o número de legajo único del alumno.
+     * @param nombre    El nombre de pila.
+     * @param apellido  El apellido.
+     */
     public Alumno(String matricula, String apellido, String nombre, LocalDate fechaNacimiento) {
         if (matricula == null || matricula.isBlank()) {
             throw new ParametroNuloException("La matrícula no puede estar vacía");

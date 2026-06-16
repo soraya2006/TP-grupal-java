@@ -8,10 +8,14 @@ import universidad.excepciones.*;
 public class Clase implements Serializable {
     @Serial
     private static final long serialVersionUID = 1L;
-
     private String id;
     private LocalDateTime fechaHora;
-
+    /**
+     * Crea un nuevo día de clases.
+     * @param id    Un código único para esta clase.
+     * @param fecha La fecha en la que se dio la clase.
+     * @param hora  El horario en el que empezó.
+     */
     public Clase(String id, LocalDateTime fechaHora) {
         if (id == null || id.isBlank()) {
             throw new ParametroNuloException("El ID de la clase no puede estar vacío");

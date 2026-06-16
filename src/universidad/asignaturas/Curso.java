@@ -6,7 +6,10 @@ import java.util.List;
 import universidad.clases.Clase;
 import universidad.inscripciones.Inscripcion;
 import universidad.excepciones.*;
-
+/**
+ * Representa una comisión de una materia en un año específico.
+ * Acá se guardan las clases que dio el profesor y los alumnos anotados.
+ */
 public class Curso implements Serializable {
     @Serial
     private static final long serialVersionUID = 1L;
@@ -16,7 +19,12 @@ public class Curso implements Serializable {
     private final int cuatrimestreDictado;
     private final List<Clase> clasesDictadas;
     private final List<Inscripcion> inscripciones;
-
+    /**
+     * Abre un nuevo curso para una materia.
+     * * @param idCurso        El código de esta comisión (ej: "COM-01").
+     * @param asignatura     La materia a la que pertenece este curso.
+     * @param anioCalendario El año en que se dicta (ej: 2026).
+     */
     public Curso(String idCurso, Asignatura asignatura, int anioCalendario, int cuatrimestreDictado) {
         if (idCurso == null || idCurso.isBlank()) {
             throw new ParametroNuloException("El ID del curso no puede estar vacío.");

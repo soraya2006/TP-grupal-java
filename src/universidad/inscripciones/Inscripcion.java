@@ -11,7 +11,10 @@ import universidad.asistencias.Asistencia;
 import universidad.clases.Clase;
 import universidad.asignaturas.Curso;
 import universidad.excepciones.*;
-
+/**
+ * Es la ficha personal de un alumno dentro de un curso.
+ * Acá se anota su modalidad (regular, oyente) y se guarda su lista de presentes y ausentes.
+ */
 public class Inscripcion implements Serializable {
     @Serial
     private static final long serialVersionUID = 1L;
@@ -21,7 +24,12 @@ public class Inscripcion implements Serializable {
     private final Curso curso;
     private final ModalidadCursada modalidad;
     private final ArrayList<Asistencia> asistencias;
-
+    /**
+     * Anota a un alumno en un curso.
+     * @param alumno    El estudiante que se quiere anotar.
+     * @param curso     El curso al que va a asistir.
+     * @param modalidad Si cursa de forma regular, condicional u oyente.
+     */
     public Inscripcion(Alumno alumno, Curso curso, ModalidadCursada modalidad) {
         if (alumno == null || curso == null || modalidad == null) {
             throw new ParametroNuloException();
@@ -31,7 +39,11 @@ public class Inscripcion implements Serializable {
         this.modalidad = modalidad;
         this.asistencias = new ArrayList<>();
     }
-
+    /**
+     * Marca si el alumno vino o faltó a una clase.
+     * @param c        La clase que se dictó.
+     * @param presente Verdadero si vino, falso si faltó.
+     */
     public void registrarAsistencia(Clase c, boolean presente) {
         if (c == null) {
             throw new ParametroNuloException("La clase a registrar no puede ser nula.");
@@ -69,7 +81,10 @@ public class Inscripcion implements Serializable {
         }
         return porcentaje;
     }
-
+    /**
+     * Revisa cuántas veces vino el alumno y las reglas de la materia para saber si aprobó.
+     * @return El estado final del alumno (Libre, Habilita o Promociona).
+     */
     public CondicionAlumno obtenerCondicion() {
         if (modalidad == ModalidadCursada.OYENTE) {
             return CondicionAlumno.LIBRE;

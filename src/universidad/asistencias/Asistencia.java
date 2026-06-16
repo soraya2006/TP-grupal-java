@@ -4,7 +4,9 @@ import java.io.Serial;
 import java.io.Serializable;
 import universidad.clases.Clase;
 import universidad.excepciones.*;
-
+/**
+ * Guarda el registro de un solo día, diciendo si el alumno vino o faltó a una clase.
+ */
 public class Asistencia implements Serializable {
     @Serial
     private static final long serialVersionUID = 1L;

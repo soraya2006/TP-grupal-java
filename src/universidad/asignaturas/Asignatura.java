@@ -3,7 +3,9 @@ package universidad.asignaturas;
 import java.io.Serializable;
 import java.io.Serial;
 import universidad.excepciones.*;
-
+/**
+ * Representa una materia que se dicta en la facultad.
+ */
 public class Asignatura implements Serializable {
     @Serial
     private static final long serialVersionUID = 1L;
@@ -11,8 +13,16 @@ public class Asignatura implements Serializable {
     private String nombre;
     private int cuatrimestre;
     private boolean promocional;
-    private CategoriaAsignatura categoria; 
+    private CategoriaAsignatura categoria;
 
+    /**
+     * Crea una nueva materia con sus reglas de aprobación.
+     * * @param codigo       El código único de la materia.
+     * @param nombre       El nombre completo de la materia.
+     * @param cuatrimestre En qué cuatrimestre se da (del 1 al 10).
+     * @param promocional  Verdadero si la materia se puede promocionar, falso si no.
+     * @param categoria    El tipo de materia (Obligatoria, Optativa, etc.).
+     */
     public Asignatura(String codigo, String nombre, int cuatrimestre, boolean promocional, CategoriaAsignatura categoria) {
         if (cuatrimestre < 1 || cuatrimestre > 10) {
             throw new DatoInvalidoException("Cuatrimestre inválido");
@@ -86,6 +96,11 @@ public class Asignatura implements Serializable {
             case PASANTIA, TESIS -> 75.0;
         };
     }
+
+    /**
+     * Calcula qué porcentaje de asistencia hace falta para quedar regular (habilitar).
+     * * @return El porcentaje mínimo requerido (ejemplo: 60.0).
+     */
     public double porcentajePromocion() {
         return switch (this.getCategoria()) {
             case OBLIGATORIA -> 80.0;
