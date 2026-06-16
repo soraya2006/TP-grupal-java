@@ -21,7 +21,7 @@ public class Curso implements Serializable {
     private final List<Inscripcion> inscripciones;
     /**
      * Abre un nuevo curso para una materia.
-     * * @param idCurso        El código de esta comisión (ej: "COM-01").
+     * @param idCurso        El código de esta comisión (ej: "COM-01").
      * @param asignatura     La materia a la que pertenece este curso.
      * @param anioCalendario El año en que se dicta (ej: 2026).
      */

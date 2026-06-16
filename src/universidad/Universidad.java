@@ -51,7 +51,7 @@ public class Universidad implements Serializable {
     }
     /**
      * Guarda una nueva materia en el sistema.
-     * * @param a La asignatura que se quiere agregar.
+     * @param a La asignatura que se quiere agregar.
      */
     public void agregarAsignatura(Asignatura a) {
         boolean existe = false;
@@ -72,7 +72,7 @@ public class Universidad implements Serializable {
     }
     /**
      * Abre un nuevo curso o comisión en el sistema.
-     * * @param c El curso a guardar.
+     * @param c El curso a guardar.
      */
     public void agregarCurso(Curso c) {
         boolean existe = false;
@@ -133,7 +133,7 @@ public class Universidad implements Serializable {
     /**
      * Arma un listado con las materias ordenadas desde la que tiene mejor asistencia
      * hasta la que tiene peor asistencia.
-     * * @return Una lista ordenada con el ranking de presentismo.
+     * @return Una lista ordenada con el ranking de presentismo.
      */
     public List<RankingAsignatura> rankingPresentismo() {
         List<RankingAsignatura> ranking;
@@ -165,7 +165,7 @@ public class Universidad implements Serializable {
     }
     /**
      * Imprime en la consola un informe detallado de todos los alumnos de un curso.
-     * * @param curso El curso del que se quiere ver el reporte.
+     * @param curso El curso del que se quiere ver el reporte.
      */
     public void reporteAsignatura(Asignatura asignatura) {
         if (asignatura == null) {
@@ -207,7 +207,7 @@ public class Universidad implements Serializable {
     }
     /**
      * Muestra en pantalla todos los alumnos que quedaron libres en un año específico.
-     * * @param anio El año que se quiere consultar (ejemplo: 2026).
+     * @param anio El año que se quiere consultar (ejemplo: 2026).
      */
     public void alumnosLibres() {
         for (Curso c : cursos) {
