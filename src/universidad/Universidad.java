@@ -15,7 +15,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
-//JAVADOCS
 /**
  * Clase principal que administra todo el sistema de la universidad.
  * Guarda las listas de alumnos, asignaturas y cursos.
@@ -121,7 +120,7 @@ public class Universidad implements Serializable {
         while (i < inscripcionesCurso.size() && !encontrado) {
             inscripcionActual = inscripcionesCurso.get(i);
             if (inscripcionActual.getAlumno().equals(alumno)) {
-                inscripcionActual.registrarAsistencia(clase, presente); // corregi esto, entonces pasamos la variable "presente" en ujar de un "true" fijo
+                inscripcionActual.registrarAsistencia(clase, presente);
                 encontrado = true;
             }
             i++;
@@ -164,8 +163,8 @@ public class Universidad implements Serializable {
         return ranking;
     }
     /**
-     * Imprime en la consola un informe detallado de todos los alumnos de un curso.
-     * @param curso El curso del que se quiere ver el reporte.
+     * Imprime en la consola un informe detallado de todos los alumnos de una asignatura.
+     * @param asignatura La asignatura de la que se quiere ver el reporte.
      */
     public void reporteAsignatura(Asignatura asignatura) {
         if (asignatura == null) {
@@ -205,10 +204,6 @@ public class Universidad implements Serializable {
             System.out.println("No hay cursos registrados para la asignatura: " + asignatura.getNombre());
         }
     }
-    /**
-     * Muestra en pantalla todos los alumnos que quedaron libres en un año específico.
-     * @param anio El año que se quiere consultar (ejemplo: 2026).
-     */
     public void alumnosLibres() {
         for (Curso c : cursos) {
             for (Inscripcion i : c.getInscripciones()) {
@@ -218,6 +213,10 @@ public class Universidad implements Serializable {
             }
         }
     }
+    /**
+     * Muestra en pantalla todos los alumnos que quedaron libres en un año específico.
+     * @param anio El año que se quiere consultar (ejemplo: 2026).
+     */
     public void alumnosLibres(int anio) {
         for (Curso c : cursos) {
             if (c.getAnioCalendario() == anio) {
