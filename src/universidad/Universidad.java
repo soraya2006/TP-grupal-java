@@ -11,10 +11,8 @@ import universidad.inscripciones.Inscripcion;
 import universidad.excepciones.*;
 import java.io.Serial;
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Set;
-import java.util.TreeSet;
+import java.util.*;
+
 /**
  * Clase principal que administra todo el sistema de la universidad.
  * Guarda las listas de alumnos, asignaturas y cursos.
@@ -227,5 +225,31 @@ public class Universidad implements Serializable {
                 }
             }
         }
+    }
+    /**
+     * Retorna el conjunto de alumnos ordenado (TreeSet → orden alfabético por compareTo).
+     * Usado por GeneradorXML para serializar el estado del sistema.
+     * @return Vista no modificable del conjunto de alumnos.
+     */
+    public Set<Alumno> getAlumnos() {
+        return Collections.unmodifiableSet(alumnos);
+    }
+
+    /**
+     * Retorna la lista de asignaturas registradas.
+     * Usado por GeneradorXML y para búsquedas internas.
+     * @return Vista no modificable de la lista de asignaturas.
+     */
+    public List<Asignatura> getAsignaturas() {
+        return Collections.unmodifiableList(asignaturas);
+    }
+
+    /**
+     * Retorna la lista de cursos registrados.
+     * Usado por GeneradorXML y por las búsquedas de reportes.
+     * @return Vista no modificable de la lista de cursos.
+     */
+    public List<Curso> getCursos() {
+        return Collections.unmodifiableList(cursos);
     }
 }
