@@ -38,10 +38,11 @@ public class Universidad implements Serializable {
     public void agregarAlumno(Alumno a) { // agrega al alumno de forma ordenada
         if (a == null) {
             throw new ParametroNuloException("El alumno a agregar no puede ser nulo.");
-        }
-        for (Alumno existente : alumnos) {
-            if (existente.getMatricula().equalsIgnoreCase(a.getMatricula())) {
-                throw new AlumnoDuplicadoException();
+        } else{
+            for (Alumno existente : alumnos) {
+                if (existente.getMatricula().equalsIgnoreCase(a.getMatricula())) {
+                    throw new AlumnoDuplicadoException();
+                }
             }
         }
         alumnos.add(a);
@@ -55,12 +56,13 @@ public class Universidad implements Serializable {
         int idx = 0;
         if (a == null) {
             throw new ParametroNuloException("La asignatura a agregar no puede ser nula.");
-        }
-        while (idx < asignaturas.size() && !existe) {
-            if (asignaturas.get(idx).getCodigo().equalsIgnoreCase(a.getCodigo())) {
-                existe = true;
+        } else{
+            while (idx < asignaturas.size() && !existe) {
+                if (asignaturas.get(idx).getCodigo().equalsIgnoreCase(a.getCodigo())) {
+                    existe = true;
+                }
+                idx++;
             }
-            idx++;
         }
         if (existe) {
             throw new AsignaturaDuplicadaException();
@@ -76,12 +78,13 @@ public class Universidad implements Serializable {
         int idx = 0;
         if (c == null) {
             throw new ParametroNuloException("El curso a agregar no puede ser nulo.");
-        }
-        while (idx < cursos.size() && !existe) {
-            if (cursos.get(idx).getIdCurso().equalsIgnoreCase(c.getIdCurso())) {
-                existe = true;
+        } else {
+            while (idx < cursos.size() && !existe) {
+                if (cursos.get(idx).getIdCurso().equalsIgnoreCase(c.getIdCurso())) {
+                    existe = true;
+                }
+                idx++;
             }
-            idx++;
         }
         if (existe) {
             throw new CursoDuplicadoException();
@@ -98,33 +101,35 @@ public class Universidad implements Serializable {
     public void registrarAsistencia(Alumno alumno, Clase clase, Curso curso, boolean presente) {
         if (alumno == null || clase == null || curso == null) {
             throw new ParametroNuloException();
-        }
-        boolean clasePerteneceAlCurso = false;
-        int j = 0;
-        List<Clase> clasesDelCurso = curso.getClasesDictadas();
-        while (j < clasesDelCurso.size() && !clasePerteneceAlCurso) {
-            if (clasesDelCurso.get(j).getId().equalsIgnoreCase(clase.getId())) {
-                clasePerteneceAlCurso = true;
+        }else{
+            boolean clasePerteneceAlCurso = false;
+            int j = 0;
+            List<Clase> clasesDelCurso = curso.getClasesDictadas();
+            while (j < clasesDelCurso.size() && !clasePerteneceAlCurso) {
+                if (clasesDelCurso.get(j).getId().equalsIgnoreCase(clase.getId())) {
+                    clasePerteneceAlCurso = true;
+                }
+                j++;
             }
-            j++;
-        }
-        if (!clasePerteneceAlCurso) {
-            throw new ClaseNoDictadaException("La clase especificada no pertenece a este curso.");
-        }
-        boolean encontrado = false;
-        Inscripcion inscripcionActual;
-        int i = 0;
-        List<Inscripcion> inscripcionesCurso = curso.getInscripciones();
-        while (i < inscripcionesCurso.size() && !encontrado) {
-            inscripcionActual = inscripcionesCurso.get(i);
-            if (inscripcionActual.getAlumno().equals(alumno)) {
-                inscripcionActual.registrarAsistencia(clase, presente);
-                encontrado = true;
+            if (!clasePerteneceAlCurso) {
+                throw new ClaseNoDictadaException("La clase especificada no pertenece a este curso.");
+            } else {
+                boolean encontrado = false;
+                Inscripcion inscripcionActual;
+                int i = 0;
+                List<Inscripcion> inscripcionesCurso = curso.getInscripciones();
+                while (i < inscripcionesCurso.size() && !encontrado) {
+                    inscripcionActual = inscripcionesCurso.get(i);
+                    if (inscripcionActual.getAlumno().equals(alumno)) {
+                        inscripcionActual.registrarAsistencia(clase, presente);
+                        encontrado = true;
+                    }
+                    i++;
+                }
+                if (!encontrado) {
+                    throw new AlumnoNoInscriptoException("El alumno no está inscripto en este curso.");
+                }
             }
-            i++;
-        }
-        if (!encontrado) {
-            throw new AlumnoNoInscriptoException("El alumno no está inscripto en este curso.");
         }
     }
     /**
@@ -167,39 +172,39 @@ public class Universidad implements Serializable {
     public void reporteAsignatura(Asignatura asignatura) {
         if (asignatura == null) {
             throw new ParametroNuloException("La asignatura no puede ser nula.");
-        }
+        }else {
 
-        boolean tieneCursos = false;
+            boolean tieneCursos = false;
 
-        for (Curso c : cursos) {
-            if (c.getAsignatura().equals(asignatura)) {
-                tieneCursos = true;
+            for (Curso c : cursos) {
+                if (c.getAsignatura().equals(asignatura)) {
+                    tieneCursos = true;
 
-                System.out.println("========================================");
-                System.out.println("Curso: " + c.getIdCurso()
-                        + " | Año: " + c.getAnioCalendario()
-                        + " | Cuatrimestre: " + c.getCuatrimestreDictado());
-                System.out.println("Clases dictadas: " + c.getClasesDictadas().size());
-                System.out.println("========================================");
+                    System.out.println("========================================");
+                    System.out.println("Curso: " + c.getIdCurso()
+                            + " | Año: " + c.getAnioCalendario()
+                            + " | Cuatrimestre: " + c.getCuatrimestreDictado());
+                    System.out.println("Clases dictadas: " + c.getClasesDictadas().size());
+                    System.out.println("========================================");
 
-                for (Inscripcion i : c.getInscripciones()) {
-                    System.out.println("Alumno:     " + i.getAlumno());
-                    System.out.println("Modalidad:  " + i.getModalidad());
-                    System.out.println("Presentes:  " + i.cantidadPresentes()
-                            + " / " + c.getClasesDictadas().size());
-                    System.out.println("Porcentaje: " + i.calcularPorcentajeAsistencia() + "%");
-                    System.out.println("Condición:  " + i.obtenerCondicion());
-                    System.out.println("Asistencias detalladas:");
-                    for (Asistencia a : i.getAsistencias()) {
-                        System.out.println("  " + a);
+                    for (Inscripcion i : c.getInscripciones()) {
+                        System.out.println("Alumno:     " + i.getAlumno());
+                        System.out.println("Modalidad:  " + i.getModalidad());
+                        System.out.println("Presentes:  " + i.cantidadPresentes()
+                                + " / " + c.getClasesDictadas().size());
+                        System.out.println("Porcentaje: " + i.calcularPorcentajeAsistencia() + "%");
+                        System.out.println("Condición:  " + i.obtenerCondicion());
+                        System.out.println("Asistencias detalladas:");
+                        for (Asistencia a : i.getAsistencias()) {
+                            System.out.println("  " + a);
+                        }
+                        System.out.println("----------------------------------------");
                     }
-                    System.out.println("----------------------------------------");
                 }
             }
-        }
-
-        if (!tieneCursos) {
-            System.out.println("No hay cursos registrados para la asignatura: " + asignatura.getNombre());
+            if (!tieneCursos) {
+                System.out.println("No hay cursos registrados para la asignatura: " + asignatura.getNombre());
+            }
         }
     }
     public void alumnosLibres() {

@@ -28,11 +28,9 @@ public class Curso implements Serializable {
     public Curso(String idCurso, Asignatura asignatura, int anioCalendario, int cuatrimestreDictado) {
         if (idCurso == null || idCurso.isBlank()) {
             throw new ParametroNuloException("El ID del curso no puede estar vacío.");
-        }
-        if (asignatura == null) {
+        } else if (asignatura == null) {
             throw new ParametroNuloException("La asignatura asociada no puede ser nula.");
-        }
-        if (cuatrimestreDictado < 1 || cuatrimestreDictado > 2) {
+        } else if (cuatrimestreDictado < 1 || cuatrimestreDictado > 2) {
             throw new DatoInvalidoException("Cuatrimestre invalido. El cuatrimestre de dictado debe ser 1 o 2.");
         }
         this.idCurso = idCurso;
@@ -90,8 +88,7 @@ public class Curso implements Serializable {
         int i = 0;
         if (insc == null) {
             throw new ParametroNuloException("La inscripción no puede ser nula.");
-        }
-        if (!insc.getCurso().getIdCurso().equalsIgnoreCase(this.idCurso)) {
+        } else if (!insc.getCurso().getIdCurso().equalsIgnoreCase(this.idCurso)) {
             throw new InscripcionDuplicada("La inscripción no pertenece a este curso.");
         }
 

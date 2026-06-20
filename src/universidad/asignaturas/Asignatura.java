@@ -23,11 +23,9 @@ public abstract class Asignatura implements Serializable {
     public Asignatura(String codigo, String nombre, int cuatrimestre, boolean promocional) {
         if (cuatrimestre < 1 || cuatrimestre > 10) {
             throw new DatoInvalidoException("Cuatrimestre inválido");
-        }
-        if (codigo == null || codigo.isBlank()) {
+        } else if (codigo == null || codigo.isBlank()) {
             throw new ParametroNuloException("El código de la asignatura no puede estar vacío");
-        }
-        if (nombre == null || nombre.isBlank()) {
+        } else if (nombre == null || nombre.isBlank()) {
             throw new ParametroNuloException("El nombre de la asignatura no puede estar vacío");
         }
         this.codigo = codigo;

@@ -16,9 +16,10 @@ public class Asistencia implements Serializable {
     public Asistencia(Clase clase, boolean presente) {
         if (clase == null) {
             throw new ParametroNuloException("La clase asociada a la asistencia no puede ser nula");
+        } else {
+            this.clase = clase;
+            this.presente = presente;
         }
-        this.clase = clase;
-        this.presente = presente;
     }
     public Clase getClase() { 
         return clase; 
@@ -26,8 +27,9 @@ public class Asistencia implements Serializable {
     public void setClase(Clase clase) { 
         if (clase == null) {
             throw new ParametroNuloException("La clase asociada a la asistencia no puede ser nula");
+        } else {
+            this.clase = clase;
         }
-        this.clase = clase; 
     }
     public boolean isPresente() { 
         return presente; 

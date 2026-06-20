@@ -13,18 +13,17 @@ public class Clase implements Serializable {
     /**
      * Crea un nuevo día de clases.
      * @param id    Un código único para esta clase.
-     * @param fecha La fecha en la que se dio la clase.
-     * @param hora  El horario en el que empezó.
+     * @param fechaHora La fecha en la que se dio la clase y el horario en el que empezó.
      */
     public Clase(String id, LocalDateTime fechaHora) {
         if (id == null || id.isBlank()) {
             throw new ParametroNuloException("El ID de la clase no puede estar vacío");
-        }
-        if (fechaHora == null) {
+        } else if (fechaHora == null) {
             throw new ParametroNuloException("La fecha y hora de la clase no pueden ser nulas");
+        } else {
+            this.id = id;
+            this.fechaHora = fechaHora;
         }
-        this.id = id;
-        this.fechaHora = fechaHora;
     }
 
     public String getId() { 

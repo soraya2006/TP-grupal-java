@@ -33,11 +33,12 @@ public class Inscripcion implements Serializable {
     public Inscripcion(Alumno alumno, Curso curso, ModalidadCursada modalidad) {
         if (alumno == null || curso == null || modalidad == null) {
             throw new ParametroNuloException();
+        }else {
+            this.alumno = alumno;
+            this.curso = curso; // Guardamos la referencia al curso
+            this.modalidad = modalidad;
+            this.asistencias = new ArrayList<>();
         }
-        this.alumno = alumno;
-        this.curso = curso; // Guardamos la referencia al curso
-        this.modalidad = modalidad;
-        this.asistencias = new ArrayList<>();
     }
     /**
      * Marca si el alumno vino o faltó a una clase.
@@ -47,20 +48,21 @@ public class Inscripcion implements Serializable {
     public void registrarAsistencia(Clase c, boolean presente) {
         if (c == null) {
             throw new ParametroNuloException("La clase a registrar no puede ser nula.");
-        }
-        boolean asistenciaDuplicada = false;
-        int i = 0;
-        while (i < asistencias.size() && !asistenciaDuplicada) {
-            if (asistencias.get(i).getClase().getId().equalsIgnoreCase(c.getId())) {
-                asistenciaDuplicada = true;
-            }
-            i++;
-        }
-        if (asistenciaDuplicada) {
-            throw new AsistenciaYaRegistradaException();
-
         } else {
-            this.asistencias.add(new Asistencia(c, presente));
+            boolean asistenciaDuplicada = false;
+            int i = 0;
+            while (i < asistencias.size() && !asistenciaDuplicada) {
+                if (asistencias.get(i).getClase().getId().equalsIgnoreCase(c.getId())) {
+                    asistenciaDuplicada = true;
+                }
+                i++;
+            }
+            if (asistenciaDuplicada) {
+                throw new AsistenciaYaRegistradaException();
+
+            } else {
+                this.asistencias.add(new Asistencia(c, presente));
+            }
         }
     }
 
@@ -88,22 +90,23 @@ public class Inscripcion implements Serializable {
     public CondicionAlumno obtenerCondicion() {
         if (modalidad == ModalidadCursada.OYENTE) {
             return CondicionAlumno.LIBRE;
-        }
-        double asistencia = calcularPorcentajeAsistencia();
-        double habilita = curso.getAsignatura().porcentajeHabilitacion();
-        double promociona = curso.getAsignatura().porcentajePromocion();
-        if (modalidad == ModalidadCursada.CONDICIONAL) {
-            habilita += 20.0;
-            if (promociona != -1.0) {
-                promociona += 20.0;
+        } else{
+            double asistencia = calcularPorcentajeAsistencia();
+            double habilita = curso.getAsignatura().porcentajeHabilitacion();
+            double promociona = curso.getAsignatura().porcentajePromocion();
+            if (modalidad == ModalidadCursada.CONDICIONAL) {
+                habilita += 20.0;
+                if (promociona != -1.0) {
+                    promociona += 20.0;
+                }
             }
-        }
-        if (promociona != -1.0 && asistencia >= promociona) {
-            return CondicionAlumno.PROMOCIONA;
-        } else if (asistencia >= habilita) {
-            return CondicionAlumno.HABILITA;
-        } else {
-            return CondicionAlumno.LIBRE;
+            if (promociona != -1.0 && asistencia >= promociona) {
+                return CondicionAlumno.PROMOCIONA;
+            } else if (asistencia >= habilita) {
+                return CondicionAlumno.HABILITA;
+            } else {
+                return CondicionAlumno.LIBRE;
+            }
         }
     }
     public Alumno getAlumno() { return alumno; }
