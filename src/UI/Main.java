@@ -125,10 +125,6 @@ public class Main {
         System.out.println("  [0] Salir");
     }
 
-    // ----------------------------------------------------------------
-    // Opción 1 — Cargar XML
-    // ----------------------------------------------------------------
-
     /**
      * Solicita la ruta del XML y delega la carga a {@link CargadorXML}.
      * Si hay errores de validación, los muestra todos antes de continuar.
