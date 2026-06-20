@@ -70,9 +70,9 @@ public abstract class Asignatura implements Serializable {
     }
     @Override
     public String toString() {
-        return "[" + codigo + "] " + nombre + " - " + this.getClass().getSimpleName();
+        return "[" + codigo + "] " + nombre + " - " + getTipo();
     }
-
+    public abstract String getTipo();
     public abstract double porcentajeHabilitacion(); // abstracta
     public abstract double porcentajePromocion(); // abstracta
 }

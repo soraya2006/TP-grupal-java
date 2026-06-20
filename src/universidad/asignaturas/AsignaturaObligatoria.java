@@ -22,7 +22,10 @@ public class AsignaturaObligatoria extends Asignatura {
     public double porcentajeHabilitacion() {
         return 60.0;
     }
-
+    @Override
+    public String getTipo() {
+        return "Obligatoria";
+    }
     /**
      * @return 80.0 — porcentaje mínimo para promocionar.
      */

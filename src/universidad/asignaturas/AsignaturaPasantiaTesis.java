@@ -17,6 +17,10 @@ public class AsignaturaPasantiaTesis extends Asignatura {
      * @return 75.0 — porcentaje mínimo para habilitar.
      */
     @Override
+    public String getTipo() {
+        return "Pasantía / Tesis";
+    }
+    @Override
     public double porcentajeHabilitacion() {
         return 75.0;
     }

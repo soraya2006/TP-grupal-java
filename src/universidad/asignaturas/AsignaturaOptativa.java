@@ -17,6 +17,10 @@ public class AsignaturaOptativa extends Asignatura {
      * @return 50.0 — porcentaje mínimo para habilitar.
      */
     @Override
+    public String getTipo() {
+        return "Optativa";
+    }
+    @Override
     public double porcentajeHabilitacion() {
         return 50.0;
     }
