@@ -91,8 +91,8 @@ public class Curso implements Serializable {
         if (insc == null) {
             throw new ParametroNuloException("La inscripción no puede ser nula.");
         }
-        if (insc.getCurso() != this) {
-            throw new InscripcionDuplicada();
+        if (!insc.getCurso().getIdCurso().equalsIgnoreCase(this.idCurso)) {
+            throw new InscripcionDuplicada("La inscripción no pertenece a este curso.");
         }
 
         while (i < inscripciones.size() && !existe) {
