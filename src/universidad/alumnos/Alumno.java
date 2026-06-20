@@ -9,10 +9,10 @@ import universidad.excepciones.*;
 public class Alumno implements Comparable<Alumno>, Serializable {
     @Serial
     private static final long serialVersionUID = 1L;
-    private final String matricula;
-    private final String apellido;
-    private final String nombre;
-    private final LocalDate fechaNacimiento;
+    private String matricula;
+    private String apellido;
+    private String nombre;
+    private LocalDate fechaNacimiento;
     /**
      * Registra un nuevo alumno.
      * @param matricula El DNI o número de legajo único del alumno.
