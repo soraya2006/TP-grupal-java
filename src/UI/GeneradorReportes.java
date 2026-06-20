@@ -1,6 +1,5 @@
 package UI;
 
-import universidad.alumnos.CondicionAlumno;
 import universidad.asignaturas.Asignatura;
 import universidad.asignaturas.Curso;
 import universidad.asistencias.Asistencia;
