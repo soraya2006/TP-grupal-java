@@ -1,6 +1,6 @@
 package UI;
+
 import io.CargadorXML;
-import UI.GeneradorReportes;
 import io.GeneradorXML;
 import io.PersistenciaBinaria;
 
@@ -10,6 +10,7 @@ import universidad.asignaturas.Asignatura;
 import universidad.asignaturas.Curso;
 import universidad.clases.Clase;
 import universidad.ranking.RankingAsignatura;
+import universidad.inscripciones.Inscripcion;
 import universidad.excepciones.*;
 
 import java.util.List;
@@ -23,10 +24,10 @@ import java.util.Scanner;
  *
  * <p>Cumple las siguientes restricciones de programación estructurada:</p>
  * <ul>
- *   <li>No se usa {@code break} ni {@code continue} en bucles.</li>
- *   <li>No se usa {@code return} anticipado dentro de métodos no-void.</li>
- *   <li>Toda entrada inválida se controla con estructuras condicionales
- *       y repetitivas.</li>
+ * <li>No se usa {@code break} ni {@code continue} en bucles.</li>
+ * <li>No se usa {@code return} anticipado dentro de métodos no-void.</li>
+ * <li>Toda entrada inválida se controla con estructuras condicionales
+ * y repetitivas.</li>
  * </ul>
  */
 public class Main {
@@ -35,19 +36,10 @@ public class Main {
 
     /**
      * Crea el sistema, intenta recuperar el estado guardado y presenta el menú.
-     *
-     * <p>Flujo del main:</p>
-     * <ol>
-     *   <li>Se intenta cargar el estado binario previo. Si no existe, se
-     *       crea una instancia nueva de {@link Universidad}.</li>
-     *   <li>Se muestra el menú en bucle {@code do-while} hasta que el
-     *       usuario elija la opción 0 (Salir).</li>
-     *   <li>Antes de terminar, se ofrece guardar el estado.</li>
-     * </ol>
-     *
-     * @param args Argumentos de línea de comandos (no utilizados).
+     * * Nota: En versiones modernas de Java (Java 22+), el método main puede
+     * prescindir del parámetro 'args' si no se utiliza y del modificador 'public'.
      */
-    public static void main(String[] args) {
+    static void main() {
 
         Scanner sc = new Scanner(System.in);
         System.out.println("  SISTEMA DE GESTIÓN UNIVERSITARIA   ");
@@ -226,25 +218,13 @@ public class Main {
     /**
      * Guía al usuario para registrar la asistencia de un alumno a una clase.
      *
-     * <p>Flujo:</p>
-     * <ol>
-     *   <li>Listar los cursos disponibles.</li>
-     *   <li>El usuario ingresa el ID del curso.</li>
-     *   <li>Se listan las clases del curso.</li>
-     *   <li>El usuario ingresa el ID de la clase.</li>
-     *   <li>Se listan los alumnos inscriptos.</li>
-     *   <li>El usuario ingresa la matrícula del alumno.</li>
-     *   <li>Se solicita si estuvo presente (s/n).</li>
-     *   <li>Se registra mediante {@link Universidad#registrarAsistencia}.</li>
-     * </ol>
-     *
      * @param sc          Scanner activo.
      * @param universidad Instancia del sistema.
      */
     private static void opcionRegistrarAsistencia(Scanner sc, Universidad universidad) {
         System.out.println("\n--- Registrar asistencia manual ---");
 
-        List<Curso> cursos = (List<Curso>) universidad.getCursos();
+        List<Curso> cursos = universidad.getCursos();
         if (cursos.isEmpty()) {
             System.out.println("[!] No hay cursos registrados en el sistema.");
         } else {
@@ -314,11 +294,7 @@ public class Main {
                                 String estadoStr = presente ? "PRESENTE" : "AUSENTE";
                                 System.out.println("Asistencia registrada: "
                                         + alumnoElegido + " → " + estadoStr);
-                            } catch (AlumnoNoInscriptoException e) {
-                                System.out.println("[!] " + e.getMessage());
-                            } catch (AsistenciaYaRegistradaException e) {
-                                System.out.println("[!] " + e.getMessage());
-                            } catch (ClaseNoDictadaException e) {
+                            } catch (AlumnoNoInscriptoException | AsistenciaYaRegistradaException | ClaseNoDictadaException e) {
                                 System.out.println("[!] " + e.getMessage());
                             } catch (ParametroNuloException e) {
                                 System.out.println("[!] Error interno: " + e.getMessage());
@@ -357,8 +333,8 @@ public class Main {
     }
 
     /**
-     * Solicita el código de una asignatura y muestra el reporte detallado.
-     * El reporte también se guarda en un archivo de texto.
+     * Solicita el código de una asignatura, muestra el reporte detallado
+     * por pantalla (respetando que Universidad no imprima) y lo guarda en archivo.
      *
      * @param sc          Scanner activo.
      * @param universidad Instancia del sistema.
@@ -366,7 +342,7 @@ public class Main {
     private static void opcionReporteAsignatura(Scanner sc, Universidad universidad) {
         System.out.println("\n--- Reporte detallado de una asignatura ---");
 
-        List<Asignatura> asignaturas = (List<Asignatura>) universidad.getAsignaturas();
+        List<Asignatura> asignaturas = universidad.getAsignaturas();
 
         if (asignaturas.isEmpty()) {
             System.out.println("[!] No hay asignaturas registradas en el sistema.");
@@ -388,12 +364,42 @@ public class Main {
                 System.out.println("[!] No existe ninguna asignatura con el código '" + codigo + "'.");
             } else {
                 System.out.println();
-                universidad.reporteAsignatura(encontrada);
+                List<Inscripcion> inscripciones = universidad.obtenerInscripcionesPorAsignatura(encontrada);
 
-                GeneradorReportes.guardarReporteAsignatura(universidad, encontrada);
+                if (inscripciones.isEmpty()) {
+                    System.out.println("  No hay alumnos inscriptos en esta asignatura.");
+                } else {
+                    String idCursoActual = "";
+                    int idx = 0;
+                    while (idx < inscripciones.size()) {
+                        Inscripcion insc = inscripciones.get(idx);
+                        Curso c = insc.getCurso();
+
+                        if (!c.getIdCurso().equals(idCursoActual)) {
+                            idCursoActual = c.getIdCurso();
+                            System.out.println("\n  Curso: " + c.getIdCurso()
+                                    + " | Año: "          + c.getAnioCalendario()
+                                    + " | Cuatrimestre: " + c.getCuatrimestreDictado());
+                            System.out.println("  Clases dictadas: " + c.getClasesDictadas().size());
+                        }
+
+                        System.out.println("  Alumno:     " + insc.getAlumno());
+                        System.out.println("  Modalidad:  " + insc.getModalidad());
+                        System.out.printf ("  Presentes:  %d / %d%n",
+                                insc.cantidadPresentes(),
+                                c.getClasesDictadas().size());
+                        System.out.printf ("  Porcentaje: %.2f%%%n",
+                                insc.calcularPorcentajeAsistencia());
+                        System.out.println("  Condición:  " + insc.obtenerCondicion());
+                        idx++;
+                    }
+                }
+
+                GeneradorReportes.guardarReporteAsignatura(encontrada, inscripciones);
             }
         }
     }
+
     /**
      * Lista por pantalla y guarda en archivo todos los alumnos con condición LIBRE
      * en cualquier asignatura.
@@ -403,19 +409,27 @@ public class Main {
     private static void opcionAlumnosLibresTodas(Universidad universidad) {
         System.out.println("\n--- Alumnos libres — todas las asignaturas ---\n");
 
-        universidad.alumnosLibres();
-        GeneradorReportes.guardarAlumnosLibresTodas(universidad);
+        List<Inscripcion> libres = universidad.alumnosLibres();
+
+        if (libres.isEmpty()) {
+            System.out.println("  (No hay alumnos libres registrados)");
+        } else {
+            int i = 0;
+            while (i < libres.size()) {
+                Inscripcion insc = libres.get(i);
+                System.out.println("  " + insc.getAlumno()
+                        + " — " + insc.getCurso().getAsignatura().getNombre()
+                        + " (Curso: " + insc.getCurso().getIdCurso() + ")");
+                i++;
+            }
+        }
+
+        GeneradorReportes.guardarAlumnosLibresTodas(libres);
     }
 
     /**
      * Solicita un año calendario y lista los alumnos libres de ese año.
      * El resultado también se guarda en un archivo de texto.
-     *
-     * <p>Nota técnica: el método {@code alumnosLibres(int)} implementado en
-     * {@link Universidad} filtra por {@code anioCalendario} del curso (ej: 2026),
-     * que es el año del calendario gregoriano en que se dictó el curso, no el año
-     * académico de la carrera. El grupo puede ajustar esa lógica si el enunciado
-     * requería filtrar por año de la carrera (cuatrimestres 1-2 = 1er año, etc.).</p>
      *
      * @param sc          Scanner activo.
      * @param universidad Instancia del sistema.
@@ -425,9 +439,22 @@ public class Main {
         int anio = leerEntero(sc, "Ingrese el año calendario (ej: 2026): ");
 
         System.out.println();
-        universidad.alumnosLibres(anio);
+        List<Inscripcion> libres = universidad.alumnosLibres(anio);
 
-        GeneradorReportes.guardarAlumnosLibresPorAnio(universidad, anio);
+        if (libres.isEmpty()) {
+            System.out.println("  (No hay alumnos libres para el año " + anio + ")");
+        } else {
+            int i = 0;
+            while (i < libres.size()) {
+                Inscripcion insc = libres.get(i);
+                System.out.println("  " + insc.getAlumno()
+                        + " — " + insc.getCurso().getAsignatura().getNombre()
+                        + " (Curso: " + insc.getCurso().getIdCurso() + ")");
+                i++;
+            }
+        }
+
+        GeneradorReportes.guardarAlumnosLibresPorAnio(libres, anio);
     }
 
     /**
@@ -439,7 +466,7 @@ public class Main {
      */
     private static Curso buscarCursoPorId(Universidad universidad, String idCurso) {
         Curso resultado = null;
-        List<Curso> cursos = (List<Curso>) universidad.getCursos();
+        List<Curso> cursos = universidad.getCursos();
         int i = 0;
         while (i < cursos.size() && resultado == null) {
             if (cursos.get(i).getIdCurso().equalsIgnoreCase(idCurso)) {
@@ -496,23 +523,20 @@ public class Main {
      */
     private static Asignatura buscarAsignaturaPorCodigo(Universidad universidad, String codigo) {
         Asignatura resultado = null;
-        List<Asignatura> lista = (List<Asignatura>) universidad.getAsignaturas();
+        List<Asignatura> lista = universidad.getAsignaturas();
         int i = 0;
         while (i < lista.size() && resultado == null) {
             if (lista.get(i).getCodigo().equalsIgnoreCase(codigo)) {
                 resultado = lista.get(i);
             }
             i++;
+
         }
         return resultado;
     }
 
     /**
      * Lee un número entero del usuario de forma segura.
-     *
-     * <p>Si el usuario ingresa algo que no es un entero, muestra un aviso
-     * y repite la solicitud. No usa {@code break}; la condición del {@code while}
-     * controla el flujo completamente.</p>
      *
      * @param sc     Scanner activo.
      * @param prompt Texto a mostrar antes de leer.
@@ -523,7 +547,7 @@ public class Main {
         boolean entradaValida = sc.hasNextInt();
 
         while (!entradaValida) {
-            sc.nextLine(); // descartar entrada inválida
+            sc.nextLine();
             System.out.println("[!] Entrada inválida. Debe ingresar un número entero.");
             System.out.print(prompt);
             entradaValida = sc.hasNextInt();

@@ -237,7 +237,7 @@ public class Universidad implements Serializable {
      * @return Lista de inscripciones con condición LIBRE.
      *         Lista vacía si no hay ninguna.
      */
-    public List<Inscripcion> obtenerAlumnosLibres() {
+    public List<Inscripcion> alumnosLibres() {
         List<Inscripcion> resultado = new ArrayList<>();
 
         for (Curso c : cursos) {
@@ -260,7 +260,7 @@ public class Universidad implements Serializable {
      * @param anioCalendario El año a filtrar (ej: 2026).
      * @return Lista de inscripciones LIBRE para ese año. Lista vacía si no hay ninguna.
      */
-    public List<Inscripcion> obtenerAlumnosLibres(int anioCalendario) {
+    public List<Inscripcion> alumnosLibres(int anioCalendario) {
         List<Inscripcion> resultado = new ArrayList<>();
 
         for (Curso c : cursos) {
