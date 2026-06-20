@@ -9,10 +9,10 @@ import universidad.excepciones.*;
 public class Alumno implements Comparable<Alumno>, Serializable {
     @Serial
     private static final long serialVersionUID = 1L;
-    private String matricula;
-    private String apellido;
-    private String nombre;
-    private LocalDate fechaNacimiento;
+    private final String matricula;
+    private final String apellido;
+    private final String nombre;
+    private final LocalDate fechaNacimiento;
     /**
      * Registra un nuevo alumno.
      * @param matricula El DNI o número de legajo único del alumno.
@@ -76,7 +76,7 @@ public class Alumno implements Comparable<Alumno>, Serializable {
     @Override
     public int compareTo(Alumno otro) {
         int compApellido = this.apellido.compareToIgnoreCase(otro.apellido);
-        if (compApellido != 0) {
+        if (compApellido != 0){
             return compApellido;
         }
         int compNombre = this.nombre.compareToIgnoreCase(otro.nombre);
