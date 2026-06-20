@@ -39,9 +39,7 @@ public class GeneradorReportes {
         PrintWriter pw = abrirArchivo(ruta);
 
         if (pw != null) {
-            pw.println("========================================");
             pw.println("   RANKING DE ASIGNATURAS POR PRESENTISMO");
-            pw.println("========================================");
 
             if (ranking.isEmpty()) {
                 pw.println("  (Sin datos)");
