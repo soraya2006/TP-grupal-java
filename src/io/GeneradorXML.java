@@ -13,7 +13,6 @@ import universidad.asignaturas.*;
 import universidad.asistencias.Asistencia;
 import universidad.clases.Clase;
 import universidad.inscripciones.Inscripcion;
-import universidad.ranking.RankingAsignatura;
 
 /**
  * Serializa el estado completo de un objeto {@link Universidad} a un archivo XML.

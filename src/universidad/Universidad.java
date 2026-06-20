@@ -16,92 +16,121 @@ import java.util.*;
 /**
  * Clase principal que administra todo el sistema de la universidad.
  * Guarda las listas de alumnos, asignaturas y cursos.
+ *
+ * <p><b>Importante:</b> esta clase pertenece exclusivamente a la capa de
+ * dominio. Ningún método imprime ni lee datos de ningún dispositivo de
+ * entrada/salida. Toda la presentación queda a cargo de la capa de
+ * interfaz de usuario (Main, GeneradorReportes, etc.).</p>
  */
 public class Universidad implements Serializable {
+
     @Serial
     private static final long serialVersionUID = 1L;
+
     private final Set<Alumno> alumnos;
     private final List<Asignatura> asignaturas;
     private final List<Curso> cursos;
 
     public Universidad() {
-        alumnos = new TreeSet<>();
+        alumnos     = new TreeSet<>();
         asignaturas = new ArrayList<>();
-        cursos = new ArrayList<>();
+        cursos      = new ArrayList<>();
     }
     /**
-     * Agrega un nuevo alumno al sistema.
-     * @param a El objeto Alumno que se va a guardar.
-     * @throws DatoInvalidoException Si el alumno es nulo.
+     * Agrega un nuevo alumno al sistema en orden alfabético.
+     *
+     * @param a El alumno a agregar.
+     * @throws ParametroNuloException   Si el alumno es nulo.
      * @throws AlumnoDuplicadoException Si ya existe un alumno con esa matrícula.
      */
-    public void agregarAlumno(Alumno a) { // agrega al alumno de forma ordenada
+    public void agregarAlumno(Alumno a) {
         if (a == null) {
             throw new ParametroNuloException("El alumno a agregar no puede ser nulo.");
-        } else{
-            for (Alumno existente : alumnos) {
-                if (existente.getMatricula().equalsIgnoreCase(a.getMatricula())) {
-                    throw new AlumnoDuplicadoException();
-                }
+        }
+
+        boolean duplicado = false;
+        for (Alumno existente : alumnos) {
+            if (!duplicado && existente.getMatricula().equalsIgnoreCase(a.getMatricula())) {
+                duplicado = true;
             }
         }
+
+        if (duplicado) {
+            throw new AlumnoDuplicadoException();
+        }
+
         alumnos.add(a);
     }
+
     /**
-     * Guarda una nueva materia en el sistema.
-     * @param a La asignatura que se quiere agregar.
+     * Agrega una nueva asignatura al sistema.
+     *
+     * @param a La asignatura a agregar.
+     * @throws ParametroNuloException      Si la asignatura es nula.
+     * @throws AsignaturaDuplicadaException Si ya existe una asignatura con ese código.
      */
     public void agregarAsignatura(Asignatura a) {
-        boolean existe = false;
-        int idx = 0;
         if (a == null) {
             throw new ParametroNuloException("La asignatura a agregar no puede ser nula.");
-        } else{
-            while (idx < asignaturas.size() && !existe) {
-                if (asignaturas.get(idx).getCodigo().equalsIgnoreCase(a.getCodigo())) {
-                    existe = true;
-                }
-                idx++;
-            }
         }
-        if (existe) {
+
+        boolean duplicada = false;
+        int idx = 0;
+        while (idx < asignaturas.size() && !duplicada) {
+            if (asignaturas.get(idx).getCodigo().equalsIgnoreCase(a.getCodigo())) {
+                duplicada = true;
+            }
+            idx++;
+        }
+        if (duplicada) {
             throw new AsignaturaDuplicadaException();
         }
         asignaturas.add(a);
     }
+
     /**
-     * Abre un nuevo curso o comisión en el sistema.
-     * @param c El curso a guardar.
+     * Agrega un nuevo curso al sistema.
+     *
+     * @param c El curso a agregar.
+     * @throws ParametroNuloException  Si el curso es nulo.
+     * @throws CursoDuplicadoException Si ya existe un curso con ese ID.
      */
     public void agregarCurso(Curso c) {
-        boolean existe = false;
-        int idx = 0;
         if (c == null) {
             throw new ParametroNuloException("El curso a agregar no puede ser nulo.");
-        } else {
-            while (idx < cursos.size() && !existe) {
-                if (cursos.get(idx).getIdCurso().equalsIgnoreCase(c.getIdCurso())) {
-                    existe = true;
-                }
-                idx++;
-            }
         }
-        if (existe) {
+
+        boolean duplicado = false;
+        int idx = 0;
+        while (idx < cursos.size() && !duplicado) {
+            if (cursos.get(idx).getIdCurso().equalsIgnoreCase(c.getIdCurso())) {
+                duplicado = true;
+            }
+            idx++;
+        }
+
+        if (duplicado) {
             throw new CursoDuplicadoException();
         }
+
         cursos.add(c);
     }
+
     /**
-     * Registra la asistencia (o inasistencia) de un alumno en un día de clases específico.
-     * @param alumno   El estudiante al que se le toma asistencia.
-     * @param clase    El día y horario de la clase.
-     * @param curso    La comisión donde se dictó la clase.
-     * @param presente Verdadero si vino, falso si faltó.
+     * Registra la asistencia (o inasistencia) de un alumno a una clase.
+     *
+     * @param alumno   El alumno al que se le registra la asistencia.
+     * @param clase    La clase a la que asistió o faltó.
+     * @param curso    El curso al que pertenece la clase.
+     * @param presente {@code true} si asistió, {@code false} si faltó.
+     * @throws ParametroNuloException       Si alguno de los parámetros es nulo.
+     * @throws ClaseNoDictadaException      Si la clase no pertenece al curso.
+     * @throws AlumnoNoInscriptoException   Si el alumno no está inscripto en el curso.
      */
     public void registrarAsistencia(Alumno alumno, Clase clase, Curso curso, boolean presente) {
         if (alumno == null || clase == null || curso == null) {
             throw new ParametroNuloException();
-        }else{
+        } else {
             boolean clasePerteneceAlCurso = false;
             int j = 0;
             List<Clase> clasesDelCurso = curso.getClasesDictadas();
@@ -115,11 +144,10 @@ public class Universidad implements Serializable {
                 throw new ClaseNoDictadaException("La clase especificada no pertenece a este curso.");
             } else {
                 boolean encontrado = false;
-                Inscripcion inscripcionActual;
                 int i = 0;
                 List<Inscripcion> inscripcionesCurso = curso.getInscripciones();
                 while (i < inscripcionesCurso.size() && !encontrado) {
-                    inscripcionActual = inscripcionesCurso.get(i);
+                    Inscripcion inscripcionActual = inscripcionesCurso.get(i);
                     if (inscripcionActual.getAlumno().equals(alumno)) {
                         inscripcionActual.registrarAsistencia(clase, presente);
                         encontrado = true;
@@ -132,108 +160,124 @@ public class Universidad implements Serializable {
             }
         }
     }
+
     /**
-     * Arma un listado con las materias ordenadas desde la que tiene mejor asistencia
-     * hasta la que tiene peor asistencia.
-     * @return Una lista ordenada con el ranking de presentismo.
+     * Calcula el ranking de asignaturas ordenado de mayor a menor
+     * porcentaje de presentismo.
+     *
+     * @return Lista ordenada de {@link RankingAsignatura}.
      */
     public List<RankingAsignatura> rankingPresentismo() {
-        List<RankingAsignatura> ranking;
-        int totalAsistenciasPresentes, alumnosInscriptosEnCurso, totalClasesMaximasPosibles, clasesDictadasEnCurso;
-        double porcentaje;
-        ranking = new ArrayList<>();
+        List<RankingAsignatura> ranking = new ArrayList<>();
+
         for (Asignatura a : asignaturas) {
-            totalAsistenciasPresentes = 0;
-            totalClasesMaximasPosibles = 0;
-            porcentaje = 0.0;
+            int totalPresentes              = 0;
+            int totalClasesMaximasPosibles  = 0;
+
             for (Curso c : cursos) {
                 if (c.getAsignatura().equals(a)) {
-                    clasesDictadasEnCurso = c.getClasesDictadas().size();
-                    alumnosInscriptosEnCurso = c.getInscripciones().size();
-                    totalClasesMaximasPosibles += (clasesDictadasEnCurso * alumnosInscriptosEnCurso);
+                    int clasesDictadas        = c.getClasesDictadas().size();
+                    int alumnosInscriptos     = c.getInscripciones().size();
+                    totalClasesMaximasPosibles += clasesDictadas * alumnosInscriptos;
+
                     for (Inscripcion insc : c.getInscripciones()) {
-                        totalAsistenciasPresentes += insc.cantidadPresentes();
+                        totalPresentes += insc.cantidadPresentes();
                     }
                 }
             }
+
+            double porcentaje = 0.0;
             if (totalClasesMaximasPosibles > 0) {
-                porcentaje = (totalAsistenciasPresentes * 100.0) / totalClasesMaximasPosibles;
+                porcentaje = (totalPresentes * 100.0) / totalClasesMaximasPosibles;
             }
+
             ranking.add(new RankingAsignatura(a, porcentaje));
         }
 
         ranking.sort((x, y) -> Double.compare(y.getPorcentaje(), x.getPorcentaje()));
         return ranking;
     }
+
     /**
-     * Imprime en la consola un informe detallado de todos los alumnos de una asignatura.
-     * @param asignatura La asignatura de la que se quiere ver el reporte.
+     * Devuelve todas las inscripciones activas en los cursos de una asignatura.
+     *
+     * <p>La capa de presentación recibe esta lista y decide cómo mostrarla
+     * (consola, archivo, ventana gráfica, etc.).</p>
+     *
+     * <p>Cada {@link Inscripcion} contiene: el alumno, la modalidad, la lista
+     * de asistencias y el curso al que pertenece, por lo que la interfaz tiene
+     * acceso a todos los datos necesarios para construir el reporte.</p>
+     *
+     * @param asignatura La asignatura a consultar.
+     * @return Lista de inscripciones encontradas. Lista vacía si no hay cursos
+     *         o si la asignatura no tiene alumnos inscriptos.
+     * @throws ParametroNuloException Si la asignatura es nula.
      */
-    public void reporteAsignatura(Asignatura asignatura) {
+    public List<Inscripcion> obtenerInscripcionesPorAsignatura(Asignatura asignatura) {
         if (asignatura == null) {
             throw new ParametroNuloException("La asignatura no puede ser nula.");
-        }else {
-
-            boolean tieneCursos = false;
-
+        } else {
+            List<Inscripcion> resultado = new ArrayList<>();
             for (Curso c : cursos) {
                 if (c.getAsignatura().equals(asignatura)) {
-                    tieneCursos = true;
-
-                    System.out.println("========================================");
-                    System.out.println("Curso: " + c.getIdCurso()
-                            + " | Año: " + c.getAnioCalendario()
-                            + " | Cuatrimestre: " + c.getCuatrimestreDictado());
-                    System.out.println("Clases dictadas: " + c.getClasesDictadas().size());
-                    System.out.println("========================================");
-
                     for (Inscripcion i : c.getInscripciones()) {
-                        System.out.println("Alumno:     " + i.getAlumno());
-                        System.out.println("Modalidad:  " + i.getModalidad());
-                        System.out.println("Presentes:  " + i.cantidadPresentes()
-                                + " / " + c.getClasesDictadas().size());
-                        System.out.println("Porcentaje: " + i.calcularPorcentajeAsistencia() + "%");
-                        System.out.println("Condición:  " + i.obtenerCondicion());
-                        System.out.println("Asistencias detalladas:");
-                        for (Asistencia a : i.getAsistencias()) {
-                            System.out.println("  " + a);
-                        }
-                        System.out.println("----------------------------------------");
+                        resultado.add(i);
                     }
                 }
             }
-            if (!tieneCursos) {
-                System.out.println("No hay cursos registrados para la asignatura: " + asignatura.getNombre());
-            }
+            return resultado;
         }
+
     }
-    public void alumnosLibres() {
+
+    /**
+     * Devuelve todas las inscripciones cuya condición final es {@link CondicionAlumno#LIBRE},
+     * sin importar la asignatura ni el año.
+     *
+     * @return Lista de inscripciones con condición LIBRE.
+     *         Lista vacía si no hay ninguna.
+     */
+    public List<Inscripcion> obtenerAlumnosLibres() {
+        List<Inscripcion> resultado = new ArrayList<>();
+
         for (Curso c : cursos) {
             for (Inscripcion i : c.getInscripciones()) {
                 if (i.obtenerCondicion() == CondicionAlumno.LIBRE) {
-                    System.out.println(i.getAlumno() + " - " + c.getAsignatura().getNombre() + " (Curso: " + c.getIdCurso() + ")");
+                    resultado.add(i);
                 }
             }
         }
+        return resultado;
     }
+
     /**
-     * Muestra en pantalla todos los alumnos que quedaron libres en un año específico.
-     * @param anio El año que se quiere consultar (ejemplo: 2026).
+     * Devuelve las inscripciones con condición {@link CondicionAlumno#LIBRE}
+     * correspondientes a cursos del año calendario indicado.
+     *
+     * <p><b>Nota:</b> filtra por {@code anioCalendario} del curso (ej: 2026),
+     * que es el año del calendario gregoriano, no el año académico de la carrera.</p>
+     *
+     * @param anioCalendario El año a filtrar (ej: 2026).
+     * @return Lista de inscripciones LIBRE para ese año. Lista vacía si no hay ninguna.
      */
-    public void alumnosLibres(int anio) {
+    public List<Inscripcion> obtenerAlumnosLibres(int anioCalendario) {
+        List<Inscripcion> resultado = new ArrayList<>();
+
         for (Curso c : cursos) {
-            if (c.getAnioCalendario() == anio) {
+            if (c.getAnioCalendario() == anioCalendario) {
                 for (Inscripcion i : c.getInscripciones()) {
                     if (i.obtenerCondicion() == CondicionAlumno.LIBRE) {
-                        System.out.println(i.getAlumno() + " - " + c.getAsignatura().getNombre() + " (Año: " + anio + ")");
+                        resultado.add(i);
                     }
                 }
             }
         }
+
+        return resultado;
     }
     /**
-     * Retorna el conjunto de alumnos ordenado (TreeSet → orden alfabético por compareTo).
-     * Usado por GeneradorXML para serializar el estado del sistema.
+     * Retorna el conjunto de alumnos ordenado alfabéticamente.
+     *
      * @return Vista no modificable del conjunto de alumnos.
      */
     public Set<Alumno> getAlumnos() {
@@ -242,7 +286,7 @@ public class Universidad implements Serializable {
 
     /**
      * Retorna la lista de asignaturas registradas.
-     * Usado por GeneradorXML y para búsquedas internas.
+     *
      * @return Vista no modificable de la lista de asignaturas.
      */
     public List<Asignatura> getAsignaturas() {
@@ -251,7 +295,7 @@ public class Universidad implements Serializable {
 
     /**
      * Retorna la lista de cursos registrados.
-     * Usado por GeneradorXML y por las búsquedas de reportes.
+     *
      * @return Vista no modificable de la lista de cursos.
      */
     public List<Curso> getCursos() {
