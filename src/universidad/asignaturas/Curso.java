@@ -2,6 +2,7 @@ package universidad.asignaturas;
 import java.io.Serializable;
 import java.io.Serial;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import universidad.clases.Clase;
 import universidad.inscripciones.Inscripcion;
@@ -58,11 +59,12 @@ public class Curso implements Serializable {
     }
 
     public List<Clase> getClasesDictadas() {
-        return clasesDictadas;
+        return Collections.unmodifiableList(clasesDictadas);
     }
 
     public List<Inscripcion> getInscripciones() {
-        return inscripciones;
+        return Collections.unmodifiableList(inscripciones);
+
     }
 
     public void agregarClase(Clase c) {
