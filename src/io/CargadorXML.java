@@ -253,11 +253,7 @@ public class CargadorXML {
     /**
      * Carga todos los {@code <curso>}, incluyendo sus {@code <clases>} e {@code <inscripciones>}.
      */
-    private static void cargarCursos(Element raiz,
-                                     Universidad universidad,
-                                     Map<String, Asignatura> mapaAsignaturas,
-                                     Map<String, Alumno> mapaAlumnos,
-                                     List<String> errores) {
+    private static void cargarCursos(Element raiz, Universidad universidad, Map<String, Asignatura> mapaAsignaturas, Map<String, Alumno> mapaAlumnos, List<String> errores) {
         NodeList seccion = raiz.getElementsByTagName("cursos");
         if (seccion.getLength() == 0) {
             errores.add("[ADVERTENCIA] No se encontró la sección <cursos> en el XML.");
@@ -270,12 +266,11 @@ public class CargadorXML {
             if (nodos.item(i).getNodeType() != Node.ELEMENT_NODE) continue;
             Element el = (Element) nodos.item(i);
             if (!el.getTagName().equals("curso")) continue;
-            numeroCurso++;
-            String idCurso          = atributo(el, "idCurso");
+            numeroCurso++;String idCurso = atributo(el, "idCurso");
             String codigoAsignatura = atributo(el, "codigoAsignatura");
-            String anioStr          = atributo(el, "anioCalendario");
-            String cuatriStr        = atributo(el, "cuatrimestreDictado");
-            String contexto         = "<curso> #" + numeroCurso;
+            String anioStr = atributo(el, "anioCalendario");
+            String cuatriStr = atributo(el, "cuatrimestreDictado");
+            String contexto = "<curso> #" + numeroCurso;
             if (idCurso.isEmpty()) {
                 errores.add("[ERROR] " + contexto + ": falta el atributo 'idCurso'. Elemento omitido.");
                 continue;
@@ -336,24 +331,15 @@ public class CargadorXML {
         }
     }
 
-    // -----------------------------------------------------------------
-    // Sub-sección <clases> dentro de un <curso>
-    // -----------------------------------------------------------------
-
     /**
      * Carga las {@code <clase>} dentro del nodo {@code <clases>} de un curso.
      * Popula el mapa {@code mapaClases} para uso posterior en las asistencias.
      */
-    private static void cargarClasesDeCurso(Element elCurso,
-                                             Curso curso,
-                                             Map<String, Clase> mapaClases,
-                                             String contexto,
-                                             List<String> errores) {
+    private static void cargarClasesDeCurso(Element elCurso, Curso curso, Map<String, Clase> mapaClases, String contexto, List<String> errores) {
         NodeList seccion = elCurso.getElementsByTagName("clases");
         if (seccion.getLength() == 0) {
             return;
         }
-
         NodeList nodos = ((Element) seccion.item(0)).getChildNodes();
         int numeroClase = 0;
 
@@ -363,9 +349,9 @@ public class CargadorXML {
             if (!el.getTagName().equals("clase")) continue;
             numeroClase++;
 
-            String idClase      = atributo(el, "id");
+            String idClase = atributo(el, "id");
             String fechaHoraStr = atributo(el, "fechaHora");
-            String ctxClase     = contexto + " > <clase> #" + numeroClase;
+            String ctxClase = contexto + " > <clase> #" + numeroClase;
 
             if (idClase.isEmpty()) {
                 errores.add("[ERROR] " + ctxClase + ": falta el atributo 'id'. Elemento omitido.");
@@ -400,20 +386,13 @@ public class CargadorXML {
     /**
      * Carga las {@code <inscripcion>} (y sus {@code <asistencia>}) dentro de un curso.
      */
-    private static void cargarInscripcionesDeCurso(Element elCurso,
-                                                    Curso curso,
-                                                    Map<String, Alumno> mapaAlumnos,
-                                                    Map<String, Clase> mapaClases,
-                                                    String contexto,
-                                                    List<String> errores) {
+    private static void cargarInscripcionesDeCurso(Element elCurso, Curso curso, Map<String, Alumno> mapaAlumnos, Map<String, Clase> mapaClases, String contexto, List<String> errores) {
         NodeList seccion = elCurso.getElementsByTagName("inscripciones");
         if (seccion.getLength() == 0) {
             return;
         }
-
         NodeList nodos = ((Element) seccion.item(0)).getChildNodes();
         int numeroInsc = 0;
-
         for (int i = 0; i < nodos.getLength(); i++) {
             if (nodos.item(i).getNodeType() != Node.ELEMENT_NODE) continue;
             Element el = (Element) nodos.item(i);
@@ -464,16 +443,11 @@ public class CargadorXML {
      * Carga los registros de {@code <asistencia>} de una inscripción.
      * Cada asistencia referencia una clase por ID (debe existir en el curso).
      */
-    private static void cargarAsistenciasDeInscripcion(Element elInscripcion,
-                                                        Inscripcion inscripcion,
-                                                        Map<String, Clase> mapaClases,
-                                                        String contexto,
-                                                        List<String> errores) {
+    private static void cargarAsistenciasDeInscripcion(Element elInscripcion, Inscripcion inscripcion, Map<String, Clase> mapaClases, String contexto, List<String> errores) {
         NodeList seccion = elInscripcion.getElementsByTagName("asistencias");
         if (seccion.getLength() == 0) {
             return;
         }
-
         NodeList nodos = ((Element) seccion.item(0)).getChildNodes();
         int numeroAsist = 0;
 
@@ -519,7 +493,6 @@ public class CargadorXML {
             }
         }
     }
-    // Utilidades de lectura del DOM
     /**
      * Lee un atributo de un elemento. Retorna cadena vacía si no existe o está en blanco.
      */
@@ -532,6 +505,7 @@ public class CargadorXML {
      * Lee el contenido de texto del primer elemento hijo con el tag dado.
      * Retorna cadena vacía si no existe o está en blanco.
      */
+    @SuppressWarnings("SameParameterValue")
     private static String textoHijo(Element el, String tagHijo) {
         NodeList lista = el.getElementsByTagName(tagHijo);
         if (lista.getLength() == 0) return "";
