@@ -100,7 +100,8 @@ public class Inscripcion implements Serializable {
                     promociona += 20.0;
                 }
             }
-            if (promociona != -1.0 && asistencia >= promociona) {
+            boolean puedePromocionar = curso.getAsignatura().isPromocional() && promociona != -1.0;
+            if (puedePromocionar && asistencia >= promociona) {
                 return CondicionAlumno.PROMOCIONA;
             } else if (asistencia >= habilita) {
                 return CondicionAlumno.HABILITA;
