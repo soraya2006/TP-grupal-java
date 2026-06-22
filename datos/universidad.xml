@@ -1,252 +1,244 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <universidad>
     <alumnos>
-        <alumno matricula="A008" apellido="Díaz" nombre="Bruno" fechaNacimiento="2002-12-05" />
-        <alumno matricula="A004" apellido="Fernández" nombre="Lucía" fechaNacimiento="2003-08-12" />
-        <alumno matricula="A002" apellido="García" nombre="María" fechaNacimiento="2002-11-18" />
-        <alumno matricula="A006" apellido="Gómez" nombre="Tomás" fechaNacimiento="2001-09-30" />
-        <alumno matricula="A003" apellido="López" nombre="Pedro" fechaNacimiento="2004-01-25" />
-        <alumno matricula="A005" apellido="Martínez" nombre="Sofía" fechaNacimiento="2002-03-07" />
-        <alumno matricula="A001" apellido="Pérez" nombre="Juan" fechaNacimiento="2003-05-10" />
-        <alumno matricula="A007" apellido="Rodríguez" nombre="Camila" fechaNacimiento="2003-02-15" />
-        <alumno matricula="A010" apellido="Romero" nombre="Joaquín" fechaNacimiento="2003-10-08" />
-        <alumno matricula="A011" apellido="Ruiz" nombre="Martina" fechaNacimiento="2002-04-19" />
-        <alumno matricula="A009" apellido="Sánchez" nombre="Valentina" fechaNacimiento="2004-06-21" />
-        <alumno matricula="A012" apellido="Torres" nombre="Mateo" fechaNacimiento="2003-07-11" />
-        <alumno matricula="A013" apellido="Vega" nombre="Carla" fechaNacimiento="2003-01-14" />
+        <alumno apellido="Díaz" fechaNacimiento="2002-12-05" matricula="A008" nombre="Bruno"/>
+        <alumno apellido="Fernández" fechaNacimiento="2003-08-12" matricula="A004" nombre="Lucía"/>
+        <alumno apellido="García" fechaNacimiento="2002-11-18" matricula="A002" nombre="María"/>
+        <alumno apellido="Gómez" fechaNacimiento="2001-09-30" matricula="A006" nombre="Tomás"/>
+        <alumno apellido="López" fechaNacimiento="2004-01-25" matricula="A003" nombre="Pedro"/>
+        <alumno apellido="Martínez" fechaNacimiento="2002-03-07" matricula="A005" nombre="Sofía"/>
+        <alumno apellido="Pérez" fechaNacimiento="2003-05-10" matricula="A001" nombre="Juan"/>
+        <alumno apellido="Rodríguez" fechaNacimiento="2003-02-15" matricula="A007" nombre="Camila"/>
+        <alumno apellido="Romero" fechaNacimiento="2003-10-08" matricula="A010" nombre="Joaquín"/>
+        <alumno apellido="Ruiz" fechaNacimiento="2002-04-19" matricula="A011" nombre="Martina"/>
+        <alumno apellido="Sánchez" fechaNacimiento="2004-06-21" matricula="A009" nombre="Valentina"/>
+        <alumno apellido="Torres" fechaNacimiento="2003-07-11" matricula="A012" nombre="Mateo"/>
+        <alumno apellido="Vega" fechaNacimiento="2003-01-14" matricula="A013" nombre="Carla"/>
     </alumnos>
-
     <asignaturas>
-        <asignatura tipo="OBLIGATORIA" codigo="AED2" cuatrimestre="2" promocional="true">
+        <asignatura codigo="AED2" cuatrimestre="2" promocional="true" tipo="OBLIGATORIA">
             <nombre>Algoritmos y Estructuras de Datos II</nombre>
         </asignatura>
-        <asignatura tipo="OBLIGATORIA" codigo="POO" cuatrimestre="3" promocional="true">
+        <asignatura codigo="POO" cuatrimestre="3" promocional="true" tipo="OBLIGATORIA">
             <nombre>Programación Orientada a Objetos</nombre>
         </asignatura>
-        <asignatura tipo="OPTATIVA" codigo="IA01" cuatrimestre="8" promocional="true">
+        <asignatura codigo="IA01" cuatrimestre="8" promocional="true" tipo="OPTATIVA">
             <nombre>Inteligencia Artificial</nombre>
         </asignatura>
-        <asignatura tipo="OPTATIVA" codigo="UX01" cuatrimestre="7" promocional="true">
+        <asignatura codigo="UX01" cuatrimestre="7" promocional="true" tipo="OPTATIVA">
             <nombre>Diseño UX</nombre>
         </asignatura>
-        <asignatura tipo="PASANTIA" codigo="PAS01" cuatrimestre="9" promocional="false">
+        <asignatura codigo="PAS01" cuatrimestre="9" tipo="PASANTIA">
             <nombre>Pasantía Profesional</nombre>
         </asignatura>
-        <asignatura tipo="PASANTIA" codigo="TES01" cuatrimestre="10" promocional="false">
+        <asignatura codigo="TES01" cuatrimestre="10" tipo="PASANTIA">
             <nombre>Trabajo Final</nombre>
         </asignatura>
-        <asignatura tipo="OBLIGATORIA" codigo="BD01" cuatrimestre="4" promocional="true">
+        <asignatura codigo="BD01" cuatrimestre="4" promocional="true" tipo="OBLIGATORIA">
             <nombre>Base de Datos</nombre>
         </asignatura>
     </asignaturas>
-
     <cursos>
-        <curso idCurso="AED2-2025" codigoAsignatura="AED2" anioCalendario="2025" cuatrimestreDictado="1">
+        <curso anioCalendario="2025" codigoAsignatura="AED2" cuatrimestreDictado="1" idCurso="AED2-2025">
             <clases>
-                <clase id="AED2-01" fechaHora="2025-03-03T18:00:00" />
-                <clase id="AED2-02" fechaHora="2025-03-10T18:00:00" />
-                <clase id="AED2-03" fechaHora="2025-03-17T18:00:00" />
-                <clase id="AED2-04" fechaHora="2025-03-24T18:00:00" />
-                <clase id="AED2-05" fechaHora="2025-03-31T18:00:00" />
+                <clase fechaHora="2025-03-03T18:00" id="AED2-01"/>
+                <clase fechaHora="2025-03-10T18:00" id="AED2-02"/>
+                <clase fechaHora="2025-03-17T18:00" id="AED2-03"/>
+                <clase fechaHora="2025-03-24T18:00" id="AED2-04"/>
+                <clase fechaHora="2025-03-31T18:00" id="AED2-05"/>
             </clases>
             <inscripciones>
                 <inscripcion matriculaAlumno="A001" modalidad="REGULAR">
                     <asistencias>
-                        <asistencia idClase="AED2-01" presente="true" />
-                        <asistencia idClase="AED2-02" presente="true" />
-                        <asistencia idClase="AED2-03" presente="true" />
-                        <asistencia idClase="AED2-04" presente="true" />
-                        <asistencia idClase="AED2-05" presente="true" />
+                        <asistencia idClase="AED2-01" presente="true"/>
+                        <asistencia idClase="AED2-02" presente="true"/>
+                        <asistencia idClase="AED2-03" presente="true"/>
+                        <asistencia idClase="AED2-04" presente="true"/>
+                        <asistencia idClase="AED2-05" presente="true"/>
                     </asistencias>
                 </inscripcion>
                 <inscripcion matriculaAlumno="A002" modalidad="CONDICIONAL">
                     <asistencias>
-                        <asistencia idClase="AED2-01" presente="true" />
-                        <asistencia idClase="AED2-02" presente="true" />
-                        <asistencia idClase="AED2-03" presente="true" />
-                        <asistencia idClase="AED2-04" presente="true" />
-                        <asistencia idClase="AED2-05" presente="false" />
+                        <asistencia idClase="AED2-01" presente="true"/>
+                        <asistencia idClase="AED2-02" presente="true"/>
+                        <asistencia idClase="AED2-03" presente="true"/>
+                        <asistencia idClase="AED2-04" presente="true"/>
+                        <asistencia idClase="AED2-05" presente="false"/>
                     </asistencias>
                 </inscripcion>
                 <inscripcion matriculaAlumno="A003" modalidad="OYENTE">
                     <asistencias>
-                        <asistencia idClase="AED2-01" presente="true" />
-                        <asistencia idClase="AED2-02" presente="true" />
-                        <asistencia idClase="AED2-03" presente="true" />
-                        <asistencia idClase="AED2-04" presente="true" />
-                        <asistencia idClase="AED2-05" presente="true" />
+                        <asistencia idClase="AED2-01" presente="true"/>
+                        <asistencia idClase="AED2-02" presente="true"/>
+                        <asistencia idClase="AED2-03" presente="true"/>
+                        <asistencia idClase="AED2-04" presente="true"/>
+                        <asistencia idClase="AED2-05" presente="true"/>
                     </asistencias>
                 </inscripcion>
             </inscripciones>
         </curso>
-
-        <curso idCurso="POO-2025" codigoAsignatura="POO" anioCalendario="2025" cuatrimestreDictado="1">
+        <curso anioCalendario="2025" codigoAsignatura="POO" cuatrimestreDictado="1" idCurso="POO-2025">
             <clases>
-                <clase id="POO-01" fechaHora="2025-03-04T19:00:00" />
-                <clase id="POO-02" fechaHora="2025-03-11T19:00:00" />
-                <clase id="POO-03" fechaHora="2025-03-18T19:00:00" />
-                <clase id="POO-04" fechaHora="2025-03-25T19:00:00" />
-                <clase id="POO-05" fechaHora="2025-04-01T19:00:00" />
+                <clase fechaHora="2025-03-04T19:00" id="POO-01"/>
+                <clase fechaHora="2025-03-11T19:00" id="POO-02"/>
+                <clase fechaHora="2025-03-18T19:00" id="POO-03"/>
+                <clase fechaHora="2025-03-25T19:00" id="POO-04"/>
+                <clase fechaHora="2025-04-01T19:00" id="POO-05"/>
             </clases>
             <inscripciones>
                 <inscripcion matriculaAlumno="A004" modalidad="REGULAR">
                     <asistencias>
-                        <asistencia idClase="POO-01" presente="true" />
-                        <asistencia idClase="POO-02" presente="true" />
-                        <asistencia idClase="POO-03" presente="true" />
-                        <asistencia idClase="POO-04" presente="true" />
-                        <asistencia idClase="POO-05" presente="false" />
+                        <asistencia idClase="POO-01" presente="true"/>
+                        <asistencia idClase="POO-02" presente="true"/>
+                        <asistencia idClase="POO-03" presente="true"/>
+                        <asistencia idClase="POO-04" presente="true"/>
+                        <asistencia idClase="POO-05" presente="false"/>
                     </asistencias>
                 </inscripcion>
                 <inscripcion matriculaAlumno="A005" modalidad="REGULAR">
                     <asistencias>
-                        <asistencia idClase="POO-01" presente="true" />
-                        <asistencia idClase="POO-02" presente="true" />
-                        <asistencia idClase="POO-03" presente="true" />
-                        <asistencia idClase="POO-04" presente="false" />
-                        <asistencia idClase="POO-05" presente="false" />
+                        <asistencia idClase="POO-01" presente="true"/>
+                        <asistencia idClase="POO-02" presente="true"/>
+                        <asistencia idClase="POO-03" presente="true"/>
+                        <asistencia idClase="POO-04" presente="false"/>
+                        <asistencia idClase="POO-05" presente="false"/>
                     </asistencias>
                 </inscripcion>
                 <inscripcion matriculaAlumno="A007" modalidad="CONDICIONAL">
                     <asistencias>
-                        <asistencia idClase="POO-01" presente="true" />
-                        <asistencia idClase="POO-02" presente="true" />
-                        <asistencia idClase="POO-03" presente="true" />
-                        <asistencia idClase="POO-04" presente="true" />
-                        <asistencia idClase="POO-05" presente="true" />
+                        <asistencia idClase="POO-01" presente="true"/>
+                        <asistencia idClase="POO-02" presente="true"/>
+                        <asistencia idClase="POO-03" presente="true"/>
+                        <asistencia idClase="POO-04" presente="true"/>
+                        <asistencia idClase="POO-05" presente="true"/>
                     </asistencias>
                 </inscripcion>
                 <inscripcion matriculaAlumno="A013" modalidad="REGULAR">
                     <asistencias>
-                        <asistencia idClase="POO-01" presente="false" />
-                        <asistencia idClase="POO-02" presente="false" />
-                        <asistencia idClase="POO-03" presente="false" />
-                        <asistencia idClase="POO-04" presente="false" />
-                        <asistencia idClase="POO-05" presente="false" />
+                        <asistencia idClase="POO-01" presente="false"/>
+                        <asistencia idClase="POO-02" presente="false"/>
+                        <asistencia idClase="POO-03" presente="false"/>
+                        <asistencia idClase="POO-04" presente="false"/>
+                        <asistencia idClase="POO-05" presente="false"/>
                     </asistencias>
                 </inscripcion>
             </inscripciones>
         </curso>
-
-        <curso idCurso="IA01-2026" codigoAsignatura="IA01" anioCalendario="2026" cuatrimestreDictado="1">
+        <curso anioCalendario="2026" codigoAsignatura="IA01" cuatrimestreDictado="1" idCurso="IA01-2026">
             <clases>
-                <clase id="IA01-01" fechaHora="2026-03-05T18:00:00" />
-                <clase id="IA01-02" fechaHora="2026-03-12T18:00:00" />
-                <clase id="IA01-03" fechaHora="2026-03-19T18:00:00" />
-                <clase id="IA01-04" fechaHora="2026-03-26T18:00:00" />
-                <clase id="IA01-05" fechaHora="2026-04-02T18:00:00" />
+                <clase fechaHora="2026-03-05T18:00" id="IA01-01"/>
+                <clase fechaHora="2026-03-12T18:00" id="IA01-02"/>
+                <clase fechaHora="2026-03-19T18:00" id="IA01-03"/>
+                <clase fechaHora="2026-03-26T18:00" id="IA01-04"/>
+                <clase fechaHora="2026-04-02T18:00" id="IA01-05"/>
             </clases>
             <inscripciones>
                 <inscripcion matriculaAlumno="A006" modalidad="REGULAR">
                     <asistencias>
-                        <asistencia idClase="IA01-01" presente="true" />
-                        <asistencia idClase="IA01-02" presente="true" />
-                        <asistencia idClase="IA01-03" presente="true" />
-                        <asistencia idClase="IA01-04" Skinner="false" presente="false" />
-                        <asistencia idClase="IA01-05" presente="false" />
+                        <asistencia idClase="IA01-01" presente="true"/>
+                        <asistencia idClase="IA01-02" presente="true"/>
+                        <asistencia idClase="IA01-03" presente="true"/>
+                        <asistencia idClase="IA01-04" presente="false"/>
+                        <asistencia idClase="IA01-05" presente="false"/>
                     </asistencias>
                 </inscripcion>
                 <inscripcion matriculaAlumno="A008" modalidad="CONDICIONAL">
                     <asistencias>
-                        <asistencia idClase="IA01-01" presente="true" />
-                        <asistencia idClase="IA01-02" presente="true" />
-                        <asistencia idClase="IA01-03" presente="true" />
-                        <asistencia idClase="IA01-04" presente="false" />
-                        <asistencia idClase="IA01-05" presente="false" />
+                        <asistencia idClase="IA01-01" presente="true"/>
+                        <asistencia idClase="IA01-02" presente="true"/>
+                        <asistencia idClase="IA01-03" presente="true"/>
+                        <asistencia idClase="IA01-04" presente="false"/>
+                        <asistencia idClase="IA01-05" presente="false"/>
                     </asistencias>
                 </inscripcion>
                 <inscripcion matriculaAlumno="A009" modalidad="OYENTE">
                     <asistencias>
-                        <asistencia idClase="IA01-01" presente="true" />
-                        <asistencia idClase="IA01-02" presente="true" />
-                        <asistencia idClase="IA01-03" presente="true" />
-                        <asistencia idClase="IA01-04" presente="true" />
-                        <asistencia idClase="IA01-05" presente="true" />
+                        <asistencia idClase="IA01-01" presente="true"/>
+                        <asistencia idClase="IA01-02" presente="true"/>
+                        <asistencia idClase="IA01-03" presente="true"/>
+                        <asistencia idClase="IA01-04" presente="true"/>
+                        <asistencia idClase="IA01-05" presente="true"/>
                     </asistencias>
                 </inscripcion>
             </inscripciones>
         </curso>
-
-        <curso idCurso="UX01-2026" codigoAsignatura="UX01" anioCalendario="2026" cuatrimestreDictado="1">
+        <curso anioCalendario="2026" codigoAsignatura="UX01" cuatrimestreDictado="1" idCurso="UX01-2026">
             <clases>
-                <clase id="UX01-01" fechaHora="2026-03-06T17:00:00" />
-                <clase id="UX01-02" fechaHora="2026-03-13T17:00:00" />
-                <clase id="UX01-03" fechaHora="2026-03-20T17:00:00" />
-                <clase id="UX01-04" fechaHora="2026-03-27T17:00:00" />
-                <clase id="UX01-05" fechaHora="2026-04-03T17:00:00" />
+                <clase fechaHora="2026-03-06T17:00" id="UX01-01"/>
+                <clase fechaHora="2026-03-13T17:00" id="UX01-02"/>
+                <clase fechaHora="2026-03-20T17:00" id="UX01-03"/>
+                <clase fechaHora="2026-03-27T17:00" id="UX01-04"/>
+                <clase fechaHora="2026-04-03T17:00" id="UX01-05"/>
             </clases>
             <inscripciones>
                 <inscripcion matriculaAlumno="A010" modalidad="REGULAR">
                     <asistencias>
-                        <asistencia idClase="UX01-01" presente="false" />
-                        <asistencia idClase="UX01-02" presente="false" />
-                        <asistencia idClase="UX01-03" presente="false" />
-                        <asistencia idClase="UX01-04" presente="false" />
-                        <asistencia idClase="UX01-05" presente="false" />
+                        <asistencia idClase="UX01-01" presente="false"/>
+                        <asistencia idClase="UX01-02" presente="false"/>
+                        <asistencia idClase="UX01-03" presente="false"/>
+                        <asistencia idClase="UX01-04" presente="false"/>
+                        <asistencia idClase="UX01-05" presente="false"/>
                     </asistencias>
                 </inscripcion>
                 <inscripcion matriculaAlumno="A011" modalidad="CONDICIONAL">
                     <asistencias>
-                        <asistencia idClase="UX01-01" presente="true" />
-                        <asistencia idClase="UX01-02" presente="true" />
-                        <asistencia idClase="UX01-03" presente="true" />
-                        <asistencia idClase="UX01-04" presente="true" />
-                        <asistencia idClase="UX01-05" presente="false" />
+                        <asistencia idClase="UX01-01" presente="true"/>
+                        <asistencia idClase="UX01-02" presente="true"/>
+                        <asistencia idClase="UX01-03" presente="true"/>
+                        <asistencia idClase="UX01-04" presente="true"/>
+                        <asistencia idClase="UX01-05" presente="false"/>
                     </asistencias>
                 </inscripcion>
                 <inscripcion matriculaAlumno="A012" modalidad="REGULAR">
                     <asistencias>
-                        <asistencia idClase="UX01-01" presente="true" />
-                        <asistencia idClase="UX01-02" presente="true" />
-                        <asistencia idClase="UX01-03" presente="true" />
-                        <asistencia idClase="UX01-04" presente="false" />
-                        <asistencia idClase="UX01-05" presente="false" />
+                        <asistencia idClase="UX01-01" presente="true"/>
+                        <asistencia idClase="UX01-02" presente="true"/>
+                        <asistencia idClase="UX01-03" presente="true"/>
+                        <asistencia idClase="UX01-04" presente="false"/>
+                        <asistencia idClase="UX01-05" presente="false"/>
                     </asistencias>
                 </inscripcion>
             </inscripciones>
         </curso>
-
-        <curso idCurso="PAS01-2026" codigoAsignatura="PAS01" anioCalendario="2026" cuatrimestreDictado="1">
+        <curso anioCalendario="2026" codigoAsignatura="PAS01" cuatrimestreDictado="1" idCurso="PAS01-2026">
             <clases>
-                <clase id="PAS01-01" fechaHora="2026-03-08T09:00:00" />
-                <clase id="PAS01-02" fechaHora="2026-03-15T09:00:00" />
-                <clase id="PAS01-03" fechaHora="2026-03-22T09:00:00" />
-                <clase id="PAS01-04" fechaHora="2026-03-29T09:00:00" />
+                <clase fechaHora="2026-03-08T09:00" id="PAS01-01"/>
+                <clase fechaHora="2026-03-15T09:00" id="PAS01-02"/>
+                <clase fechaHora="2026-03-22T09:00" id="PAS01-03"/>
+                <clase fechaHora="2026-03-29T09:00" id="PAS01-04"/>
             </clases>
             <inscripciones>
                 <inscripcion matriculaAlumno="A001" modalidad="REGULAR">
                     <asistencias>
-                        <asistencia idPh="PAS01-01" idClase="PAS01-01" presente="true" />
-                        <asistencia idClase="PAS01-02" presente="true" />
-                        <asistencia idClase="PAS01-03" presente="true" />
-                        <asistencia idClase="PAS01-04" presente="false" />
+                        <asistencia idClase="PAS01-01" presente="true"/>
+                        <asistencia idClase="PAS01-02" presente="true"/>
+                        <asistencia idClase="PAS01-03" presente="true"/>
+                        <asistencia idClase="PAS01-04" presente="false"/>
                     </asistencias>
                 </inscripcion>
             </inscripciones>
         </curso>
-
-        <curso idCurso="TES01-2026" codigoAsignatura="TES01" anioCalendario="2026" cuatrimestreDictado="1">
+        <curso anioCalendario="2026" codigoAsignatura="TES01" cuatrimestreDictado="1" idCurso="TES01-2026">
             <clases>
-                <clase id="TES01-01" fechaHora="2026-03-09T18:00:00" />
-                <clase id="TES01-02" fechaHora="2026-03-16T18:00:00" />
-                <clase id="TES01-03" fechaHora="2026-03-23T18:00:00" />
-                <clase id="TES01-04" fechaHora="2026-03-30T18:00:00" />
+                <clase fechaHora="2026-03-09T18:00" id="TES01-01"/>
+                <clase fechaHora="2026-03-16T18:00" id="TES01-02"/>
+                <clase fechaHora="2026-03-23T18:00" id="TES01-03"/>
+                <clase fechaHora="2026-03-30T18:00" id="TES01-04"/>
             </clases>
             <inscripciones>
                 <inscripcion matriculaAlumno="A002" modalidad="REGULAR">
                     <asistencias>
-                        <asistencia idClase="TES01-01" presente="true" />
-                        <asistencia idClase="TES01-02" presente="true" />
-                        <asistencia idClase="TES01-03" presente="false" />
-                        <asistencia idClase="TES01-04" presente="false" />
+                        <asistencia idClase="TES01-01" presente="true"/>
+                        <asistencia idClase="TES01-02" presente="true"/>
+                        <asistencia idClase="TES01-03" presente="false"/>
+                        <asistencia idClase="TES01-04" presente="false"/>
                     </asistencias>
                 </inscripcion>
             </inscripciones>
         </curso>
-
-        <curso idCurso="BD01-2026" codigoAsignatura="BD01" anioCalendario="2026" cuatrimestreDictado="1">
-            <clases></clases>
-            <inscripciones></inscripciones>
+        <curso anioCalendario="2026" codigoAsignatura="BD01" cuatrimestreDictado="1" idCurso="BD01-2026">
+            <clases/>
+            <inscripciones/>
         </curso>
     </cursos>
 </universidad>

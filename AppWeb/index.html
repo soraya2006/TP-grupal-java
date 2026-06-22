@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Sistema de Gestión Universitaria ✨</title>
+    <style>
+        :root {
+            --bg-color: #fdf6f6;
+            --container-bg: #ffffff;
+            --primary-pink: #ffb7b2;
+            --primary-yellow: #ffdac1;
+            --text-color: #4a4a4a;
+            --accent-soft: #e2f0cb;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 40px;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+        }
+
+        .container {
+            max-width: 800px;
+            background: var(--container-bg);
+            padding: 30px;
+            border-radius: 16px;
+            box-shadow: 0 8px 20px rgba(255, 183, 178, 0.2);
+            margin: 0 auto;
+        }
+
+        h1 {
+            text-align: center;
+            color: #ff9aa2;
+            font-size: 28px;
+            margin-bottom: 30px;
+        }
+
+        .section-title {
+            font-size: 18px;
+            font-weight: bold;
+            margin-top: 25px;
+            margin-bottom: 15px;
+            border-bottom: 2px dashed var(--primary-pink);
+            padding-bottom: 5px;
+        }
+
+        .grid-menu {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+        }
+
+        .card {
+            background: #fffdf9;
+            border: 1px solid var(--primary-yellow);
+            padding: 15px;
+            border-radius: 12px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        label {
+            font-size: 14px;
+            margin-bottom: 8px;
+            font-weight: 600;
+        }
+
+        input[type="text"], select {
+            width: 100%;
+            padding: 10px;
+            box-sizing: border-box;
+            border: 1px solid #ffe5ec;
+            border-radius: 8px;
+            background-color: #fffafb;
+            outline: none;
+        }
+
+        button {
+            background-color: var(--primary-pink);
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: transform 0.2s, background-color 0.2s;
+        }
+
+        button:hover {
+            background-color: #ff9aa2;
+            transform: translateY(-1px);
+        }
+
+        .btn-secondary {
+            background-color: var(--primary-yellow);
+            color: #5d5046;
+        }
+        .btn-secondary:hover {
+            background-color: #ffc6a5;
+        }
+
+        .resultado-box {
+            margin-top: 25px;
+            padding: 15px;
+            background: #f0f7f4;
+            border-left: 5px solid var(--accent-soft);
+            border-radius: 4px;
+            font-family: monospace;
+            min-height: 40px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>SISTEMA DE GESTIÓN UNIVERSITARIA</h1>
+
+    <div class="section-title">Persistencia de Datos</div>
+    <div class="grid-menu">
+        <div class="card">
+            <label>Cargar configuración base (XML)</label>
+            <button onclick="enviarAccion('1')">Ejecutar Carga</button>
+        </div>
+        <div class="card">
+            <label>Respaldar base actual (XML)</label>
+            <button onclick="enviarAccion('2')" class="btn-secondary">Guardar XML</button>
+        </div>
+        <div class="card">
+            <label>Guardar Estado del Sistema (Binario)</label>
+            <button onclick="enviarAccion('3')">Guardar Binario</button>
+        </div>
+        <div class="card">
+            <label>Recuperar Estado del Sistema (Binario)</label>
+            <button onclick="enviarAccion('4')" class="btn-secondary">Cargar Binario</button>
+        </div>
+    </div>
+
+    <div class="section-title">Operaciones y Asistencias</div>
+    <div class="card" style="margin-bottom: 15px;">
+        <label>Registrar Asistencia Manual</label>
+        <div style="display: flex; gap: 10px; margin-bottom: 10px;">
+            <input type="text" id="idCurso" placeholder="ID Curso (ej: C01)">
+            <input type="text" id="idClase" placeholder="ID Clase">
+            <input type="text" id="matricula" placeholder="Matrícula Alumno">
+        </div>
+        <div style="display: flex; gap: 10px;">
+            <select id="presente">
+                <option value="s">Presente</option>
+                <option value="n">Ausente</option>
+            </select>
+            <button onclick="registrarAsistencia()" style="flex-grow: 1;">Registrar</button>
+        </div>
+    </div>
+
+    <div class="section-title">Reportes y Estadísticas</div>
+    <div class="grid-menu">
+        <div class="card">
+            <label>Ranking de Presentismo</label>
+            <button onclick="enviarAccion('6')" class="btn-secondary">Generar Ranking</button>
+        </div>
+        <div class="card">
+            <label>Reporte por Asignatura</label>
+            <div style="display: flex; gap: 5px;">
+                <input type="text" id="codAsignatura" placeholder="Código">
+                <button onclick="enviarAccion('7')">Ver</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="section-title">Estado de Salida</div>
+    <div class="resultado-box" id="consola">Consola lista para recibir operaciones...</div>
+</div>
+
+<script>
+    function enviarAccion(opcion) {
+        let params = "operacion=" + opcion;
+        if (opcion === '7') {
+            const inputCod = document.getElementById('codAsignatura');
+            params += "&codigo=" + (inputCod ? encodeURIComponent(inputCod.value) : "");
+        }
+
+        // Indicamos visualmente que la petición está en curso
+        document.getElementById('consola').innerText = "Procesando operación " + opcion + "...⏳";
+
+        fetch('/accion', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded'
+            },
+            body: params
+        })
+            .then(res => {
+                if (!res.ok) {
+                    throw new Error("Error en el servidor: HTTP " + res.status);
+                }
+                return res.text();
+            })
+            .then(data => {
+                document.getElementById('consola').innerText = data;
+            })
+            .catch(err => {
+                document.getElementById('consola').innerText = "[❌ Error]: " + err.message;
+                console.error(err);
+            });
+    }
+
+    function registrarAsistencia() {
+        let idCurso = encodeURIComponent(document.getElementById('idCurso').value);
+        let idClase = encodeURIComponent(document.getElementById('idClase').value);
+        let matricula = encodeURIComponent(document.getElementById('matricula').value);
+        let presente = encodeURIComponent(document.getElementById('presente').value);
+
+        let params = `operacion=5&idCurso=${idCurso}&idClase=${idClase}&matricula=${matricula}&presente=${presente}`;
+
+        document.getElementById('consola').innerText = "Registrando asistencia...⏳";
+
+        fetch('/accion', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded'
+            },
+            body: params
+        })
+            .then(res => {
+                if (!res.ok) {
+                    throw new Error("Error en el servidor: HTTP " + res.status);
+                }
+                return res.text();
+            })
+            .then(data => {
+                document.getElementById('consola').innerText = data;
+            })
+            .catch(err => {
+                document.getElementById('consola').innerText = "[❌ Error]: " + err.message;
+                console.error(err);
+            });
+    }
+</script>
+</body>
+</html>
