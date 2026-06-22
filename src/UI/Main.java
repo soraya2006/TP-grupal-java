@@ -194,7 +194,7 @@ public class Main {
                                 sb.append("ALUMNOS LIBRES - TODAS LAS ASIGNATURAS:\n\n");
                                 for (universidad.inscripciones.Inscripcion i : libres) {
                                     sb.append("Alumno: ").append(i.getAlumno()).append("\n");
-                                    sb.append("Asignatura: ").append(i.getCurso().getAsignatura().getNombre());
+                                    sb.append("Asignatura: ").append(i.getCurso().getAsignatura().getNombre()).append("\n");
                                     sb.append("Curso: ").append(i.getCurso().getIdCurso()).append("\n");
                                     sb.append("─────────────────────────────────────────\n");
                                 }
@@ -212,7 +212,7 @@ public class Main {
                                     sb.append("ALUMNOS LIBRES - AÑO DE CARRERA ").append(anio).append(":\n\n");
                                     for (universidad.inscripciones.Inscripcion i : libres) {
                                         sb.append("Alumno: ").append(i.getAlumno()).append("\n");
-                                        sb.append("Asignatura: ").append(i.getCurso().getAsignatura().getNombre());
+                                        sb.append("Asignatura: ").append(i.getCurso().getAsignatura().getNombre()).append("\n");
                                         sb.append("Curso: ").append(i.getCurso().getIdCurso()).append("\n");
                                         sb.append("─────────────────────────────────────────\n");
                                     }
