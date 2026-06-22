@@ -1,0 +1,5 @@
+   ALUMNOS LIBRES — AÑO CALENDARIO: 2026
+  Díaz, Bruno (Matrícula: A008) — Inteligencia Artificial (Curso: IA01-2026)
+  Sánchez, Valentina (Matrícula: A009) — Inteligencia Artificial (Curso: IA01-2026)
+  Romero, Joaquín (Matrícula: A010) — Diseño UX (Curso: UX01-2026)
+  García, María (Matrícula: A002) — Trabajo Final (Curso: TES01-2026)

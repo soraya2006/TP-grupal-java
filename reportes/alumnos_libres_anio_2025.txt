@@ -1,0 +1,3 @@
+   ALUMNOS LIBRES — AÑO CALENDARIO: 2025
+  López, Pedro (Matrícula: A003) — Algoritmos y Estructuras de Datos II (Curso: AED2-2025)
+  Vega, Carla (Matrícula: A013) — Programación Orientada a Objetos (Curso: POO-2025)
