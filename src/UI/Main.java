@@ -193,9 +193,10 @@ public class Main {
                                 StringBuilder sb = new StringBuilder();
                                 sb.append("ALUMNOS LIBRES - TODAS LAS ASIGNATURAS:\n\n");
                                 for (universidad.inscripciones.Inscripcion i : libres) {
-                                    sb.append("• ").append(i.getAlumno())
-                                            .append(" en ").append(i.getCurso().getAsignatura().getNombre())
-                                            .append(" (Curso: ").append(i.getCurso().getIdCurso()).append(")\n");
+                                    sb.append("Alumno: ").append(i.getAlumno()).append("\n");
+                                    sb.append("Asignatura: ").append(i.getCurso().getAsignatura().getNombre());
+                                    sb.append("Curso: ").append(i.getCurso().getIdCurso()).append("\n");
+                                    sb.append("─────────────────────────────────────────\n");
                                 }
                                 UI.GeneradorReportes.guardarAlumnosLibresTodas(libres);
                                 resultado = sb.toString();
@@ -210,9 +211,10 @@ public class Main {
                                     StringBuilder sb = new StringBuilder();
                                     sb.append("ALUMNOS LIBRES - AÑO ").append(anio).append(":\n\n");
                                     for (universidad.inscripciones.Inscripcion i : libres) {
-                                        sb.append("• ").append(i.getAlumno())
-                                                .append(" en ").append(i.getCurso().getAsignatura().getNombre())
-                                                .append(" (Curso: ").append(i.getCurso().getIdCurso()).append(")\n");
+                                        sb.append("Alumno: ").append(i.getAlumno()).append("\n");
+                                        sb.append("Asignatura: ").append(i.getCurso().getAsignatura().getNombre());
+                                        sb.append("Curso: ").append(i.getCurso().getIdCurso()).append("\n");
+                                        sb.append("─────────────────────────────────────────\n");
                                     }
                                     UI.GeneradorReportes.guardarAlumnosLibresPorAnio(libres, anio);
                                     resultado = sb.toString();
