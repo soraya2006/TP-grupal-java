@@ -1,9 +1,9 @@
    RANKING DE ASIGNATURAS POR PRESENTISMO
-   1. Algoritmos y Estructuras de Datos II    93.33%
-   2. Pasantía Profesional                    75.00%
-   3. Inteligencia Artificial                 73.33%
-   4. Programación Orientada a Objetos        60.00%
-   5. Trabajo Final                           50.00%
-   6. Diseño UX                               46.67%
-   7. Base de Datos                            0.00%
+   1. Algoritmos y Estructuras de Datos II    93,33%
+   2. Pasantía Profesional                    75,00%
+   3. Inteligencia Artificial                 73,33%
+   4. Programación Orientada a Objetos        60,00%
+   5. Trabajo Final                           50,00%
+   6. Diseño UX                               46,67%
+   7. Base de Datos                            0,00%
 ========================================

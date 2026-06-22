@@ -5,12 +5,12 @@
     <title>Sistema de Gestión Universitaria</title>
     <style>
         :root {
-            --bg-color: #cbd5e1; /* Gris de fondo un poco más oscuro y serio */
-            --container-bg: #e9ecef; /* El gris de fondo de la versión anterior para el bloque central */
+            --bg-color: #cbd5e1;
+            --container-bg: #e9ecef;
             --card-bg: #ffffff;
-            --primary-blue: #1e3a8a; /* Azul institucional uniforme para todos los botones */
+            --primary-blue: #1e3a8a;
             --primary-hover: #11224e;
-            --border-color: #94a3b8; /* Borde intermedio que delimita sin contrastar en exceso */
+            --border-color: #94a3b8;
             --text-color: #1a202c;
             --text-muted: #4a5568;
             --console-bg: #f1f5f9;
@@ -27,7 +27,7 @@
         }
 
         .container {
-            max-width: 800px;
+            max-width: 1100px;
             background: var(--container-bg);
             padding: 40px;
             border-radius: 8px;
@@ -49,13 +49,30 @@
             padding-bottom: 15px;
         }
 
+        .bloque-principal {
+            display: grid;
+            grid-template-columns: 1.2fr 1fr;
+            gap: 30px;
+            margin-bottom: 30px;
+        }
+
+        .columna-izquierda {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .columna-medio {
+            display: flex;
+            flex-direction: column;
+        }
+
         .section-title {
             font-size: 13px;
             font-weight: 700;
             text-transform: uppercase;
             letter-spacing: 1px;
             color: var(--text-muted);
-            margin-top: 30px;
+            margin-top: 20px;
             margin-bottom: 15px;
             padding-bottom: 3px;
         }
@@ -64,6 +81,15 @@
             display: grid;
             grid-template-columns: 1fr 1fr;
             gap: 15px;
+        }
+
+        @media (max-width: 900px) {
+            .grid-menu {
+                grid-template-columns: 1fr;
+            }
+            .bloque-principal {
+                grid-template-columns: 1fr;
+            }
         }
 
         .card {
@@ -110,7 +136,7 @@
             font-size: 14px;
             font-weight: 600;
             transition: background-color 0.15s;
-            width: 100%; /* Asegura consistencia visual */
+            width: 100%;
         }
 
         button:hover {
@@ -118,7 +144,6 @@
         }
 
         .resultado-box {
-            margin-top: 20px;
             padding: 15px;
             background: var(--console-bg);
             border: 1px solid var(--console-border);
@@ -126,7 +151,8 @@
             font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, monospace;
             font-size: 13px;
             white-space: pre-wrap;
-            min-height: 50px;
+            flex-grow: 1;
+            min-height: 200px;
             color: #1e293b;
         }
     </style>
@@ -136,60 +162,71 @@
 <div class="container">
     <h1>Sistema de Gestión Universitaria</h1>
 
-    <div class="section-title">Persistencia de Datos</div>
-    <div class="grid-menu">
-        <div class="card">
-            <label>Cargar configuración base (XML)</label>
-            <button onclick="enviarAccion('1')">Ejecutar Carga</button>
+    <div class="bloque-principal">
+
+        <div class="columna-izquierda">
+            <div class="section-title" style="margin-top: 0;">Persistencia de Datos</div>
+            <div class="grid-menu">
+                <div class="card">
+                    <label>Cargar configuración base (XML)</label>
+                    <button onclick="enviarAccion('1')">Ejecutar Carga</button>
+                </div>
+                <div class="card">
+                    <label>Respaldar base actual (XML)</label>
+                    <button onclick="enviarAccion('2')">Guardar XML</button>
+                </div>
+                <div class="card">
+                    <label>Guardar Estado del Sistema (Binario)</label>
+                    <button onclick="enviarAccion('3')">Guardar Binario</button>
+                </div>
+                <div class="card">
+                    <label>Recuperar Estado del Sistema (Binario)</label>
+                    <button onclick="enviarAccion('4')">Cargar Binario</button>
+                </div>
+            </div>
+
+            <div class="section-title">Reportes y Estadísticas</div>
+            <div class="grid-menu">
+                <div class="card">
+                    <label>Ranking de Presentismo</label>
+                    <button onclick="enviarAccion('6')">Generar Ranking</button>
+                </div>
+                <div class="card">
+                    <label>Reporte por Asignatura</label>
+                    <div style="display: flex; gap: 5px; flex-direction: column; justify-content: space-between; height: 100%;">
+                        <input type="text" id="codAsignatura" placeholder="Código de asignatura" style="margin-bottom: 8px;">
+                        <button onclick="enviarAccion('7')">Consultar</button>
+                    </div>
+                </div>
+            </div>
         </div>
-        <div class="card">
-            <label>Respaldar base actual (XML)</label>
-            <button onclick="enviarAccion('2')">Guardar XML</button>
+
+        <div class="columna-medio">
+            <div class="section-title" style="margin-top: 0;">Consola de Salida</div>
+            <div class="resultado-box" id="consola">Consola lista para recibir operaciones.</div>
         </div>
-        <div class="card">
-            <label>Guardar Estado del Sistema (Binario)</label>
-            <button onclick="enviarAccion('3')">Guardar Binario</button>
-        </div>
-        <div class="card">
-            <label>Recuperar Estado del Sistema (Binario)</label>
-            <button onclick="enviarAccion('4')">Cargar Binario</button>
-        </div>
+
     </div>
 
-    <div class="section-title">Operaciones y Asistencias</div>
-    <div class="card" style="margin-bottom: 15px;">
-        <label>Registrar Asistencia Manual</label>
-        <div style="display: flex; gap: 10px; margin-bottom: 12px;">
-            <input type="text" id="idCurso" placeholder="ID Curso (ej: AED2-2025)">
-            <input type="text" id="idClase" placeholder="ID Clase (ej: AED2-01)">
-            <input type="text" id="matricula" placeholder="Matrícula Alumno">
-        </div>
-        <div style="display: flex; gap: 10px;">
-            <select id="presente" style="max-width: 150px;">
-                <option value="s">Presente</option>
-                <option value="n">Ausente</option>
-            </select>
-            <button onclick="registrarAsistencia()">Registrar Asistencia</button>
-        </div>
-    </div>
-
-    <div class="section-title">Reportes y Estadísticas</div>
-    <div class="grid-menu">
+    <div class="seccion-inferior">
+        <div class="section-title">Operaciones y Asistencias</div>
         <div class="card">
-            <label>Ranking de Presentismo</label>
-            <button onclick="enviarAccion('6')">Generar Ranking</button>
-        </div>
-        <div class="card">
-            <label>Reporte por Asignatura</label>
-            <div style="display: flex; gap: 5px;">
-                <input type="text" id="codAsignatura" placeholder="Código de asignatura">
-                <button onclick="enviarAccion('7')">Consultar</button>
+            <label>Registrar Asistencia Manual</label>
+            <div style="display: flex; gap: 10px; margin-bottom: 12px; flex-wrap: wrap;">
+                <input type="text" id="idCurso" placeholder="ID Curso (ej: AED2-2025)" style="flex: 1; min-width: 150px;">
+                <input type="text" id="idClase" placeholder="ID Clase (ej: AED2-01)" style="flex: 1; min-width: 150px;">
+                <input type="text" id="matricula" placeholder="Matrícula Alumno" style="flex: 1; min-width: 150px;">
+            </div>
+            <div style="display: flex; gap: 10px; align-items: center;">
+                <select id="presente" style="max-width: 150px;">
+                    <option value="s">Presente</option>
+                    <option value="n">Ausente</option>
+                </select>
+                <button onclick="registrarAsistencia()">Registrar Asistencia</button>
             </div>
         </div>
     </div>
 
-    <div class="section-title">Consola de Salida</div>
-    <div class="resultado-box" id="consola">Consola lista para recibir operaciones.</div>
 </div>
 
 <script>
