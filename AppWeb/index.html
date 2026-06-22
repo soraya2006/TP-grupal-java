@@ -2,48 +2,62 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <title>Sistema de Gestión Universitaria ✨</title>
+    <title>Sistema de Gestión Universitaria</title>
     <style>
         :root {
-            --bg-color: #fdf6f6;
-            --container-bg: #ffffff;
-            --primary-pink: #ffb7b2;
-            --primary-yellow: #ffdac1;
-            --text-color: #4a4a4a;
-            --accent-soft: #e2f0cb;
+            --bg-color: #cbd5e1; /* Gris de fondo un poco más oscuro y serio */
+            --container-bg: #e9ecef; /* El gris de fondo de la versión anterior para el bloque central */
+            --card-bg: #ffffff;
+            --primary-blue: #1e3a8a; /* Azul institucional uniforme para todos los botones */
+            --primary-hover: #11224e;
+            --border-color: #94a3b8; /* Borde intermedio que delimita sin contrastar en exceso */
+            --text-color: #1a202c;
+            --text-muted: #4a5568;
+            --console-bg: #f1f5f9;
+            --console-border: #64748b;
         }
 
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
             margin: 0;
-            padding: 40px;
+            padding: 40px 20px;
             background-color: var(--bg-color);
             color: var(--text-color);
+            line-height: 1.5;
         }
 
         .container {
             max-width: 800px;
             background: var(--container-bg);
-            padding: 30px;
-            border-radius: 16px;
-            box-shadow: 0 8px 20px rgba(255, 183, 178, 0.2);
+            padding: 40px;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
             margin: 0 auto;
+            border: 1px solid var(--border-color);
         }
 
         h1 {
             text-align: center;
-            color: #ff9aa2;
-            font-size: 28px;
+            color: var(--primary-blue);
+            font-size: 24px;
+            font-weight: 700;
+            margin-top: 0;
             margin-bottom: 30px;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+            border-bottom: 2px solid var(--primary-blue);
+            padding-bottom: 15px;
         }
 
         .section-title {
-            font-size: 18px;
-            font-weight: bold;
-            margin-top: 25px;
+            font-size: 13px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--text-muted);
+            margin-top: 30px;
             margin-bottom: 15px;
-            border-bottom: 2px dashed var(--primary-pink);
-            padding-bottom: 5px;
+            padding-bottom: 3px;
         }
 
         .grid-menu {
@@ -53,10 +67,10 @@
         }
 
         .card {
-            background: #fffdf9;
-            border: 1px solid var(--primary-yellow);
-            padding: 15px;
-            border-radius: 12px;
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            padding: 20px;
+            border-radius: 6px;
             display: flex;
             flex-direction: column;
             justify-content: space-between;
@@ -64,59 +78,63 @@
 
         label {
             font-size: 14px;
-            margin-bottom: 8px;
-            font-weight: 600;
+            margin-bottom: 12px;
+            font-weight: 500;
+            color: var(--text-color);
         }
 
         input[type="text"], select {
             width: 100%;
-            padding: 10px;
+            padding: 8px 12px;
             box-sizing: border-box;
-            border: 1px solid #ffe5ec;
-            border-radius: 8px;
-            background-color: #fffafb;
+            border: 1px solid var(--border-color);
+            border-radius: 4px;
+            background-color: #ffffff;
+            color: var(--text-color);
+            font-size: 14px;
             outline: none;
+            transition: border-color 0.2s;
+        }
+
+        input[type="text"]:focus, select:focus {
+            border-color: var(--primary-blue);
         }
 
         button {
-            background-color: var(--primary-pink);
-            color: white;
-            padding: 10px 15px;
-            border: none;
-            border-radius: 8px;
+            background-color: var(--primary-blue);
+            color: #ffffff;
+            padding: 10px 16px;
+            border: 1px solid transparent;
+            border-radius: 4px;
             cursor: pointer;
-            font-weight: bold;
-            transition: transform 0.2s, background-color 0.2s;
+            font-size: 14px;
+            font-weight: 600;
+            transition: background-color 0.15s;
+            width: 100%; /* Asegura consistencia visual */
         }
 
         button:hover {
-            background-color: #ff9aa2;
-            transform: translateY(-1px);
-        }
-
-        .btn-secondary {
-            background-color: var(--primary-yellow);
-            color: #5d5046;
-        }
-        .btn-secondary:hover {
-            background-color: #ffc6a5;
+            background-color: var(--primary-hover);
         }
 
         .resultado-box {
-            margin-top: 25px;
+            margin-top: 20px;
             padding: 15px;
-            background: #f0f7f4;
-            border-left: 5px solid var(--accent-soft);
+            background: var(--console-bg);
+            border: 1px solid var(--console-border);
             border-radius: 4px;
-            font-family: monospace;
-            min-height: 40px;
+            font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, monospace;
+            font-size: 13px;
+            white-space: pre-wrap;
+            min-height: 50px;
+            color: #1e293b;
         }
     </style>
 </head>
 <body>
 
 <div class="container">
-    <h1>SISTEMA DE GESTIÓN UNIVERSITARIA</h1>
+    <h1>Sistema de Gestión Universitaria</h1>
 
     <div class="section-title">Persistencia de Datos</div>
     <div class="grid-menu">
@@ -126,7 +144,7 @@
         </div>
         <div class="card">
             <label>Respaldar base actual (XML)</label>
-            <button onclick="enviarAccion('2')" class="btn-secondary">Guardar XML</button>
+            <button onclick="enviarAccion('2')">Guardar XML</button>
         </div>
         <div class="card">
             <label>Guardar Estado del Sistema (Binario)</label>
@@ -134,24 +152,24 @@
         </div>
         <div class="card">
             <label>Recuperar Estado del Sistema (Binario)</label>
-            <button onclick="enviarAccion('4')" class="btn-secondary">Cargar Binario</button>
+            <button onclick="enviarAccion('4')">Cargar Binario</button>
         </div>
     </div>
 
     <div class="section-title">Operaciones y Asistencias</div>
     <div class="card" style="margin-bottom: 15px;">
         <label>Registrar Asistencia Manual</label>
-        <div style="display: flex; gap: 10px; margin-bottom: 10px;">
-            <input type="text" id="idCurso" placeholder="ID Curso (ej: C01)">
-            <input type="text" id="idClase" placeholder="ID Clase">
+        <div style="display: flex; gap: 10px; margin-bottom: 12px;">
+            <input type="text" id="idCurso" placeholder="ID Curso (ej: AED2-2025)">
+            <input type="text" id="idClase" placeholder="ID Clase (ej: AED2-01)">
             <input type="text" id="matricula" placeholder="Matrícula Alumno">
         </div>
         <div style="display: flex; gap: 10px;">
-            <select id="presente">
+            <select id="presente" style="max-width: 150px;">
                 <option value="s">Presente</option>
                 <option value="n">Ausente</option>
             </select>
-            <button onclick="registrarAsistencia()" style="flex-grow: 1;">Registrar</button>
+            <button onclick="registrarAsistencia()">Registrar Asistencia</button>
         </div>
     </div>
 
@@ -159,19 +177,19 @@
     <div class="grid-menu">
         <div class="card">
             <label>Ranking de Presentismo</label>
-            <button onclick="enviarAccion('6')" class="btn-secondary">Generar Ranking</button>
+            <button onclick="enviarAccion('6')">Generar Ranking</button>
         </div>
         <div class="card">
             <label>Reporte por Asignatura</label>
             <div style="display: flex; gap: 5px;">
-                <input type="text" id="codAsignatura" placeholder="Código">
-                <button onclick="enviarAccion('7')">Ver</button>
+                <input type="text" id="codAsignatura" placeholder="Código de asignatura">
+                <button onclick="enviarAccion('7')">Consultar</button>
             </div>
         </div>
     </div>
 
-    <div class="section-title">Estado de Salida</div>
-    <div class="resultado-box" id="consola">Consola lista para recibir operaciones...</div>
+    <div class="section-title">Consola de Salida</div>
+    <div class="resultado-box" id="consola">Consola lista para recibir operaciones.</div>
 </div>
 
 <script>
@@ -182,8 +200,7 @@
             params += "&codigo=" + (inputCod ? encodeURIComponent(inputCod.value) : "");
         }
 
-        // Indicamos visualmente que la petición está en curso
-        document.getElementById('consola').innerText = "Procesando operación " + opcion + "...⏳";
+        document.getElementById('consola').innerText = "Procesando operación " + opcion + "...";
 
         fetch('/accion', {
             method: 'POST',
@@ -202,7 +219,7 @@
                 document.getElementById('consola').innerText = data;
             })
             .catch(err => {
-                document.getElementById('consola').innerText = "[❌ Error]: " + err.message;
+                document.getElementById('consola').innerText = "[Error]: " + err.message;
                 console.error(err);
             });
     }
@@ -215,7 +232,7 @@
 
         let params = `operacion=5&idCurso=${idCurso}&idClase=${idClase}&matricula=${matricula}&presente=${presente}`;
 
-        document.getElementById('consola').innerText = "Registrando asistencia...⏳";
+        document.getElementById('consola').innerText = "Registrando asistencia...";
 
         fetch('/accion', {
             method: 'POST',
@@ -234,7 +251,7 @@
                 document.getElementById('consola').innerText = data;
             })
             .catch(err => {
-                document.getElementById('consola').innerText = "[❌ Error]: " + err.message;
+                document.getElementById('consola').innerText = "[Error]: " + err.message;
                 console.error(err);
             });
     }

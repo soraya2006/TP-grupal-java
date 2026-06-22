@@ -40,8 +40,8 @@ import java.util.Scanner;
  */
 public class Main {
     private static Universidad universidad;
-    private static final String RUTA_XML_DEFAULT    = "datos/universidad.xml";
-    private static final String RUTA_BIN_DEFAULT    = "datos/universidad.dat";
+    private static final String RUTA_XML_DEFAULT = "datos/universidad.xml";
+    private static final String RUTA_BIN_DEFAULT = "datos/universidad.dat";
     private static final String RUTA_HTML = "AppWeb/index.html";
 
     /**
@@ -73,7 +73,6 @@ public class Main {
                 }
             });
 
-            // Handler para procesar las acciones del menú
             // Handler para procesar las acciones del menú
             server.createContext("/accion", new HttpHandler() {
                 @Override
