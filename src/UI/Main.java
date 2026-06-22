@@ -39,8 +39,8 @@ import java.util.List;
  */
 public class Main {
     private static Universidad universidad;
-    private static final String RUTA_XML_DEFAULT = "datos/universidad.xml";
-    private static final String RUTA_BIN_DEFAULT = "datos/universidad.dat";
+    private static final String RUTA_XML_DEFAULT = "src/io/universidad.xml";
+    private static final String RUTA_BIN_DEFAULT = "src/io/universidad.dat";
 
     /**
      * Crea el sistema, intenta recuperar el estado guardado y presenta el menú.
