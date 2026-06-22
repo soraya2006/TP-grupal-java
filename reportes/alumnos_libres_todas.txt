@@ -1,0 +1,7 @@
+   ALUMNOS LIBRES — TODAS LAS ASIGNATURAS
+  López, Pedro (Matrícula: A003) — Algoritmos y Estructuras de Datos II (Curso: AED2-2025)
+  Vega, Carla (Matrícula: A013) — Programación Orientada a Objetos (Curso: POO-2025)
+  Díaz, Bruno (Matrícula: A008) — Inteligencia Artificial (Curso: IA01-2026)
+  Sánchez, Valentina (Matrícula: A009) — Inteligencia Artificial (Curso: IA01-2026)
+  Romero, Joaquín (Matrícula: A010) — Diseño UX (Curso: UX01-2026)
+  García, María (Matrícula: A002) — Trabajo Final (Curso: TES01-2026)
