@@ -251,20 +251,22 @@ public class Universidad implements Serializable {
     }
 
     /**
-     * Devuelve las inscripciones con condición {@link CondicionAlumno#LIBRE}
-     * correspondientes a cursos del año calendario indicado.
+     * Devuelve las inscripciones con condición LIBRE correspondientes a
+     * asignaturas del año académico indicado.
      *
-     * <p><b>Nota:</b> filtra por {@code anioCalendario} del curso (ej: 2026),
-     * que es el año del calendario gregoriano, no el año académico de la carrera.</p>
+     * El año académico se calcula a partir del cuatrimestre de la asignatura:
+     * cuatrimestres 1-2 → año 1, cuatrimestres 3-4 → año 2, etc.
+     * Fórmula: (cuatrimestre - 1) / 2 + 1
      *
-     * @param anioCalendario El año a filtrar (ej: 2026).
+     * @param anioCarrera El año académico a filtrar (1 a 5).
      * @return Lista de inscripciones LIBRE para ese año. Lista vacía si no hay ninguna.
      */
-    public List<Inscripcion> alumnosLibres(int anioCalendario) {
+    public List<Inscripcion> alumnosLibres(int anioCarrera) {
         List<Inscripcion> resultado = new ArrayList<>();
-
         for (Curso c : cursos) {
-            if (c.getAnioCalendario() == anioCalendario) {
+            int cuatrimestre = c.getAsignatura().getCuatrimestre();
+            int anioAcademico = (cuatrimestre - 1) / 2 + 1;
+            if (anioAcademico == anioCarrera) {
                 for (Inscripcion i : c.getInscripciones()) {
                     if (i.obtenerCondicion() == CondicionAlumno.LIBRE) {
                         resultado.add(i);
@@ -272,7 +274,6 @@ public class Universidad implements Serializable {
                 }
             }
         }
-
         return resultado;
     }
     /**

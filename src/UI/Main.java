@@ -218,7 +218,7 @@ public class Main {
                                     resultado = sb.toString();
                                 }
                             } catch (NumberFormatException e) {
-                                resultado = "[!] Ingrese un año válido en el cuadro de texto.";
+                                resultado = "[!] Ingrese un año de carrera válido (1 a 5) en el cuadro de texto.";
                             }
                         }
                         // Responder al navegador
