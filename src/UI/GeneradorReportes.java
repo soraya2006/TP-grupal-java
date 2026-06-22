@@ -151,14 +151,14 @@ public class GeneradorReportes {
      * <p>Recibe la lista producida por {@code Universidad.obtenerAlumnosLibres(int)}.</p>
      *
      * @param libres         Lista de inscripciones LIBRE del año indicado.
-     * @param anioCalendario El año al que corresponden los datos.
+     * @param anioCarrera El año al que corresponden los datos.
      */
     public static void guardarAlumnosLibresPorAnio(List<Inscripcion> libres, int anioCarrera) {
         String ruta = CARPETA + "alumnos_libres_anio_" + anioCarrera + ".txt";
         PrintWriter pw = abrirArchivo(ruta);
 
         if (pw != null) {
-            pw.println("   ALUMNOS LIBRES — AÑO CALENDARIO: " + anioCarrera);
+            pw.println("   ALUMNOS LIBRES — AÑO DE CARRERA: " + anioCarrera);
 
             if (libres.isEmpty()) {
                 pw.println("  (No hay alumnos libres para el año " + anioCarrera + ")");
