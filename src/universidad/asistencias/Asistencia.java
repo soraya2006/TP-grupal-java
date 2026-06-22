@@ -10,8 +10,8 @@ import universidad.excepciones.*;
 public class Asistencia implements Serializable {
     @Serial
     private static final long serialVersionUID = 1L;
-    private Clase clase;
-    private boolean presente;
+    private final Clase clase;
+    private final boolean presente;
 
     public Asistencia(Clase clase, boolean presente) {
         if (clase == null) {
@@ -24,18 +24,8 @@ public class Asistencia implements Serializable {
     public Clase getClase() { 
         return clase; 
     }
-    public void setClase(Clase clase) { 
-        if (clase == null) {
-            throw new ParametroNuloException("La clase asociada a la asistencia no puede ser nula");
-        } else {
-            this.clase = clase;
-        }
-    }
     public boolean isPresente() { 
         return presente; 
-    }
-    public void setPresente(boolean presente) { 
-        this.presente = presente; 
     }
     @Override
     public String toString() {
