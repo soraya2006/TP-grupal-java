@@ -22,7 +22,6 @@ import java.nio.file.Paths;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.List;
-import java.util.Scanner;
 
 /**
  * Punto de entrada del sistema de gestión universitaria.
@@ -42,7 +41,6 @@ public class Main {
     private static Universidad universidad;
     private static final String RUTA_XML_DEFAULT = "datos/universidad.xml";
     private static final String RUTA_BIN_DEFAULT = "datos/universidad.dat";
-    private static final String RUTA_HTML = "AppWeb/index.html";
 
     /**
      * Crea el sistema, intenta recuperar el estado guardado y presenta el menú.
@@ -64,12 +62,24 @@ public class Main {
             server.createContext("/", new HttpHandler() {
                 @Override
                 public void handle(HttpExchange exchange) throws IOException {
-                    byte[] response = Files.readAllBytes(Paths.get(RUTA_HTML));
-                    exchange.getResponseHeaders().set("Content-Type", "text/html; charset=UTF-8");
-                    exchange.sendResponseHeaders(200, response.length);
-                    OutputStream os = exchange.getResponseBody();
-                    os.write(response);
-                    os.close();
+                    try (InputStream is = Main.class.getResourceAsStream("/UI/AppWeb/index.html")) {
+                        if (is == null) {
+                            String errorMsg = "Error interno: No se encontró el archivo index.html en los recursos.";
+                            byte[] responseBytes = errorMsg.getBytes(StandardCharsets.UTF_8);
+                            exchange.sendResponseHeaders(404, responseBytes.length);
+                            try (OutputStream os = exchange.getResponseBody()) {
+                                os.write(responseBytes);
+                            }
+                            return;
+                        }
+
+                        byte[] response = is.readAllBytes();
+                        exchange.getResponseHeaders().set("Content-Type", "text/html; charset=UTF-8");
+                        exchange.sendResponseHeaders(200, response.length);
+                        try (OutputStream os = exchange.getResponseBody()) {
+                            os.write(response);
+                        }
+                    }
                 }
             });
 
