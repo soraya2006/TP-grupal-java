@@ -3,6 +3,9 @@ package universidad.inscripciones;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.io.Serial;
+import java.util.Collections;
+import java.util.List;
+
 import universidad.alumnos.Alumno;
 import universidad.alumnos.CondicionAlumno; 
 import universidad.asignaturas.Asignatura;
@@ -114,5 +117,7 @@ public class Inscripcion implements Serializable {
     public ModalidadCursada getModalidad() { return modalidad; }
     public Asignatura getAsignatura() { return curso.getAsignatura(); }
     public Curso getCurso() { return curso; }
-    public ArrayList<Asistencia> getAsistencias() { return asistencias; }
+    public List<Asistencia> getAsistencias() {
+        return Collections.unmodifiableList(asistencias);
+    }
 }
