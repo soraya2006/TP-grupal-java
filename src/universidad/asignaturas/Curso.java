@@ -9,7 +9,7 @@ import universidad.inscripciones.Inscripcion;
 import universidad.excepciones.*;
 /**
  * Representa una comisión de una materia en un año específico.
- * Acá se guardan las clases que dio el profesor y los alumnos anotados.
+ * Se almacenan las clases dadas por el profesor y los alumnos anotados.
  */
 public class Curso implements Serializable {
     @Serial

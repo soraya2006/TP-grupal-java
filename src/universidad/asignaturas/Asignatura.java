@@ -21,12 +21,12 @@ public abstract class Asignatura implements Serializable {
      * @param promocional  Verdadero si la materia se puede promocionar, falso si no.
      */
     public Asignatura(String codigo, String nombre, int cuatrimestre, boolean promocional) {
-        if (cuatrimestre < 1 || cuatrimestre > 10) {
-            throw new DatoInvalidoException("Cuatrimestre inválido");
-        } else if (codigo == null || codigo.isBlank()) {
+        if (codigo == null || codigo.isBlank()) {
             throw new ParametroNuloException("El código de la asignatura no puede estar vacío");
         } else if (nombre == null || nombre.isBlank()) {
             throw new ParametroNuloException("El nombre de la asignatura no puede estar vacío");
+        } else if (cuatrimestre < 1 || cuatrimestre > 10) {
+            throw new DatoInvalidoException("Cuatrimestre inválido: debe estar entre 1 y 10");
         }
         this.codigo = codigo;
         this.nombre = nombre;

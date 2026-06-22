@@ -45,7 +45,7 @@ public class Main {
      * * Nota: En versiones modernas de Java (Java 22+), el método main puede
      * prescindir del parámetro 'args' si no se utiliza y del modificador 'public'.
      */
-    static void main(String[] args) {
+    public static void main(String[] args) {
         try {
             universidad = PersistenciaBinaria.cargarEstado(RUTA_BIN_DEFAULT); // Intenta recuperar el estado previo al iniciar
             if (universidad == null) {
@@ -206,10 +206,10 @@ public class Main {
                                 int anio = Integer.parseInt(params.get("codigo")); // Reutiliza el parámetro de texto de la UI
                                 List<universidad.inscripciones.Inscripcion> libres = universidad.alumnosLibres(anio);
                                 if (libres.isEmpty()) {
-                                    resultado = "(No hay alumnos libres para el año " + anio + ")";
+                                    resultado = "(No hay alumnos libres para el año de carrera" + anio + ")";
                                 } else {
                                     StringBuilder sb = new StringBuilder();
-                                    sb.append("ALUMNOS LIBRES - AÑO ").append(anio).append(":\n\n");
+                                    sb.append("ALUMNOS LIBRES - AÑO DE CARRERA ").append(anio).append(":\n\n");
                                     for (universidad.inscripciones.Inscripcion i : libres) {
                                         sb.append("Alumno: ").append(i.getAlumno()).append("\n");
                                         sb.append("Asignatura: ").append(i.getCurso().getAsignatura().getNombre());
@@ -220,7 +220,7 @@ public class Main {
                                     resultado = sb.toString();
                                 }
                             } catch (NumberFormatException e) {
-                                resultado = "[!] Ingrese un año válido en el cuadro de texto.";
+                                resultado = "[!] Ingrese un año de carrera válido (1 a 5) en el cuadro de texto.";
                             }
                         }
                         // Responder al navegador

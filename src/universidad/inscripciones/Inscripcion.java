@@ -16,7 +16,7 @@ import universidad.asignaturas.Curso;
 import universidad.excepciones.*;
 /**
  * Es la ficha personal de un alumno dentro de un curso.
- * Acá se anota su modalidad (regular, oyente) y se guarda su lista de presentes y ausentes.
+ * Registra la modalidad (regular, oyente) y se almacena su lista de presentes y ausentes.
  */
 public class Inscripcion implements Serializable {
     @Serial
