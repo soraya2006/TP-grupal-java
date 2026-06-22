@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<universidad>
+    <alumnos>
+        <alumno matricula="A100" apellido="Test" nombre="Valido" fechaNacimiento="2000-01-01" />
+
+        <alumno matricula="A100" apellido="Pérez" nombre="Juan" fechaNacimiento="2002-05-15" />
+
+        <alumno matricula="A200" apellido="Gómez" nombre="" fechaNacimiento="2001-03-22" />
+
+        <alumno matricula="A300" apellido="López" nombre="Carlos" fechaNacimiento="" />
+    </alumnos>
+
+    <asignaturas>
+        <asignatura tipo="OBLIGATORIA" codigo="PROG1" cuatrimestre="1" promocional="true">
+            <nombre>Programación I</nombre>
+        </asignatura>
+
+        <asignatura tipo="OBLIGATORIA" codigo="PROG1" cuatrimestre="2" promocional="false">
+            <nombre>Programación Avanzada</nombre>
+        </asignatura>
+
+        <asignatura tipo="OPTATIVA" codigo="MAT3" cuatrimestre="15" promocional="true">
+            <nombre>Matemática Discreta</nombre>
+        </asignatura>
+    </asignaturas>
+
+    <cursos>
+    </cursos>
+</universidad>

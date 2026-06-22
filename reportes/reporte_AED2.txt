@@ -1,0 +1,40 @@
+========================================
+  REPORTE DE ASIGNATURA: Algoritmos y Estructuras de Datos II
+  Código: AED2 | Tipo: Obligatoria
+========================================
+
+  Curso: AED2-2025 | Año: 2025 | Cuatrimestre: 1
+  Clases dictadas: 5
+  Alumno:     Pérez, Juan (Matrícula: A001)
+  Modalidad:  REGULAR
+  Presentes:  5 / 5
+  Porcentaje: 100,00%
+  Condición:  PROMOCIONA
+  Asistencias detalladas:
+    - Clase ID: AED2-01 - Fecha/Hora: 2025-03-03T18:00 -> Estado: PRESENTE
+    - Clase ID: AED2-02 - Fecha/Hora: 2025-03-10T18:00 -> Estado: PRESENTE
+    - Clase ID: AED2-03 - Fecha/Hora: 2025-03-17T18:00 -> Estado: PRESENTE
+    - Clase ID: AED2-04 - Fecha/Hora: 2025-03-24T18:00 -> Estado: PRESENTE
+    - Clase ID: AED2-05 - Fecha/Hora: 2025-03-31T18:00 -> Estado: PRESENTE
+  Alumno:     García, María (Matrícula: A002)
+  Modalidad:  CONDICIONAL
+  Presentes:  4 / 5
+  Porcentaje: 80,00%
+  Condición:  HABILITA
+  Asistencias detalladas:
+    - Clase ID: AED2-01 - Fecha/Hora: 2025-03-03T18:00 -> Estado: PRESENTE
+    - Clase ID: AED2-02 - Fecha/Hora: 2025-03-10T18:00 -> Estado: PRESENTE
+    - Clase ID: AED2-03 - Fecha/Hora: 2025-03-17T18:00 -> Estado: PRESENTE
+    - Clase ID: AED2-04 - Fecha/Hora: 2025-03-24T18:00 -> Estado: PRESENTE
+    - Clase ID: AED2-05 - Fecha/Hora: 2025-03-31T18:00 -> Estado: AUSENTE
+  Alumno:     López, Pedro (Matrícula: A003)
+  Modalidad:  OYENTE
+  Presentes:  5 / 5
+  Porcentaje: 100,00%
+  Condición:  LIBRE
+  Asistencias detalladas:
+    - Clase ID: AED2-01 - Fecha/Hora: 2025-03-03T18:00 -> Estado: PRESENTE
+    - Clase ID: AED2-02 - Fecha/Hora: 2025-03-10T18:00 -> Estado: PRESENTE
+    - Clase ID: AED2-03 - Fecha/Hora: 2025-03-17T18:00 -> Estado: PRESENTE
+    - Clase ID: AED2-04 - Fecha/Hora: 2025-03-24T18:00 -> Estado: PRESENTE
+    - Clase ID: AED2-05 - Fecha/Hora: 2025-03-31T18:00 -> Estado: PRESENTE

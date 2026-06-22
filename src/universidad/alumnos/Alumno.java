@@ -47,13 +47,7 @@ public class Alumno implements Comparable<Alumno>, Serializable {
     public LocalDate getFechaNacimiento() { 
         return fechaNacimiento; 
     }
-    public void setFechaNacimiento(LocalDate fechaNacimiento) { 
-        if (fechaNacimiento == null) {
-            throw new ParametroNuloException("La fecha de nacimiento no puede ser nula");
-        } else {
-            this.fechaNacimiento = fechaNacimiento;
-        }
-    }
+
     @Override
     public int compareTo(Alumno otro) {
         int comp = this.apellido.compareToIgnoreCase(otro.apellido);
