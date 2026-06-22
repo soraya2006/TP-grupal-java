@@ -21,6 +21,8 @@ public class AsignaturaPasantiaTesis extends Asignatura {
         return "Pasantía / Tesis";
     }
     @Override
+    public String getCodigoTipo() { return "PASANTIA"; }
+    @Override
     public double porcentajeHabilitacion() {
         return 75.0;
     }

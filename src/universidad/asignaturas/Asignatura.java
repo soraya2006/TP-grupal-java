@@ -36,6 +36,7 @@ public abstract class Asignatura implements Serializable {
     public String getCodigo() {
         return codigo;
     }
+    public abstract String getCodigoTipo(); // Identificador tecnico para el xml
     public String getNombre() {
         return nombre;
     }

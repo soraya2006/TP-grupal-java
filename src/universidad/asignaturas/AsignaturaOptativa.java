@@ -21,6 +21,8 @@ public class AsignaturaOptativa extends Asignatura {
         return "Optativa";
     }
     @Override
+    public String getCodigoTipo() { return "OPTATIVA"; }
+    @Override
     public double porcentajeHabilitacion() {
         return 50.0;
     }

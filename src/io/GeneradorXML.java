@@ -53,8 +53,7 @@ public class GeneradorXML {
             transformer.setOutputProperty(OutputKeys.INDENT, "yes");
             transformer.setOutputProperty("{http://xml.apache.org/xslt}indent-amount", "4");
 
-            // crear directorio si no existe
-            File archivo = new File(rutaArchivo);
+            File archivo = new File(rutaArchivo); // crea directorio si no existe
             if (archivo.getParentFile() != null) {
                 archivo.getParentFile().mkdirs();
             }
@@ -84,15 +83,7 @@ public class GeneradorXML {
     private static Element construirAsignaturas(Document doc, Universidad universidad) {
         Element seccion = doc.createElement("asignaturas");
         for (Asignatura a : universidad.getAsignaturas()) {
-            String tipo;
-            if (a instanceof AsignaturaObligatoria) {
-                tipo = "OBLIGATORIA";
-            } else if (a instanceof AsignaturaOptativa) {
-                tipo = "OPTATIVA";
-            } else {
-                tipo = "PASANTIA";
-            }
-
+            String tipo = a.getCodigoTipo();
             Element el = doc.createElement("asignatura");
             el.setAttribute("tipo",          tipo);
             el.setAttribute("codigo",        a.getCodigo());

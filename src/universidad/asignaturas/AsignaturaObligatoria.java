@@ -26,6 +26,8 @@ public class AsignaturaObligatoria extends Asignatura {
     public String getTipo() {
         return "Obligatoria";
     }
+    @Override
+    public String getCodigoTipo() { return "OBLIGATORIA"; }
     /**
      * @return 80.0 — porcentaje mínimo para promocionar.
      */
