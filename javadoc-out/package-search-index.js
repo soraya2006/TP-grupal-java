@@ -1,0 +1,1 @@
+packageSearchIndex = [{"l":"All Packages","u":"allpackages-index.html","k":"18"},{"l":"io"},{"l":"UI"},{"l":"universidad"},{"l":"universidad.alumnos"},{"l":"universidad.asignaturas"},{"l":"universidad.asistencias"},{"l":"universidad.clases"},{"l":"universidad.excepciones"},{"l":"universidad.inscripciones"},{"l":"universidad.ranking"}];updateSearchResults();
