@@ -294,7 +294,7 @@ public class Main {
             int anio = Integer.parseInt(params.get("codigo")); // Reutiliza el parámetro de texto de la UI
             List<universidad.inscripciones.Inscripcion> libres = universidad.alumnosLibres(anio);
             if (libres.isEmpty()) {
-                res = "(No hay alumnos libres para el año de carrera" + anio + ")";
+                res = "(No hay alumnos libres para el año de carrera " + anio + ")";
             } else {
                 StringBuilder sb = new StringBuilder();
                 sb.append("ALUMNOS LIBRES - AÑO DE CARRERA ").append(anio).append(":\n\n");
