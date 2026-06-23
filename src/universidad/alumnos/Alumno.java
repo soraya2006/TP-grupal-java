@@ -6,7 +6,13 @@ import java.io.Serial;
 import java.util.Objects;
 import universidad.excepciones.*;
 
-
+/**
+ * Representa a un alumno dentro del sistema universitario.
+ *
+ * <p>Cada alumno se identifica de forma única por su matrícula. La clase implementa
+ * {@link Comparable} para permitir la ordenación por apellido, nombre y matrícula,
+ * y {@link Serializable} para soportar persistencia binaria.</p>
+ */
 public class Alumno implements Comparable<Alumno>, Serializable {
     @Serial
     private static final long serialVersionUID = 1L;
@@ -49,7 +55,19 @@ public class Alumno implements Comparable<Alumno>, Serializable {
     public LocalDate getFechaNacimiento() { 
         return fechaNacimiento; 
     }
-
+    /**
+     * Compara este alumno con otro para determinar su orden natural.
+     *
+     * <p>El criterio de ordenación es, en orden de prioridad:
+     * <ol>
+     *   <li>Apellido (sin distinción de mayúsculas).</li>
+     *   <li>Nombre (sin distinción de mayúsculas), en caso de apellidos iguales.</li>
+     *   <li>Matrícula (sin distinción de mayúsculas), en caso de apellido y nombre iguales.</li>
+     * </ol>
+     *
+     * @param otro el alumno con el que se compara.
+     * @return un valor negativo, cero o positivo según si este alumno es menor, igual o mayor que {@code otro}.
+     */
     @Override
     public int compareTo(Alumno otro) {
         int comp = this.apellido.compareToIgnoreCase(otro.apellido);
@@ -62,6 +80,15 @@ public class Alumno implements Comparable<Alumno>, Serializable {
 
         return comp;
     }
+    /**
+     * Indica si este alumno es igual a otro objeto.
+     *
+     * <p>Dos alumnos se consideran iguales si sus matrículas coinciden
+     * sin distinción de mayúsculas y minúsculas.</p>
+     *
+     * @param o el objeto a comparar.
+     * @return {@code true} si ambos alumnos tienen la misma matrícula; {@code false} en caso contrario.
+     */
     @Override
     public boolean equals(Object o) {
         if (this == o){
@@ -77,10 +104,22 @@ public class Alumno implements Comparable<Alumno>, Serializable {
             }
         }
     }
+    /**
+     * Devuelve una representación textual del alumno con apellido, nombre y matrícula.
+     * @return cadena con el formato {@code "Apellido, Nombre (Matrícula: XXX)"}.
+     */
     @Override
     public String toString() {
         return getApellido() + ", " + getNombre() + " (Matrícula: " + getMatricula() + ")";
     }
+    /**
+     * Devuelve el código hash del alumno, basado en su matrícula en minúsculas.
+     *
+     * <p>Es consistente con {@link #equals(Object)}: dos alumnos iguales
+     * siempre producen el mismo hash.</p>
+     *
+     * @return el código hash.
+     */
     @Override
     public int hashCode() {
         return Objects.hash(matricula != null ? matricula.toLowerCase() : null);
