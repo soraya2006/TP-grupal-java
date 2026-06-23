@@ -46,20 +46,18 @@ public class Universidad implements Serializable {
     public void agregarAlumno(Alumno a) {
         if (a == null) {
             throw new ParametroNuloException("El alumno a agregar no puede ser nulo.");
-        }
-
-        boolean duplicado = false;
-        for (Alumno existente : alumnos) {
-            if (!duplicado && existente.getMatricula().equalsIgnoreCase(a.getMatricula())) {
-                duplicado = true;
+        } else {
+            boolean duplicado = false;
+            for (Alumno existente : alumnos) {
+                if (!duplicado && existente.getMatricula().equalsIgnoreCase(a.getMatricula())) {
+                    duplicado = true;
+                }
             }
+            if (duplicado) {
+                throw new AlumnoDuplicadoException();
+            }
+            alumnos.add(a);
         }
-
-        if (duplicado) {
-            throw new AlumnoDuplicadoException();
-        }
-
-        alumnos.add(a);
     }
 
     /**
@@ -72,20 +70,20 @@ public class Universidad implements Serializable {
     public void agregarAsignatura(Asignatura a) {
         if (a == null) {
             throw new ParametroNuloException("La asignatura a agregar no puede ser nula.");
-        }
-
-        boolean duplicada = false;
-        int idx = 0;
-        while (idx < asignaturas.size() && !duplicada) {
-            if (asignaturas.get(idx).getCodigo().equalsIgnoreCase(a.getCodigo())) {
-                duplicada = true;
+        } else {
+            boolean duplicada = false;
+            int idx = 0;
+            while (idx < asignaturas.size() && !duplicada) {
+                if (asignaturas.get(idx).getCodigo().equalsIgnoreCase(a.getCodigo())) {
+                    duplicada = true;
+                }
+                idx++;
             }
-            idx++;
+            if (duplicada) {
+                throw new AsignaturaDuplicadaException();
+            }
+            asignaturas.add(a);
         }
-        if (duplicada) {
-            throw new AsignaturaDuplicadaException();
-        }
-        asignaturas.add(a);
     }
 
     /**
@@ -98,22 +96,22 @@ public class Universidad implements Serializable {
     public void agregarCurso(Curso c) {
         if (c == null) {
             throw new ParametroNuloException("El curso a agregar no puede ser nulo.");
-        }
-
-        boolean duplicado = false;
-        int idx = 0;
-        while (idx < cursos.size() && !duplicado) {
-            if (cursos.get(idx).getIdCurso().equalsIgnoreCase(c.getIdCurso())) {
-                duplicado = true;
+        } else {
+            boolean duplicado = false;
+            int idx = 0;
+            while (idx < cursos.size() && !duplicado) {
+                if (cursos.get(idx).getIdCurso().equalsIgnoreCase(c.getIdCurso())) {
+                    duplicado = true;
+                }
+                idx++;
             }
-            idx++;
-        }
 
-        if (duplicado) {
-            throw new CursoDuplicadoException();
-        }
+            if (duplicado) {
+                throw new CursoDuplicadoException();
+            }
 
-        cursos.add(c);
+            cursos.add(c);
+        }
     }
 
     /**

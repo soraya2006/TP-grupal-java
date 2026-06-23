@@ -19,6 +19,7 @@ public class Alumno implements Comparable<Alumno>, Serializable {
      * @param matricula El DNI o número de legajo único del alumno.
      * @param nombre    El nombre de pila.
      * @param apellido  El apellido.
+     * @param fechaNacimiento Fecha de nacimiento del alumno
      */
     public Alumno(String matricula, String apellido, String nombre, LocalDate fechaNacimiento) {
         if (matricula == null || matricula.isBlank()) {
