@@ -26,14 +26,6 @@ import java.util.List;
  *
  * <p>Presenta un menú interactivo de texto que permite al usuario
  * cargar datos, registrar asistencias y generar reportes.</p>
- *
- * <p>Cumple las siguientes restricciones de programación estructurada:</p>
- * <ul>
- * <li>No se usa {@code break} ni {@code continue} en bucles.</li>
- * <li>No se usa {@code return} anticipado dentro de métodos no-void.</li>
- * <li>Toda entrada inválida se controla con estructuras condicionales
- * y repetitivas.</li>
- * </ul>
  */
 public class Main {
     private static Universidad universidad;
