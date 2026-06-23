@@ -183,24 +183,25 @@ public class Main {
                 }
             }
 
-            universidad.alumnos.Alumno alumnoElegido = null;
-            java.util.Iterator<universidad.alumnos.Alumno> itAlumnos = universidad.getAlumnos().iterator();
-            while (itAlumnos.hasNext() && alumnoElegido == null) {
-                universidad.alumnos.Alumno a = itAlumnos.next();
-                if (a.getMatricula().equalsIgnoreCase(matricula)) {
-                    alumnoElegido = a;
-                }
-            }
-
             if (cursoElegido == null) {
                 res = "[!] No existe un curso con el ID ingresado.";
             } else if (claseElegida == null) {
                 res = "[!] No existe una clase con ese ID en el curso.";
-            } else if (alumnoElegido == null) {
-                res = "[!] No existe ningún alumno con esa matrícula.";
             } else {
-                universidad.registrarAsistencia(alumnoElegido, claseElegida, cursoElegido, presente);
-                res = "Asistencia registrada: " + alumnoElegido + " -> " + (presente ? "PRESENTE" : "AUSENTE");
+                universidad.alumnos.Alumno alumnoElegido = null;
+                java.util.Iterator<universidad.alumnos.Alumno> itAlumnos = universidad.getAlumnos().iterator();
+                while (itAlumnos.hasNext() && alumnoElegido == null) {
+                    universidad.alumnos.Alumno a = itAlumnos.next();
+                    if (a.getMatricula().equalsIgnoreCase(matricula)) {
+                        alumnoElegido = a;
+                    }
+                }
+                if (alumnoElegido == null) {
+                    res = "[!] No existe ningún alumno con esa matrícula.";
+                } else {
+                    universidad.registrarAsistencia(alumnoElegido, claseElegida, cursoElegido, presente);
+                    res = "Asistencia registrada: " + alumnoElegido + " -> " + (presente ? "PRESENTE" : "AUSENTE");
+                }
             }
         } catch (Exception e) {
             res = "[!] Error: " + e.getMessage();
