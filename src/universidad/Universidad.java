@@ -262,19 +262,23 @@ public class Universidad implements Serializable {
      * @return Lista de inscripciones LIBRE para ese año. Lista vacía si no hay ninguna.
      */
     public List<Inscripcion> alumnosLibres(int anioCarrera) {
-        List<Inscripcion> resultado = new ArrayList<>();
-        for (Curso c : cursos) {
-            int cuatrimestre = c.getAsignatura().getCuatrimestre();
-            int anioAcademico = (cuatrimestre - 1) / 2 + 1;
-            if (anioAcademico == anioCarrera) {
-                for (Inscripcion i : c.getInscripciones()) {
-                    if (i.obtenerCondicion() == CondicionAlumno.LIBRE) {
-                        resultado.add(i);
+        if (anioCarrera < 1 || anioCarrera > 5) {
+            throw new DatoInvalidoException("El año de carrera debe estar comprendido entre 1 y 5.");
+        } else {
+            List<Inscripcion> resultado = new ArrayList<>();
+            for (Curso c : cursos) {
+                int cuatrimestre = c.getAsignatura().getCuatrimestre();
+                int anioAcademico = (cuatrimestre - 1) / 2 + 1;
+                if (anioAcademico == anioCarrera) {
+                    for (Inscripcion i : c.getInscripciones()) {
+                        if (i.obtenerCondicion() == CondicionAlumno.LIBRE) {
+                            resultado.add(i);
+                        }
                     }
                 }
             }
+            return resultado;
         }
-        return resultado;
     }
     /**
      * Retorna el conjunto de alumnos ordenado alfabéticamente.

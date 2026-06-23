@@ -307,6 +307,8 @@ public class Main {
             }
         } catch (NumberFormatException e) {
             res = "[!] Ingrese un año de carrera válido (1 a 5) en el cuadro de texto.";
+        } catch (universidad.excepciones.DatoInvalidoException e){
+            res = "[!] Error de validación: " + e.getMessage();
         }
         return res;
     }
