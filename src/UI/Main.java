@@ -24,14 +24,15 @@ import java.util.List;
 /**
  * Punto de entrada del sistema de gestión universitaria.
  *
- * <p>Presenta una interfaz web interactiva modularizada que permite al usuario
+ * <p>Presenta un menú interactivo de texto que permite al usuario
  * cargar datos, registrar asistencias y generar reportes.</p>
  *
  * <p>Cumple las siguientes restricciones de programación estructurada:</p>
  * <ul>
  * <li>No se usa {@code break} ni {@code continue} en bucles.</li>
- * <li>No se usa {@code return} anticipado dentro de los flujos de control.</li>
- * <li>Toda entrada inválida se controla con estructuras condicionales y repetitivas.</li>
+ * <li>No se usa {@code return} anticipado dentro de métodos no-void.</li>
+ * <li>Toda entrada inválida se controla con estructuras condicionales
+ * y repetitivas.</li>
  * </ul>
  */
 public class Main {
@@ -39,17 +40,21 @@ public class Main {
     private static final String RUTA_XML_DEFAULT = "src/io/universidad.xml";
     private static final String RUTA_BIN_DEFAULT = "src/io/universidad.dat";
 
+    /**
+     * Crea el sistema, intenta recuperar el estado guardado y presenta el menú.
+     * * Nota: En versiones modernas de Java (Java 22+), el método main puede
+     * prescindir del parámetro 'args' si no se utiliza y del modificador 'public'.
+     */
     public static void main(String[] args) {
         try {
-            universidad = PersistenciaBinaria.cargarEstado(RUTA_BIN_DEFAULT);
+            universidad = PersistenciaBinaria.cargarEstado(RUTA_BIN_DEFAULT); // Intenta recuperar el estado previo al iniciar
             if (universidad == null) {
                 universidad = new Universidad();
             }
 
             HttpServer server = HttpServer.create(new InetSocketAddress(8080), 0);
 
-            // Handler para servir la página web principal de manera estructurada
-            server.createContext("/", new HttpHandler() {
+            server.createContext("/", new HttpHandler() { // Handler para servir la página web principal
                 @Override
                 public void handle(HttpExchange exchange) throws IOException {
                     try (InputStream is = Main.class.getResourceAsStream("/UI/AppWeb/index.html")) {
@@ -70,8 +75,7 @@ public class Main {
                 }
             });
 
-            // Handler para procesar las acciones delegando de manera cohesiva
-            server.createContext("/accion", new HttpHandler() {
+            server.createContext("/accion", new HttpHandler() {// Handler para procesar las acciones del menú
                 @Override
                 public void handle(HttpExchange exchange) throws IOException {
                     if ("POST".equalsIgnoreCase(exchange.getRequestMethod())) {
@@ -80,25 +84,26 @@ public class Main {
                         String resultado = "Operación no reconocida.";
 
                         if ("1".equals(operacion)) {
-                            resultado = procesarCargaXML();
+                            resultado = procesarOperacion1();
                         } else if ("2".equals(operacion)) {
-                            resultado = procesarGuardarXML();
+                            resultado = procesarOperacion2();
                         } else if ("3".equals(operacion)) {
-                            resultado = procesarGuardarBinario();
+                            resultado = procesarOperacion3();
                         } else if ("4".equals(operacion)) {
-                            resultado = procesarCargarBinario();
+                            resultado = procesarOperacion4();
                         } else if ("5".equals(operacion)) {
-                            resultado = procesarRegistrarAsistencia(params);
+                            resultado = procesarOperacion5(params);
                         } else if ("6".equals(operacion)) {
-                            resultado = procesarRankingPresentismo();
+                            resultado = procesarOperacion6();
                         } else if ("7".equals(operacion)) {
-                            resultado = procesarReporteAsignatura(params);
+                            resultado = procesarOperacion7(params);
                         } else if ("8".equals(operacion)) {
-                            resultado = procesarAlumnosLibresTodas();
+                            resultado = procesarOperacion8();
                         } else if ("9".equals(operacion)) {
-                            resultado = procesarAlumnosLibresPorAnio(params);
+                            resultado = procesarOperacion9(params);
                         }
 
+                        // Responder al navegador
                         exchange.getResponseHeaders().set("Content-Type", "text/plain; charset=UTF-8");
                         byte[] responseBytes = resultado.getBytes(StandardCharsets.UTF_8);
                         exchange.sendResponseHeaders(200, responseBytes.length);
@@ -119,28 +124,26 @@ public class Main {
         }
     }
 
-    // =========================================================================
-    // MÉTODOS MODULARIZADOS DE ENTRADA/SALIDA Y PROCESAMIENTO (COHESIÓN)
-    // =========================================================================
-
-    private static String procesarCargaXML() {
+    private static String procesarOperacion1() {
         List<String> errores = CargadorXML.cargar(RUTA_XML_DEFAULT, universidad);
         String res = errores.isEmpty() ? "Carga XML completada sin errores."
                 : "Cargado con advertencias: \n" + String.join("\n", errores);
         return res;
     }
 
-    private static String procesarGuardarXML() {
+    private static String procesarOperacion2() {
         GeneradorXML.guardar(universidad, RUTA_XML_DEFAULT);
-        return "Estado guardado con éxito en: " + RUTA_XML_DEFAULT;
+        String res = "Estado guardado con éxito en: " + RUTA_XML_DEFAULT;
+        return res;
     }
 
-    private static String procesarGuardarBinario() {
+    private static String procesarOperacion3() {
         PersistenciaBinaria.guardarEstado(universidad, RUTA_BIN_DEFAULT);
-        return "Estado binario guardado con éxito.";
+        String res = "Estado binario guardado con éxito.";
+        return res;
     }
 
-    private static String procesarCargarBinario() {
+    private static String procesarOperacion4() {
         String res;
         Universidad recuperada = PersistenciaBinaria.cargarEstado(RUTA_BIN_DEFAULT);
         if (recuperada != null) {
@@ -153,7 +156,7 @@ public class Main {
         return res;
     }
 
-    private static String procesarRegistrarAsistencia(Map<String, String> params) {
+    private static String procesarOperacion5(Map<String, String> params) {
         String res;
         try {
             String idCurso = params.get("idCurso");
@@ -161,35 +164,32 @@ public class Main {
             String matricula = params.get("matricula");
             boolean presente = "s".equalsIgnoreCase(params.get("presente"));
 
-            // Búsqueda controlada de Curso
             universidad.asignaturas.Curso cursoElegido = null;
-            List<universidad.asignaturas.Curso> listaCursos = universidad.getCursos();
+            List<universidad.asignaturas.Curso> cursos = universidad.getCursos();
             int i = 0;
-            while (i < listaCursos.size() && cursoElegido == null) {
-                if (listaCursos.get(i).getIdCurso().equalsIgnoreCase(idCurso)) {
-                    cursoElegido = listaCursos.get(i);
+            while (i < cursos.size() && cursoElegido == null) {
+                if (cursos.get(i).getIdCurso().equalsIgnoreCase(idCurso)) {
+                    cursoElegido = cursos.get(i);
                 }
                 i++;
             }
 
-            // Búsqueda controlada de Clase
             universidad.clases.Clase claseElegida = null;
             if (cursoElegido != null) {
-                List<universidad.clases.Clase> listaClases = cursoElegido.getClasesDictadas();
+                List<universidad.clases.Clase> clases = cursoElegido.getClasesDictadas();
                 int j = 0;
-                while (j < listaClases.size() && claseElegida == null) {
-                    if (listaClases.get(j).getId().equalsIgnoreCase(idClase)) {
-                        claseElegida = listaClases.get(j);
+                while (j < clases.size() && claseElegida == null) {
+                    if (clases.get(j).getId().equalsIgnoreCase(idClase)) {
+                        claseElegida = clases.get(j);
                     }
                     j++;
                 }
             }
 
-            // Búsqueda controlada de Alumno
             universidad.alumnos.Alumno alumnoElegido = null;
-            java.util.Iterator<universidad.alumnos.Alumno> itAlumno = universidad.getAlumnos().iterator();
-            while (itAlumno.hasNext() && alumnoElegido == null) {
-                universidad.alumnos.Alumno a = itAlumno.next();
+            java.util.Iterator<universidad.alumnos.Alumno> itAlumnos = universidad.getAlumnos().iterator();
+            while (itAlumnos.hasNext() && alumnoElegido == null) {
+                universidad.alumnos.Alumno a = itAlumnos.next();
                 if (a.getMatricula().equalsIgnoreCase(matricula)) {
                     alumnoElegido = a;
                 }
@@ -211,7 +211,7 @@ public class Main {
         return res;
     }
 
-    private static String procesarRankingPresentismo() {
+    private static String procesarOperacion6() {
         String res;
         List<universidad.ranking.RankingAsignatura> ranking = universidad.rankingPresentismo();
         if (ranking.isEmpty()) {
@@ -232,17 +232,17 @@ public class Main {
         return res;
     }
 
-    private static String procesarReporteAsignatura(Map<String, String> params) {
+    private static String procesarOperacion7(Map<String, String> params) {
         String res;
         String codigo = params.get("codigo");
         universidad.asignaturas.Asignatura encontrada = null;
-        List<universidad.asignaturas.Asignatura> listaAsignaturas = universidad.getAsignaturas();
-        int k = 0;
-        while (k < listaAsignaturas.size() && encontrada == null) {
-            if (listaAsignaturas.get(k).getCodigo().equalsIgnoreCase(codigo)) {
-                encontrada = listaAsignaturas.get(k);
+        List<universidad.asignaturas.Asignatura> asignaturas = universidad.getAsignaturas();
+        int i = 0;
+        while (i < asignaturas.size() && encontrada == null) {
+            if (asignaturas.get(i).getCodigo().equalsIgnoreCase(codigo)) {
+                encontrada = asignaturas.get(i);
             }
-            k++;
+            i++;
         }
 
         if (encontrada == null) {
@@ -268,7 +268,7 @@ public class Main {
         return res;
     }
 
-    private static String procesarAlumnosLibresTodas() {
+    private static String procesarOperacion8() {
         String res;
         List<universidad.inscripciones.Inscripcion> libres = universidad.alumnosLibres();
         if (libres.isEmpty()) {
@@ -277,9 +277,10 @@ public class Main {
             StringBuilder sb = new StringBuilder();
             sb.append("ALUMNOS LIBRES - TODAS LAS ASIGNATURAS:\n\n");
             for (universidad.inscripciones.Inscripcion i : libres) {
-                sb.append("• ").append(i.getAlumno())
-                        .append(" en ").append(i.getCurso().getAsignatura().getNombre())
-                        .append(" (Curso: ").append(i.getCurso().getIdCurso()).append(")\n");
+                sb.append("Alumno: ").append(i.getAlumno()).append("\n");
+                sb.append("Asignatura: ").append(i.getCurso().getAsignatura().getNombre()).append("\n");
+                sb.append("Curso: ").append(i.getCurso().getIdCurso()).append("\n");
+                sb.append("─────────────────────────────────────────\n");
             }
             UI.GeneradorReportes.guardarAlumnosLibresTodas(libres);
             res = sb.toString();
@@ -287,20 +288,21 @@ public class Main {
         return res;
     }
 
-    private static String procesarAlumnosLibresPorAnio(Map<String, String> params) {
+    private static String procesarOperacion9(Map<String, String> params) {
         String res;
         try {
-            int anio = Integer.parseInt(params.get("codigo"));
+            int anio = Integer.parseInt(params.get("codigo")); // Reutiliza el parámetro de texto de la UI
             List<universidad.inscripciones.Inscripcion> libres = universidad.alumnosLibres(anio);
             if (libres.isEmpty()) {
-                res = "(No hay alumnos libres para el año de carrera " + anio + ")";
+                res = "(No hay alumnos libres para el año de carrera" + anio + ")";
             } else {
                 StringBuilder sb = new StringBuilder();
                 sb.append("ALUMNOS LIBRES - AÑO DE CARRERA ").append(anio).append(":\n\n");
                 for (universidad.inscripciones.Inscripcion i : libres) {
-                    sb.append("• ").append(i.getAlumno())
-                            .append(" en ").append(i.getCurso().getAsignatura().getNombre())
-                            .append(" (Curso: ").append(i.getCurso().getIdCurso()).append(")\n");
+                    sb.append("Alumno: ").append(i.getAlumno()).append("\n");
+                    sb.append("Asignatura: ").append(i.getCurso().getAsignatura().getNombre()).append("\n");
+                    sb.append("Curso: ").append(i.getCurso().getIdCurso()).append("\n");
+                    sb.append("─────────────────────────────────────────\n");
                 }
                 UI.GeneradorReportes.guardarAlumnosLibresPorAnio(libres, anio);
                 res = sb.toString();
@@ -311,6 +313,13 @@ public class Main {
         return res;
     }
 
+    /**
+     * Procesa y parsea el cuerpo de una solicitud HTTP POST codificada en formato
+     * application/x-www-form-urlencoded, convirtiéndola en un mapa de clave-valor.
+     * * @param is El flujo de entrada conteniendo los bytes del cuerpo del POST.
+     * @return Un mapa {@link Map} con los parámetros y sus respectivos valores decodificados.
+     * @throws IOException Si ocurre un error de lectura en el flujo de datos.
+     */
     private static Map<String, String> parsearPostParams(InputStream is) throws IOException {
         Map<String, String> result = new HashMap<>();
         String query = new String(is.readAllBytes(), StandardCharsets.UTF_8);
