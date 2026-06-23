@@ -47,14 +47,12 @@ public class Main {
      */
     public static void main(String[] args) {
         try {
-            universidad = PersistenciaBinaria.cargarEstado(RUTA_BIN_DEFAULT); // Intenta recuperar el estado previo al iniciar
+            universidad = PersistenciaBinaria.cargarEstado(RUTA_BIN_DEFAULT);
             if (universidad == null) {
                 universidad = new Universidad();
             }
-
             HttpServer server = HttpServer.create(new InetSocketAddress(8080), 0);
-
-            server.createContext("/", new HttpHandler() { // Handler para servir la página web principal
+            server.createContext("/", new HttpHandler() {
                 @Override
                 public void handle(HttpExchange exchange) throws IOException {
                     try (InputStream is = Main.class.getResourceAsStream("/UI/AppWeb/index.html")) {
@@ -75,7 +73,7 @@ public class Main {
                 }
             });
 
-            server.createContext("/accion", new HttpHandler() {// Handler para procesar las acciones del menú
+            server.createContext("/accion", new HttpHandler() {
                 @Override
                 public void handle(HttpExchange exchange) throws IOException {
                     if ("POST".equalsIgnoreCase(exchange.getRequestMethod())) {
@@ -103,7 +101,6 @@ public class Main {
                             resultado = procesarOperacion9(params);
                         }
 
-                        // Responder al navegador
                         exchange.getResponseHeaders().set("Content-Type", "text/plain; charset=UTF-8");
                         byte[] responseBytes = resultado.getBytes(StandardCharsets.UTF_8);
                         exchange.sendResponseHeaders(200, responseBytes.length);
