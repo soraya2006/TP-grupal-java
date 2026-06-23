@@ -41,9 +41,12 @@ public class Main {
     private static final String RUTA_BIN_DEFAULT = "src/io/universidad.dat";
 
     /**
-     * Crea el sistema, intenta recuperar el estado guardado y presenta el menú.
-     * * Nota: En versiones modernas de Java (Java 22+), el método main puede
-     * prescindir del parámetro 'args' si no se utiliza y del modificador 'public'.
+     * Punto de entrada principal de la aplicación. Inicializa el modelo de dominio
+     * intentando restaurar su estado previo desde el archivo binario y arranca
+     * el servidor HTTP embebido en el puerto 8080 configurando los contextos
+     * para la interfaz gráfica y el procesamiento de acciones de formulario.
+     *
+     * @param args Argumentos de la línea de comandos (no utilizados).
      */
     public static void main(String[] args) {
         try {
@@ -120,27 +123,47 @@ public class Main {
             System.err.println("Error al iniciar el servidor de UI: " + e.getMessage());
         }
     }
-
+    /**
+     * Procesa la Operación 1: Realiza la carga de datos del modelo desde el archivo
+     * de configuración estructurado en formato XML.
+     *
+     * @return Mensaje de confirmación del éxito de la operación o el listado
+     * detallado de advertencias/errores encontrados durante el parseo.
+     */
     private static String procesarOperacion1() {
         List<String> errores = CargadorXML.cargar(RUTA_XML_DEFAULT, universidad);
         String res = errores.isEmpty() ? "Carga XML completada sin errores."
                 : "Cargado con advertencias: \n" + String.join("\n", errores);
         return res;
     }
-
+    /**
+     * Procesa la Operación 2: Exporta y guarda el estado actual del modelo
+     * de la universidad en el archivo XML por defecto.
+     *
+     * @return Mensaje de éxito indicando la ruta del archivo XML modificado.
+     */
     private static String procesarOperacion2() {
         GeneradorXML.guardar(universidad, RUTA_XML_DEFAULT);
         String res = "Estado guardado con éxito en: " + RUTA_XML_DEFAULT;
         return res;
     }
-
+    /**
+     * Procesa la Operación 3: Serializa de forma binaria el estado completo del
+     * objeto Universidad, persistiendo los datos de cara a futuras ejecuciones.
+     *
+     * @return Mensaje confirmando que el estado binario fue resguardado correctamente.
+     */
     private static String procesarOperacion3() {
         PersistenciaBinaria.guardarEstado(universidad, RUTA_BIN_DEFAULT);
         String res = "Estado binario guardado con éxito.";
         return res;
     }
-
-
+    /**
+     * Procesa la Operación 4: Restaura y deserializa el estado del sistema
+     * recuperando la instancia completa de Universidad desde el archivo binario de persistencia.
+     *
+     * @return Mensaje de confirmación del éxito o fracaso de la des-serialización.
+     */
     private static String procesarOperacion4() {
         String res;
         Universidad recuperada = PersistenciaBinaria.cargarEstado(RUTA_BIN_DEFAULT);
@@ -153,7 +176,15 @@ public class Main {
         }
         return res;
     }
-
+    /**
+     * Procesa la Operación 5: Extrae los parámetros web de curso, clase, alumno
+     * y presencia para buscar las instancias correspondientes en el dominio
+     * y registrar la asistencia de forma segura.
+     *
+     * @param params Mapa con las claves "idCurso", "idClase", "matricula" y "presente".
+     * @return Mensaje detallando el éxito del registro o un indicador de error estructurado
+     * en caso de que falte alguna entidad.
+     */
     private static String procesarOperacion5(Map<String, String> params) {
         String res;
         try {
@@ -209,7 +240,13 @@ public class Main {
         }
         return res;
     }
-
+    /**
+     * Procesa la Operación 6: Invoca al negocio para calcular el ordenamiento de materias
+     * por nivel de asistencia y genera tanto la visualización en formato string
+     * como el archivo físico de reporte.
+     *
+     * @return Representación en texto plano tabulado de la tabla de posiciones de presentismo.
+     */
     private static String procesarOperacion6() {
         String res;
         List<universidad.ranking.RankingAsignatura> ranking = universidad.rankingPresentismo();
@@ -230,7 +267,14 @@ public class Main {
         }
         return res;
     }
-
+    /**
+     * Procesa la Operación 7: Busca una asignatura específica por su código identificador,
+     * recopila todas las inscripciones activas asociadas y computa sus métricas.
+     *
+     * @param params Mapa que contiene el "codigo" de la asignatura a consultar.
+     * @return Reporte en texto con el desglose de alumnos, modalidades y porcentajes,
+     * o un mensaje indicando la inexistencia del código.
+     */
     private static String procesarOperacion7(Map<String, String> params) {
         String res;
         String codigo = params.get("codigo");
@@ -266,7 +310,12 @@ public class Main {
         }
         return res;
     }
-
+    /**
+     * Procesa la Operación 8: Solicita al dominio el listado consolidado global de todos
+     * aquellos estudiantes cuya condición actual sea Libre.
+     *
+     * @return Listado de alumnos libres detallando materia y comisión, o un aviso de lista vacía.
+     */
     private static String procesarOperacion8() {
         String res;
         List<universidad.inscripciones.Inscripcion> libres = universidad.alumnosLibres();
@@ -286,7 +335,14 @@ public class Main {
         }
         return res;
     }
-
+    /**
+     * Procesa la Operación 9: Filtra y extrae los alumnos en condición Libre pertenecientes
+     * exclusivamente a las asignaturas dictadas en el año académico provisto.
+     *
+     * @param params Mapa que contiene la clave "codigo" representando el año de la carrera (1 a 5).
+     * @return Reporte tabulado de alumnos libres del año académico seleccionado o la captura
+     * del error de entrada.
+     */
     private static String procesarOperacion9(Map<String, String> params) {
         String res;
         try {
@@ -316,10 +372,11 @@ public class Main {
 
     /**
      * Procesa y parsea el cuerpo de una solicitud HTTP POST codificada en formato
-     * application/x-www-form-urlencoded, convirtiéndola en un mapa de clave-valor.
-     * * @param is El flujo de entrada conteniendo los bytes del cuerpo del POST.
-     * @return Un mapa {@link Map} con los parámetros y sus respectivos valores decodificados.
-     * @throws IOException Si ocurre un error de lectura en el flujo de datos.
+     * application/x-www-form-urlencoded, convirtiéndola en un mapa asociativo de clave-valor.
+     *
+     * @param is El flujo de entrada conteniendo los bytes crudos del cuerpo del POST.
+     * @return Un mapa {@link Map} con los parámetros indexados y sus respectivos valores decodificados.
+     * @throws IOException Si ocurre un error de lectura o interrupción en el flujo de entrada de datos.
      */
     private static Map<String, String> parsearPostParams(InputStream is) throws IOException {
         Map<String, String> result = new HashMap<>();
