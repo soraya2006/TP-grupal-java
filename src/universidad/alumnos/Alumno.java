@@ -53,10 +53,10 @@ public class Alumno implements Comparable<Alumno>, Serializable {
     @Override
     public int compareTo(Alumno otro) {
         int comp = this.apellido.compareToIgnoreCase(otro.apellido);
-        if (comp == 0) { // si es el mismo apellido comparamos x nombre
+        if (comp == 0) {
             comp = this.nombre.compareToIgnoreCase(otro.nombre);
         }
-        if (comp == 0) { // si tienen mismo nombre y apellido comparamos por matricula
+        if (comp == 0) {
             comp = this.matricula.compareToIgnoreCase(otro.matricula);
         }
 

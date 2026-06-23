@@ -43,7 +43,7 @@ public class Inscripcion implements Serializable {
         }
     }
     /**
-     * Marca si el alumno vino o faltó a una clase.
+     * Registra si el alumno asistio o no a una clase.
      * @param c        La clase que se dictó.
      * @param presente Verdadero si vino, falso si faltó.
      */
