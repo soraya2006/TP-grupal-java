@@ -45,10 +45,7 @@ public class GeneradorReportes {
             } else {
                 int posicion = 1;
                 for (RankingAsignatura r : ranking) {
-                    pw.printf("  %2d. %-38s %6.2f%%%n",
-                            posicion,
-                            r.getAsignatura().getNombre(),
-                            r.getPorcentaje());
+                    pw.printf("  %2d. %-38s %6.2f%%%n", posicion, r.getAsignatura().getNombre(), r.getPorcentaje());
                     posicion++;
                 }
             }
@@ -69,9 +66,7 @@ public class GeneradorReportes {
      */
     public static void guardarReporteAsignatura(Asignatura asignatura,
                                                 List<Inscripcion> inscripciones) {
-        String nombreArchivo = "reporte_"
-                + asignatura.getCodigo().replaceAll("[^a-zA-Z0-9]", "_")
-                + ".txt";
+        String nombreArchivo = "reporte_" + asignatura.getCodigo().replaceAll("[^a-zA-Z0-9]", "_") + ".txt";
         String ruta = CARPETA + nombreArchivo;
         PrintWriter pw = abrirArchivo(ruta);
 
@@ -91,19 +86,14 @@ public class GeneradorReportes {
                     if (!c.getIdCurso().equals(idCursoActual)) {
                         idCursoActual = c.getIdCurso();
                         pw.println();
-                        pw.println("  Curso: " + c.getIdCurso()
-                                + " | Año: "          + c.getAnioCalendario()
-                                + " | Cuatrimestre: " + c.getCuatrimestreDictado());
+                        pw.println("  Curso: " + c.getIdCurso() + " | Año: "          + c.getAnioCalendario() + " | Cuatrimestre: " + c.getCuatrimestreDictado());
                         pw.println("  Clases dictadas: " + c.getClasesDictadas().size());
                     }
 
                     pw.println("  Alumno:     " + i.getAlumno());
                     pw.println("  Modalidad:  " + i.getModalidad());
-                    pw.printf ("  Presentes:  %d / %d%n",
-                            i.cantidadPresentes(),
-                            i.getCurso().getClasesDictadas().size());
-                    pw.printf ("  Porcentaje: %.2f%%%n",
-                            i.calcularPorcentajeAsistencia());
+                    pw.printf ("  Presentes:  %d / %d%n", i.cantidadPresentes(), i.getCurso().getClasesDictadas().size());
+                    pw.printf ("  Porcentaje: %.2f%%%n", i.calcularPorcentajeAsistencia());
                     pw.println("  Condición:  " + i.obtenerCondicion());
                     pw.println("  Asistencias detalladas:");
 
@@ -135,9 +125,7 @@ public class GeneradorReportes {
                 pw.println("  (No hay alumnos libres registrados)");
             } else {
                 for (Inscripcion i : libres) {
-                    pw.println("  " + i.getAlumno()
-                            + " — " + i.getCurso().getAsignatura().getNombre()
-                            + " (Curso: " + i.getCurso().getIdCurso() + ")");
+                    pw.println("  " + i.getAlumno() + " — " + i.getCurso().getAsignatura().getNombre() + " (Curso: " + i.getCurso().getIdCurso() + ")");
                 }
             }
 
@@ -164,9 +152,7 @@ public class GeneradorReportes {
                 pw.println("  (No hay alumnos libres para el año " + anioCarrera + ")");
             } else {
                 for (Inscripcion i : libres) {
-                    pw.println("  " + i.getAlumno()
-                            + " — " + i.getCurso().getAsignatura().getNombre()
-                            + " (Curso: " + i.getCurso().getIdCurso() + ")");
+                    pw.println("  " + i.getAlumno() + " — " + i.getCurso().getAsignatura().getNombre() + " (Curso: " + i.getCurso().getIdCurso() + ")");
                 }
             }
 
@@ -189,8 +175,7 @@ public class GeneradorReportes {
             new File(CARPETA).mkdirs();
             pw = new PrintWriter(new FileWriter(ruta, false));
         } catch (IOException e) {
-            System.err.println("[Reporte] No se pudo crear el archivo: "
-                    + ruta + " — " + e.getMessage());
+            System.err.println("[Reporte] No se pudo crear el archivo: " + ruta + " — " + e.getMessage());
             errorAbierto = true;
         }
 
